@@ -1,3 +1,5 @@
+/* Validates an input contains a value or a specific
+   key is pressed and presents an error if input is empty.*/
 (function wireGuideAdvanceButton(step) {
   // pendo.dom('._pendo-guide-next_')[0].disabled = true;
   step && step.attachEvent(step.guideElement[0], 'click', function(e) {

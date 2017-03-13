@@ -1,3 +1,6 @@
+// Prerequisites:
+// One hidden banner step set to sitewide
+// Subsequent step set to site wide to take visitor back to desired location
 pendo._.defer(function (){
     // Skip to first step which matches current URL if step assigned to specific page
     var url = pendo.getCurrentUrl();

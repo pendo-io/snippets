@@ -1,0 +1,45 @@
+label._pendo-onboarding-progress_ {
+    color: #6a6c75;
+    vertical-align: middle;
+    font-weight: 400;
+    font-size: 12px;
+    display: block;
+    height: 50%;
+    width: 100%;
+    line-height: 1em;
+    padding: 0 10px;
+}
+
+._pendo-progress-area-inner_ {
+    padding: 20px 10px;
+    height: 50%;
+}
+
+._pendo-progress-bar-outer_ {
+    height: 8px;
+    border-radius: 3px;
+    background-color: #dadce5;
+    display: block;
+    width: 100%;
+}
+
+._pendo-progress-bar-inner_ {
+    border-radius: 3px;
+    background-color: #00c583;
+    height: 8px;
+    width: 0%;
+    transition-delay: 600ms;
+    -webkit-transition-delay: 600ms;
+    transition: width 2s cubic-bezier(.35, .18, .54, 1);
+    -webkit-transition: width 2s cubic-bezier(.35, .18, .54, 1);
+}
+
+._pendo-onboarding-item-progress_ {
+    color: #babcc5;
+    font-weight: 400;
+    font-size: 12px;
+}
+
+._pendo-launcher-onboarding-progress_ {
+    height: 100%;
+}

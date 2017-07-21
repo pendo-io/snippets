@@ -1,5 +1,5 @@
 // handles the percentage fill and ticking counter for large bottom percetage bar for onboarding module
-// assumes the following html structure and css in updateOverallProgress.css
+// assumes the following html structure (adjust classes as needed)
 
 // <div class='_pendo-launcher-onboarding-progress_'>
 //     <div class='_pendo-progress-area-inner_'>

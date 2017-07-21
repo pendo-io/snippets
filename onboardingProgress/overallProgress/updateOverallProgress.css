@@ -1,3 +1,14 @@
+._pendo-launcher-onboarding-progress-footer_ {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border-top: 1px solid #f4f4f7;
+    margin: 0 5px;
+    height: 80px;
+    background: #fff;
+}
+
 label._pendo-onboarding-progress_ {
     color: #6a6c75;
     vertical-align: middle;

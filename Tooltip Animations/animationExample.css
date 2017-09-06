@@ -1,0 +1,27 @@
+&.top {
+    animation: fadein 1s, slide-up .5s;
+    -moz-animation: fadein 1s, slide-up .5s; /* Firefox */
+    -webkit-animation: fadein 1s, slide-up .5s; /* Safari and Chrome */
+    -o-animation: fadein 1s, slide-up .5s; /* Opera */
+}
+
+&.bottom {
+    animation: fadein 1s, slide-down .5s;
+    -moz-animation: fadein 1s, slide-down .5s; /* Firefox */
+    -webkit-animation: fadein 1s, slide-down .5s; /* Safari and Chrome */
+    -o-animation: fadein 1s, slide-down .5s; /* Opera */
+}
+
+&.left {
+    animation: fadein 1s, slide-left .5s;
+    -moz-animation: fadein 1s, slide-left .5s; /* Firefox */
+    -webkit-animation: fadein 1s, slide-left .5s; /* Safari and Chrome */
+    -o-animation: fadein 1s, slide-left .5s; /* Opera */
+}
+
+&.right {
+    animation: fadein 1s, slide-right .5s;
+    -moz-animation: fadein 1s, slide-right .5s; /* Firefox */
+    -webkit-animation: fadein 1s, slide-right .5s; /* Safari and Chrome */
+    -o-animation: fadein 1s, slide-right .5s; /* Opera */
+}

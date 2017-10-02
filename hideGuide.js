@@ -43,7 +43,7 @@ else {
 }
 
 // EXAMPLE: reveal after 3 seconds. Remove timeout and set conditional check
-setTimeout(function pendoRevealGuide() {
+setTimeout(function () {
   if (true) {
     pendoRevealGuide();
   }

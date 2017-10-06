@@ -70,7 +70,7 @@ var skipToURL = [
     }
 ];
 
-fdescribe('Skip to Step on Page Service Snippet', function () {
+describe('Skip to Step on Page Service Snippet', function () {
     beforeEach(function () {
         this.SKIP_PAGE_GUIDE = {
             'id': 'guide1',

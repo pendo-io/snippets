@@ -1,3 +1,4 @@
+// Agent version must be 2.8.0 or lower
 // Remove all guides with "Automatically" activation on client side from the payload
 //
 // An example initialize using advanced "events" and "guides" objects.

@@ -1,5 +1,6 @@
 'use strict';
 
+// Create steps for the Guide
 var skipToURL = [
     {
         'id': 'step1',
@@ -72,6 +73,7 @@ var skipToURL = [
 
 describe('Skip to Step on Page Service Snippet', function () {
     beforeEach(function () {
+        // Create an object providing the steps defined above
         this.SKIP_PAGE_GUIDE = {
             'id': 'guide1',
             'name': 'Skip to Step on Page',
@@ -80,10 +82,12 @@ describe('Skip to Step on Page Service Snippet', function () {
             'steps': skipToURL
         };
 
+        // Watch the FrameController Object and return true when isInThisFrame is executed
         spyOn(FrameController, 'isInThisFrame').and.returnValue(true);
     });
 
     afterEach(function () {
+        // Clean up after each execution
         stopGuides();
         clearLoopTimer();
     });
@@ -93,15 +97,20 @@ describe('Skip to Step on Page Service Snippet', function () {
             activeGuides = [];
             pendo.lastGuideStepSeen = {};
 
+            // Set local context with SKIP_PAGE_GUIDE object
             var SKIP_PAGE_GUIDE = this.SKIP_PAGE_GUIDE;
 
+            // Watch our guide API functions
             spyOn(window, 'advancedGuide').and.callThrough();
             spyOn(window, 'dismissedGuide').and.callThrough();
             spyOn(window, '_updateGuideStepStatus');
 
+            // Provide the SKIP_PAGE_GUIDE object to the agent and let GuideFactory set Guide attributes
+            // GuideFactory will return a guide object
             activeGuides = _.map([this.SKIP_PAGE_GUIDE], GuideFactory);
             this.step = activeGuides[0].steps[0];
 
+            // Add our elements to the DOM
             setFixtures(['<input type="text" id="input" class="test-success">Hello Gubnor!</input>',
                 '<button id="foo" class="test-success">Next</button>',
                 '<button id="bar" class="test-success">Back</button>',
@@ -109,10 +118,12 @@ describe('Skip to Step on Page Service Snippet', function () {
             ].join('')
         );
 
+            // Agent expects a lastGuideStepSeen. Set to our first step
             window.lastGuideStepSeen = activeGuides[0].steps[0].id;
         });
 
         afterEach(function () {
+             // Clean up after each execution
             stopGuides();
             clearLoopTimer();
         });
@@ -120,6 +131,7 @@ describe('Skip to Step on Page Service Snippet', function () {
         it('Should present second step (index 1)', function () {
             startGuides();
 
+            // Check our Guide is displayed
             expect(isGuideShown()).toBe(true);
             expect(pendo._.indexOf(guide.steps, pendo.guideDev.getActiveGuide().step)).toBe(1);
 
@@ -127,10 +139,12 @@ describe('Skip to Step on Page Service Snippet', function () {
         });
 
         it('Should present third step (index 2)', function () {
+            // Watch the pendo object and return new URL when getCurrentUrl is executed
             spyOn(pendo, 'getCurrentUrl').and.returnValue('https://localhost:9876/media_gallery.html');
             console.log(pendo.getCurrentUrl());
 
             startGuides();
+            // Check our Guide is displayed
             expect(isGuideShown()).toBe(true);
             expect(pendo._.indexOf(guide.steps, pendo.guideDev.getActiveGuide().step)).toBe(2);
 
@@ -138,10 +152,12 @@ describe('Skip to Step on Page Service Snippet', function () {
         });
 
         it('Should present fourth step (index 3)', function () {
+            // Watch the pendo object and return new URL when getCurrentUrl is executed
             spyOn(pendo, 'getCurrentUrl').and.returnValue('https://localhost:9876/typography.html');
             console.log(pendo.getCurrentUrl());
 
             startGuides();
+            // Check our Guide is displayed
             expect(isGuideShown()).toBe(true);
             expect(pendo._.indexOf(guide.steps, pendo.guideDev.getActiveGuide().step)).toBe(3);
 
@@ -149,10 +165,12 @@ describe('Skip to Step on Page Service Snippet', function () {
         });
 
         it('Should present present first step when url does not match any', function () {
+            // Watch the pendo object and return new URL when getCurrentUrl is executed
             spyOn(pendo, 'getCurrentUrl').and.returnValue('https://localhost:9876/index.html');
             console.log(pendo.getCurrentUrl());
 
             startGuides();
+            // Check our Guide is displayed
             expect(isGuideShown()).toBe(true);
             expect(pendo._.indexOf(guide.steps, pendo.guideDev.getActiveGuide().step)).toBe(1);
 

@@ -1,5 +1,6 @@
 'use strict';
 
+// Create steps for the Guide
 var wireAdvanced = [
     {
         'id': 'step1',
@@ -38,6 +39,7 @@ var wireAdvanced = [
 
 describe('Wire Advanced button Service Snippet', function () {
     beforeEach(function () {
+        // Create an oject providing the steps defined above
         this.WIRE_ADVANCED = {
             'id': 'guide1',
             'name': 'Wire advanced button',
@@ -46,10 +48,12 @@ describe('Wire Advanced button Service Snippet', function () {
             'steps': wireAdvanced
         };
 
+        // Watch the FrameController Object and return true when isInThisFrame is executed
         spyOn(FrameController, 'isInThisFrame').and.returnValue(true);
     });
 
     afterEach(function () {
+        // Clean up after each execution
         stopGuides();
         clearLoopTimer();
     });
@@ -59,31 +63,41 @@ describe('Wire Advanced button Service Snippet', function () {
             activeGuides = [];
             pendo.lastGuideStepSeen = {};
 
+            // Set local context with WIRE_ADVANCED object
             var WIRE_ADVANCED = this.WIRE_ADVANCED;
 
+            // Watch our guide API functions
             spyOn(window, 'advancedGuide');
             spyOn(window, '_updateGuideStepStatus');
 
+            // Provide the WIRE_ADVANCED object to the agent and let GuideFactory set Guide attributes
+            // GuideFactory will return a guide object
             activeGuides = _.map([this.WIRE_ADVANCED], GuideFactory);
             this.step = activeGuides[0].steps[0];
 
+            // Add our elements to the DOM
             setFixtures('<input id="input" class="test-success _pendo-required_">Hello Gubnor!</input>');
 
+            // Agent expects a lastGuideStepSeen. Set to our first step
             window.lastGuideStepSeen = this.step.id;
             startGuides();
         });
 
         afterEach(function () {
+            // Clean up after each execution
             stopGuides();
             clearLoopTimer();
         });
 
         it('Should display a guide and advance on Next button click', function () {
+            // Check our Guide is displayed
             expect(isGuideShown()).toBe(true);
             var nextButton = document.getElementsByClassName('_pendo-guide-next_');
 
+            // Execute click event on our element
             nextButton[0].click();
 
+            // Validate our guide advances and updates the step status
             expect(advancedGuide).toHaveBeenCalled();
             expect(_updateGuideStepStatus).toHaveBeenCalled();
             expect(pendo._.indexOf(guide.steps, pendo.guideDev.getActiveGuide().step)).toBe(1);

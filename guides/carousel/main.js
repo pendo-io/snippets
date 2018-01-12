@@ -66,7 +66,7 @@
       var backToMain = dom(e.target || e.srcElement).closest('._pendo-guide-back-to-main_');
       var takeMeButton = dom(e.target || e.srcElement).closest('._pendo-guide-takeme-wrapper_');
 
-      var destinationButton = dom(eventTarget(e)).closest('.step-indicator');
+      var destinationButton = dom(e.target || e.srcElement).closest('.step-indicator');
       var destinationIndex = destinationButton.attr('data-index');
       var guideContent = dom('._pendo-guide-card-content_');
 

@@ -1,49 +1,27 @@
 width: 100% !important;
-height: 100vh !important;
-position: absolute !important;
+height: 100% !important;
 top: 0 !important;
 left: 0 !important;
 right: 0 !important;
-bottom: 0 !important;
 margin: auto !important;
-display: -webkit-box !important;
-display: -webkit-flex !important;
-display: -ms-flexbox !important;
-display: flex !important;
--webkit-box-align: center !important;
--webkit-align-items: center !important;
--ms-flex-align: center !important;
-align-items: center !important;
--webkit-box-pack: center !important;
--webkit-justify-content: center !important;
--ms-flex-pack: center !important;
-justify-content: center !important;
 max-width: 1300px !important;
 
 ._pendo-guide-container_ {
   top: 2% !important;
   left: 5% !important;
   right: 5% !important;
-  padding: 0;
   border: none;
+  -webkit-box-shadow: 0 4px 30px 0 rgba(0, 0, 0, 0.3);
   box-shadow: 0 4px 30px 0 rgba(0, 0, 0, 0.3);
   border-radius: 4px;
-  -webkit-box-flex: 0 !important;
-  -webkit-flex: none !important;
-  -ms-flex: none !important;
-  flex: none !important;
-  max-width: 1300px !important;
-  max-height: 900px !important;
-  -webkit-box-flex: 1 !important;
-  -webkit-flex: 1 !important;
-  -ms-flex: 1 !important;
-  flex: 1 !important;
+  max-width: 1300px;
+  max-height: 900px;
 }
 
 ._pendo-guide-container_ ._pendo-guide-content_ {
   /* Content area: use for font attributes, padding, etc. */
   text-align: left;
-  padding: 0
+  padding: 0;
 }
 
 ._pendo-guide-container_ ._pendo-close-guide_ {
@@ -61,25 +39,24 @@ max-width: 1300px !important;
   color: #999;
 }
 
-.embed {
+._pendo-guide-invision-embed_ {
   position: relative;
   display: block;
-  height: 0;
   padding: 0 0 62.5%;
   overflow: hidden;
   border-radius: 4px 4px 0 0;
-}
 
-.embed iframe {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border: 0;
-  outline: none;
-  border-radius: 4px 4px 0 0;
+  > iframe {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    outline: none;
+    border-radius: 4px 4px 0 0;
+  }
 }
 
 ._pendo-guide-next_ {
@@ -95,15 +72,20 @@ max-width: 1300px !important;
   line-height: 100%;
   text-align: center;
   vertical-align: middle;
+  -webkit-transition: all 0.2s ease-in-out;
+  -o-transition: all 0.2s ease-in-out;
   transition: all 0.2s ease-in-out;
   border: none;
   letter-spacing: 0.5px;
+  -webkit-box-shadow: 0 4px 15px 0 rgba(0, 0, 0, 0.3);
   box-shadow: 0 4px 15px 0 rgba(0, 0, 0, 0.3);
   border-radius: 0 0 4px 4px;
 }
 
 ._pendo-guide-next_:hover {
-  background: #FF3A6C;
+  background: #ff3a6c;
 }
 
-button:focus {outline:0;}
+._pendo-guide-next:focus {
+  outline: 0;
+}

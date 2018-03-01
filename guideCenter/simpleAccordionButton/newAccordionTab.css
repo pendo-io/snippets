@@ -1,0 +1,17 @@
+/**********************************
+* Add the following CSS to the    *
+* bottom of the CSS column when   *
+* editing the Guide Center.       *
+**********************************/
+
+._pendo-launcher-custom-help_ {
+  ._pendo-launcher-guide-listing_ {
+    padding-left: 15px;
+  }
+
+  ._pendo-launcher-item_ {
+    line-height: 2em;
+    padding-top: 7px;
+    padding-bottom: 7px;
+  }
+}

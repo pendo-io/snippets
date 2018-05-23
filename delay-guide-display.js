@@ -20,6 +20,10 @@ function pendoHideGuide() {
   pendo._.each(pendo.Sizzle('._pendo-backdrop_'), function(guide) {
     guide.style.display = 'none';
   })
+  // Only required for Tooltip block-click.
+  pendo._.each(pendo.Sizzle('._pendo-guide-tt-region-block_'), function(guide) {
+    guide.style.display = 'none';
+  })
 }
 
 function pendoRevealGuide() {
@@ -30,6 +34,10 @@ function pendoRevealGuide() {
     pendo._.each(pendo.Sizzle('._pendo-backdrop_'), function(guide) {
       guide.style.display = 'block';
     })
+    pendo._.each(pendo.Sizzle('._pendo-guide-tt-region-block_'), function(guide) {
+      guide.style.display = 'block';
+    })
+
   }
 }
 

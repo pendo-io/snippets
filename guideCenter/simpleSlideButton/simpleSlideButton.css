@@ -1,0 +1,11 @@
+/**********************************
+* Add the following CSS to the    *
+* bottom of the CSS column when   *
+* editing the Guide Center.       *
+**********************************/
+
+[data-id='extra-button'] {
+    ._pendo-launcher-guide-listing_ {
+        padding: 10px;
+    }
+}

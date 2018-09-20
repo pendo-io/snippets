@@ -1,12 +1,42 @@
-// note: this snippet leverages the fetch and filesAPI  (https://developer.mozilla.org/en-US/docs/Web/API/File). 
-// Dependent on your product's browser support requirements you may not be able to use this. 
-
-// You'll also see a few different @TODO's buried in here. While functional, this form could no doubt be improved. 
-// Feel free to submit pull requests with improvements for review. 
-
-// lastly, if you're using the html as is, you'll need to write a bit of javascript to toggle the section open. That is not included in this repo.  
+/*****************************************************************************
+* Place the complete contetns here at the end of the JS tab, immediately before
+* this line: })(pendo.dom, pendo.guideWidget);
+*
+* You'll see a few different @TODO's buried in here. While functional,
+* this form could no doubt be improved. Feel free to submit pull requests with
+* improvements for review.
+*
+* Note: This snippet leverages the fetch and filesAPI. Dependent on your
+* product's browser support requirements you may not be able to use this.
+* Documentation: https://developer.mozilla.org/en-US/docs/Web/API/File
+*****************************************************************************/
 
 (function() {
+
+  //Populate this variable with your Zendesk instance Domain
+  var zendeskApiAddress = 'https://yourcompany.zendesk.com/';
+
+  /*****************************************************************************
+  * Internally at Pendo, we use email address for our visitor Id.
+  * We can use this to prepopulate the requester field for zendesk.
+  * If you use email, you can leverage this as well.
+  * If not, you can come up with your own dynamic method populating for
+  * the requester field, or let the user provide it themselves.
+  *****************************************************************************/
+
+  /* * * START DYNAMIC EMAIL DETERMINATION * * */
+  /*
+  var visitorId = pendo.getVisitorId();
+
+  if (visitorId !== null) {
+    emailAddress = document.getElementById('email');
+    emailAddress.value = visitorId;
+    emailAddress.type = 'hidden';
+    emailAddress.parentNode.style.marginBottom = '0';
+  }
+  */
+  /* * * END DYNAMIC EMAIL DETERMINATION * * */
+
   var formBody = document.querySelector('#_pendo-contact-form__body_'),
     form = document.querySelector('._pendo-contact-form_'),
     formSubmit = document.querySelector('._pendo-contact-form__submit_'),
@@ -34,8 +64,37 @@
     dropzoneInput.setAttribute('id', dropzoneId);
     dropzoneTrigger.setAttribute('for', dropzoneId);
   }
-  init();
 
+
+
+  /**************************************
+  * Author: spencer@pendo.io
+  * Last Modified By: spencer@pendo.io
+  * Last Modified: 09-20-18
+  *
+  * Function below created to trigger the
+  * various animations that are required
+  * when opening or closing the form.
+  ***************************************/
+
+  function contactController() {
+    var contactBodyToggle = function(){
+  	var contactFormBody = pendo.Sizzle('#_pendo-contact-form__body_')[0];
+      if(pendo._.some(contactFormBody.classList, function(elementClass) { if (elementClass === 'is-toggled') { return true; } })) {
+          contactFormBody.classList.remove('is-toggled');
+      } else {
+          contactFormBody.classList.add('is-toggled');
+  	  }
+    }
+
+    pendo.Sizzle('.section__contact-toggle')[0].addEventListener('click', contactBodyToggle);
+    pendo.Sizzle('.section__contact-modal-close')[0].addEventListener('click', contactBodyToggle);
+    pendo.Sizzle('.section__contact-modal-back')[0].addEventListener('click', contactBodyToggle);
+
+  }
+
+  init();
+  contactController();
 
   var i, dropped = false;
 
@@ -46,11 +105,9 @@
     var remoteCallsRemaining = files.length;
     for (i = 0; i < files.length; i++) {
       var file = files[i];
-      // scoping is an issue here with multiple files for both dnd and input select.
-      // using 'let' works well here. if you set to 'var', you end up with two uploads of the same file. no bueno.
       let reader = new FileReader();
       reader.onload = function(e) {
-        fetch('https://pendo.zendesk.com/api/v2/uploads.json?filename=' + escape(file.name), {
+        fetch(zendeskApiAddress + 'api/v2/uploads.json?filename=' + escape(file.name), {
           method: 'POST',
           headers: new Headers({
             'Content-Type': 'application/binary'
@@ -118,15 +175,7 @@
     var subject = formData.get('subject');
     var body = formData.get('body');
 
-    // @TODO: could be used to create name variable for the requester object...
-
-    // var name = function(email) {
-    //   var uHostName = email.split("@", 2)[0];
-    //   var paths = uHostName.split(/[._]/);
-    //   return p.default.map(paths, p.default.capitalize).join(" ");
-    // }(email);
-
-    fetch('https://pendo.zendesk.com/api/v2/requests.json', {
+    fetch(zendeskApiAddress + 'api/v2/requests.json', {
         method: 'POST',
         headers: new Headers({
           'Content-Type': 'application/json'
@@ -287,7 +336,6 @@
     }, 300);
   }
 
-  // @TODO: when removing attachments, reduce overall attachment count so that dropzoneMaxUploads actually has a reason for existing
   var removeTheAttachment = function() {
     var uploads = uploadsTokenList();
     var attachmentToRemoveToken = this.parentNode.dataset.dropZoneAttachmentId;
@@ -311,14 +359,4 @@
     }
   }
 
-  // Internally at Pendo, we use email address for our visitor Id.  We can use this to prepopulate the requester field for zendesk.
-  // If you use email, you can leverage this as well. If not, you'll want to come up with your own dynamic populating for the requester field.
-  var visitorId = pendo.getVisitorId();
-
-  if (visitorId !== null) {
-    emailAddress = document.getElementById('email');
-    emailAddress.value = visitorId;
-    emailAddress.type = 'hidden';
-    emailAddress.parentNode.style.marginBottom = '0';
-  }
 }());

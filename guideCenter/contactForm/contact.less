@@ -1,3 +1,17 @@
+
+/*
+* Paste this complete snippet at the very end of the CSS column.
+*
+* Note: You'll likely need to edit the CSS style for the top of
+* _pendo-launcher-menu_ once the form is added.
+*
+* The color fields below make up the two main visual colors that make up the
+* Form and it's corresponding animations. Defaulted to Pendo colors.
+*/
+
+@uniform-color-scheme--primary: #ec2059;
+@uniform-color-scheme--secondary: #ff3467;
+
 #contact {
   border-bottom: none;
 }
@@ -89,7 +103,7 @@
   }
   h2 {
     font: 500 26px/1.4em 'proxima-nova', sans-serif;
-    color: #ec2059;
+    color: @uniform-color-scheme--primary;
     margin: 1em auto 0;
   }
   h3 {
@@ -148,7 +162,7 @@
   outline: 0px;
   background: 0px 0px;
   overflow: visible;
-  color: #ec2059;
+  color: @uniform-color-scheme--primary;
 }
 
 .section__contact-modal-back:hover {
@@ -244,10 +258,10 @@
         }
         &.__failure_ {
           ._pendo-contact-form__drop-zone-progress__background_ {
-            fill: #ec2059;
+            fill: @uniform-color-scheme--primary;
           }
           ._pendo-contact-form__drop-zone-progress__fill_ {
-            stroke: #ec2059;
+            stroke: @uniform-color-scheme--primary;
             stroke-dashoffset: 0;
           }
         }
@@ -415,7 +429,7 @@
       background-position-y: center;
     }
     &.is-error {
-      border-left-color: #ec2059;
+      border-left-color: @uniform-color-scheme--primary;
       background-color: rgba(236, 32, 89, 0.1);
       &:before {
         background-image: url("data:image/svg+xml,%3Csvg width='79px' height='70px' viewBox='0 0 79 70' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'%3E%3Cdefs%3E%3C/defs%3E%3Cg id='Page-1' stroke='none' stroke-width='1' fill='none' fill-rule='evenodd'%3E%3Cg id='noun_1073619_cc' fill-rule='nonzero' fill='%23EC2059'%3E%3Cg id='Group'%3E%3Cpath d='M78.2,60.5 L45.1,3.5 C44,1.6 42.1,0.5 39.9,0.5 C37.7,0.5 35.8,1.6 34.7,3.5 L1.6,60.5 C0.5,62.4 0.5,64.6 1.6,66.5 C2.7,68.4 4.6,69.5 6.8,69.5 L72.9,69.5 C75.1,69.5 77,68.4 78.1,66.5 C79.2,64.6 79.3,62.4 78.2,60.5 Z M74.8,64.5 C74.6,64.8 74.1,65.5 73.1,65.5 L6.9,65.5 C5.9,65.5 5.3,64.8 5.2,64.5 C5,64.2 4.7,63.4 5.2,62.5 L38.3,5.5 C38.8,4.6 39.7,4.5 40,4.5 C40.3,4.5 41.2,4.6 41.7,5.5 L74.8,62.5 C75.3,63.4 75,64.2 74.8,64.5 Z' id='Shape'%3E%3C/path%3E%3Crect id='Rectangle-path' x='38' y='25.5' width='4' height='23' rx='2'%3E%3C/rect%3E%3Crect id='Rectangle-path' x='38' y='52.5' width='4' height='5' rx='2'%3E%3C/rect%3E%3C/g%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
@@ -469,7 +483,7 @@
     &:focus {
       color: #2a2c35;
       background-color: #fff;
-      border: 1px solid #ff3467;
+      border: 1px solid @uniform-color-scheme--secondary;
       transition: all 300ms;
     }
   }
@@ -479,7 +493,7 @@
     &:focus {
       color: #2a2c35;
       background-color: #fff;
-      border: 1px solid #ff3467;
+      border: 1px solid @uniform-color-scheme--secondary;
       transition: all 300ms;
     }
     &::-webkit-scrollbar,
@@ -495,14 +509,14 @@
   ._pendo-contact-form__submit_ {
     &:hover {
       cursor: pointer;
-      background-color: #ff3467;
+      background-color: @uniform-color-scheme--secondary;
       transition: all 300ms;
     }
     outline: none;
     width: 100%;
     border: 0;
     border-radius: 3px;
-    border: 2px solid #ec2059;
+    border: 2px solid @uniform-color-scheme--primary;
     height: 40px;
     font: 700 14px/1em 'proxima-nova',
     'Arial',
@@ -516,7 +530,7 @@
     -webkit-transition: all 300ms ease;
     transition: all 300ms ease;
     background-clip: padding-box;
-    background-color: #ec2059;
+    background-color: @uniform-color-scheme--primary;
     &.is-submitting {
       cursor: progress;
       margin: 0 auto;
@@ -526,7 +540,7 @@
       border-width: 3px;
       font-size: 0;
       border-radius: 40px;
-      border-left-color: #ec2059;
+      border-left-color: @uniform-color-scheme--primary;
       -webkit-animation: rotate 2s 0.25s linear infinite;
       animation: rotate 2s 0.25s linear infinite;
     }
@@ -553,17 +567,17 @@
     border-radius: 50%;
     display: block;
     stroke-width: 2;
-    stroke: #ec2059;
+    stroke: @uniform-color-scheme--primary;
     stroke-miterlimit: 10;
     margin: auto;
-    box-shadow: inset 0px 0px 0px #ec2059;
+    box-shadow: inset 0px 0px 0px @uniform-color-scheme--primary;
     animation: fill .4s ease-in-out .4s forwards, scale .3s ease-in-out .9s both;
     .checkmark__circle {
       stroke-dasharray: 166;
       stroke-dashoffset: 166;
       stroke-width: 2;
       stroke-miterlimit: 10;
-      stroke: #ec2059;
+      stroke: @uniform-color-scheme--primary;
       fill: none;
       animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
     }
@@ -587,17 +601,17 @@
     border-radius: 50%;
     display: block;
     stroke-width: 2;
-    stroke: #ec2059;
+    stroke: @uniform-color-scheme--primary;
     stroke-miterlimit: 10;
     margin: auto;
-    box-shadow: inset 0px 0px 0px #ec2059;
+    box-shadow: inset 0px 0px 0px @uniform-color-scheme--primary;
     animation: fill .4s ease-in-out .4s forwards, scale .3s ease-in-out .9s both;
     .cross__circle {
       stroke-dasharray: 166;
       stroke-dashoffset: 166;
       stroke-width: 2;
       stroke-miterlimit: 10;
-      stroke: #ec2059;
+      stroke: @uniform-color-scheme--primary;
       fill: none;
       animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
     }

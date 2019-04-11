@@ -6,10 +6,10 @@ function(step,guide){(function wireGuideAdvance (dom, step) {
 
 
     function checkForElementAndAdvance (e) {
-    	var checkForTableBody = setInterval(function () {
+    	var checkForNextElement = setInterval(function () {
             if (dom(nextStep.elementPathRule).length) {
                 advanceOnce();
-                clearInterval(checkForTableBody);
+                clearInterval(checkForNextElement);
             }
     	}, 1000);
     }

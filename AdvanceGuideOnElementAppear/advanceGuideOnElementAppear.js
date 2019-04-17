@@ -1,4 +1,4 @@
-function(step,guide){(function wireGuideAdvance (dom, step) {
+(function wireGuideAdvance (dom, step) {
     if (!step) return;
     var nextStep = guide.steps[guide.getPositionOfStep(step)];
 
@@ -20,4 +20,4 @@ function(step,guide){(function wireGuideAdvance (dom, step) {
     step.after('teardown', function () {
         pendo.detachEvent(document, 'click', checkForElementAndAdvance);
     });
-})(pendo.dom, step);});
+})

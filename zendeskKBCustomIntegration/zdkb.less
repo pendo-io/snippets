@@ -1,0 +1,550 @@
+
+/**
+ * color assignments
+ * these variable names match the class name they're tied to
+ * want to update the color? simply change the hex code and it will automatically
+ * apply that color to the associated class/element.
+ *
+ * for example, to update the @header--border-bottom color to black, we would use:
+ * @pendo-launcher-header--border-bottom: #000;
+ *
+ * more information on lesscss can be found here: http://lesscss.org/#variables
+ *
+ */
+
+/* main header */
+@header--border-bottom: #f4f4f7;
+
+/* search box + results */
+@search-box--background-color: #fff;
+@search-box--border-color: #dadce5;
+@search-box--placeholder-color: #9a9ca5;
+@search-results--header-text-color: #babcc5;
+@search-results--clear-search-link-color: #2ca0c8;
+@search-results--no-results-found-text-color: #2a2c35;
+@search-results--no-results-found-subtext-color: #9a9ca5;
+@search-results--search-display-return-color: #2ca0c8;
+@search-results--search-highlight-color: #fff5cd;
+
+/* z-index */
+@base-zIndex: 200000;
+@enableSearchTop: 125px;
+
+.opacity(@amount) {
+    @opacity: @amount * 100;
+    -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=@opacity);
+    filter: alpha(opacity=@opacity);
+    opacity: @amount;
+}
+
+.border-radius (@radius: 4px) {
+    -webkit-border-radius: @radius;
+    -moz-border-radius: @radius;
+    border-radius: @radius;
+
+    -moz-background-clip: padding;
+    -webkit-background-clip: padding-box;
+    background-clip: padding-box;
+}
+
+.animation (...) {
+    -webkit-animation: @arguments;
+    -moz-animation: @arguments;
+    -ms-animation: @arguments;
+    animation: @arguments;
+}
+
+.transition (...) {
+    -webkit-transition: @arguments;
+    -moz-transition: @arguments;
+    -ms-transition: @arguments;
+    -o-transition: @arguments;
+    transition: @arguments;
+}
+
+.transform (...) {
+    -webkit-transform: @arguments;
+    -moz-transform: @arguments;
+    -ms-transform: @arguments;
+    -o-transform: @arguments;
+    transform: @arguments;
+}
+
+/* reset button styles in order to prevent picking up styles  */
+
+button {
+    background: none;
+    border: 0;
+    color: inherit;
+    font: inherit;
+    line-height: normal;
+    overflow: visible;
+    padding: 0;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    &::-moz-focus-inner {
+        border: 0;
+        padding: 0;
+    }
+
+    &:focus {
+        outline: -webkit-focus-ring-color auto 0;
+    }
+}
+
+/* font-smooth on displays that support it */
+
+@media only screen and (-webkit-min-device-pixel-ratio: 1.3),
+    only screen and (-o-min-device-pixel-ratio: 13/10),
+    only screen and (min-resolution: 120dpi) {
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* ------------------------------
+ * -- main launcher/menu view ---
+ * ------------------------------ */
+
+._pendo-active_ {
+    display: block;
+}
+
+._pendo-hidden_ {
+    display: none;
+}
+
+li {
+    list-style: none;
+}
+
+._pendo-section-content-article-header_ {
+    border-top:1px solid #e1dfe1;
+    border-bottom:1px solid #e1dfe1;
+    line-height: 40px;
+}
+
+._pendo-kb-search_ {
+    padding: 0px 30px 20px 30px;
+    background-color: @search-box--background-color;
+    z-index: 10;
+}
+
+/* ------------------------------
+* --------- search box ---------
+* ------------------------------ */
+._pendo-kb-search-box_ {
+    margin: 0 0 0 0;
+    background-color: @search-box--background-color;
+    border: 1px solid @search-box--border-color;
+
+    input[type='text'] {
+        width: calc(~'100% - 70px');
+        padding: 5px 5px;
+        font-size: 14px;
+        line-height: 32px;
+        outline: none;
+        border: 0;
+        -webkit-appearance: textfield;
+        vertical-align: bottom;
+        display: inline-block;
+        color: inherit;
+
+        &::-webkit-input-placeholder {
+            color: @search-box--placeholder-color;
+        }
+        &::-moz-input-placeholder {
+            color: @search-box--placeholder-color;
+        }
+        &::-ms-input-placeholder {
+            color: @search-box--placeholder-color;
+        }
+        &::-moz-placeholder {
+            color: @search-box--placeholder-color;
+        }
+        &::placeholder {
+            color: @search-box--placeholder-color;
+        }
+
+        &::-ms-clear {
+            display: none;
+        }
+    }
+    input::placeholder{
+        font-style: italic;
+    }
+
+    ._pendo-kb-search-icon_,
+    ._pendo-kb-clear-search-icon_ {
+        margin: 5px 0px;
+        padding: 5px 0px;
+        width: 32px;
+        height: 32px;
+        max-width: 32px;
+        max-height: 32px;
+        background-size: 15px;
+        background-repeat: no-repeat;
+        background-position: center;
+    }
+
+    ._pendo-kb-search-icon_ {
+        float: left;
+        background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTMiIGhlaWdodD0iMTMiIHZpZXdCb3g9IjAgMCAxOCAxOCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMTcuNzIyNTIyMiAxNi4zODI3NDA5bC0xLjMzOTc4MTMgMS4zMzk3ODEzLTQuOTY3NzgyNS00Ljk2Nzc4MjVjLTEuMTk1Mzg4NC45MTMyODk1LTIuNjg5MTg4MzUgMS40NTU3ODY2LTQuMzA5Njk1MjQgMS40NTU3ODY2QzMuMTgxMTM0NyAxNC4yMTA1MjYzIDAgMTEuMDI5MzkxNiAwIDcuMTA1MjYzMTYgMCAzLjE4MTEzNDcgMy4xODExMzQ3IDAgNy4xMDUyNjMxNiAwYzMuOTI0MTI4NDQgMCA3LjEwNTI2MzE0IDMuMTgxMTM0NyA3LjEwNTI2MzE0IDcuMTA1MjYzMTYgMCAxLjYyMDUwNjktLjU0MjQ5NzEgMy4xMTQzMDY4NC0xLjQ1NTc4NjYgNC4zMDk2OTUyNGw0Ljk2Nzc4MjUgNC45Njc3ODI1ek03LjEwNTI2MzE2IDEyLjMxNTc4OTVjMi44Nzc2OTQyIDAgNS4yMTA1MjYzNC0yLjMzMjgzMjE0IDUuMjEwNTI2MzQtNS4yMTA1MjYzNCAwLTIuODc3Njk0Mi0yLjMzMjgzMjE0LTUuMjEwNTI2MzItNS4yMTA1MjYzNC01LjIxMDUyNjMyLTIuODc3Njk0MiAwLTUuMjEwNTI2MzIgMi4zMzI4MzIxMi01LjIxMDUyNjMyIDUuMjEwNTI2MzIgMCAyLjg3NzY5NDIgMi4zMzI4MzIxMiA1LjIxMDUyNjM0IDUuMjEwNTI2MzIgNS4yMTA1MjYzNHoiIGZpbGw9IiNCQUJDQzUiPjwvcGF0aD48L3N2Zz4=');
+    }
+
+    ._pendo-kb-clear-search-icon_ {
+        cursor: pointer;
+        background-color: transparent;
+        border: none;
+        float: right;
+        background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTRweCIgaGVpZ2h0PSIxNXB4IiB2aWV3Qm94PSIwIDAgMTQgMTUiIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+PHBhdGggZD0iTTcsMCBDOC44NTY1MTU0MywxLjEzNjc4Nzg0ZS0xNiAxMC42MzY5OTI4LDAuNzM3NDk3ODgzIDExLjk0OTc0NzUsMi4wNTAyNTI1MyBDMTMuMjYyNTAyMSwzLjM2MzAwNzE4IDE0LDUuMTQzNDg0NTcgMTQsNyBDMTQsMTAuODY1OTkzMiAxMC44NjU5OTMyLDE0IDcsMTQgQzMuMTM0MDA2NzUsMTQgLTQuNzM0NDc2MjZlLTE2LDEwLjg2NTk5MzIgMCw3IEM0LjczNDQ3NjI2ZS0xNiwzLjEzNDAwNjc1IDMuMTM0MDA2NzUsLTIuMzY3MjM4MTNlLTE2IDcsMCBaIE0xMC4wNSw5LjA3NSBMOCw3IEwxMC4wNzUsNC45NSBDMTAuMzUxMTQyNCw0LjY3Mzg1NzYzIDEwLjM1MTE0MjQsNC4yMjYxNDIzNyAxMC4wNzUsMy45NSBDOS43OTg4NTc2MywzLjY3Mzg1NzYzIDkuMzUxMTQyMzcsMy42NzM4NTc2MyA5LjA3NSwzLjk1IEw3LDYgTDQuOTUsMy45MjUgQzQuNjczODU3NjIsMy42NDg4NTc2MyA0LjIyNjE0MjM4LDMuNjQ4ODU3NjQgMy45NTAwMDAwMSwzLjkyNTAwMDAxIEMzLjY3Mzg1NzY0LDQuMjAxMTQyMzggMy42NzM4NTc2Myw0LjY0ODg1NzYyIDMuOTUsNC45MjUgTDYsNyBMMy45MjUsOS4wNSBDMy43ODgwMzU2Miw5LjE4MDI1MzA2IDMuNzEwNDk5NzQsOS4zNjA5ODkxNSAzLjcxMDQ5OTc0LDkuNTUgQzMuNzEwNDk5NzQsOS43MzkwMTA4NSAzLjc4ODAzNTYyLDkuOTE5NzQ2OTQgMy45MjUsMTAuMDUgQzQuMDU1MjUzMDYsMTAuMTg2OTY0NCA0LjIzNTk4OTE1LDEwLjI2NDUwMDMgNC40MjUsMTAuMjY0NTAwMyBDNC42MTQwMTA4NSwxMC4yNjQ1MDAzIDQuNzk0NzQ2OTQsMTAuMTg2OTY0NCA0LjkyNSwxMC4wNSBMNyw4IEw5LjA1LDEwLjA3NSBDOS4zMjYxNDIzNywxMC4zNTExNDI0IDkuNzczODU3NjMsMTAuMzUxMTQyNCAxMC4wNSwxMC4wNzUgQzEwLjMyNjE0MjQsOS43OTg4NTc2MyAxMC4zMjYxNDI0LDkuMzUxMTQyMzcgMTAuMDUsOS4wNzUgWiIgaWQ9IkRlbGV0ZS1Db3B5LTQiIHN0cm9rZT0ibm9uZSIgZmlsbD0iI0JBQkNDNSIgZmlsbC1ydWxlPSJldmVub2RkIj48L3BhdGg+PC9zdmc+');
+
+        &:focus {
+            outline: none;
+        }
+    }
+}
+
+#_pendo-section-content-helpcenter-article-frame_ {
+    border-width: 0;
+    border-style: none;
+    border-color: none;
+    border-image: none;
+    margin-top: 5px;
+}
+
+._pendo-section-content-search-header_ {
+    text-align: left;
+    margin: 0 10px;
+    font-size: 12px;
+    color: #babcc5;
+    >._pendo-section-content-clear-search_ {
+      float: right;
+      color: #0677DA;
+      text-decoration: none;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+}
+._pendo-section-content-body-error_,
+._pendo-section-content-top-searches-header_ {
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    display: block;
+    font-size: 12px;
+    font-weight: bold;
+    color: #babcc5;
+    >._pendo-section-content-clear-search_ {
+      font-weight: bold;
+      float: right;
+      color: #0677DA;
+      text-decoration: none;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+}
+
+._pendo-tt-suggestion_ {
+    padding: 0;
+    font-size: 14px;
+    color: #0677DA;
+    cursor: pointer;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    width: 290px;
+    text-decoration: none;
+    list-style: none;
+    margin-bottom: 7px;
+    >a {
+      text-decoration: none;
+      margin: 0;
+      padding: 0;
+      font-size: 14px;
+      color: #0677DA;
+      cursor: pointer;
+      white-space: normal;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      width: 290px;
+      font-weight: normal;
+      line-height: 19px;
+      &:hover {
+          text-decoration: underline;
+      }
+    }
+}
+
+._pendo-section-content-body-top-searches_ {
+    padding: 15px 7px 5px 20px;
+    overflow-y: auto;
+    object-fit: contain;
+  }
+
+ ._pendo-section-content-body-article_ {
+    margin: 0 10px;
+    border-top-right-radius: 4px;
+    border-top-left-radius: 4px;
+    color: #2a2c35;
+    overflow-y: auto;
+    object-fit: contain;
+  }
+
+  ._pendo_card_module_ {
+      background-color: #f4f4f7;
+      padding: 20px;
+      margin: 20px 0;
+
+    ._pendo-kb-open-external_ {
+        float: right;
+        width: 12px;
+        height: 12px;
+        top: 0px;
+        right: 0px;
+        margin: 0;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='feather feather-external-link'%3E%3Cpath d='M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6'%3E%3C/path%3E%3Cpolyline points='15 3 21 3 21 9'%3E%3C/polyline%3E%3Cline x1='10' y1='14' x2='21' y2='3'%3E%3C/line%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-size: 12px 12px;
+    }
+
+  }
+
+  ._pendo-section-content-body-top-searches_,
+  ._pendo-section-content-body-results_,
+  ._pendo-section-content-body-guides_ {
+    padding: 5px 30px;
+    overflow-x: hidden;
+    line-height: 28px;
+  }
+
+._pendo-kb-no-search_ {
+    margin: 1.33em auto;
+    font-size: 16px;
+    font-weight: 400;
+    text-align: center;
+}
+
+._pendo-section-content-article-chevron_ {
+  left: 0;
+  top: 50%;
+  margin-top: -5px;
+  display: inline-block;
+  width: 16px;
+  height: 9px;
+  background-image: url('data:image/svg+xml;utf,<svg width=\"256px\" height=\"448px\" viewBox=\"0 0 256 448\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\"><defs></defs><g id=\"Page-1\" stroke=\"none\" stroke-width=\"1\" fill=\"none\" fill-rule=\"evenodd\"><g id=\"chevron-left\" fill=\"#2ca0c8\"><path d=\"M85.7,224 L85.7,224 L85.7,224 L252.9,49.9 C257.1,45.6 257,38.5 252.7,34.1 L222.8,3.5 C218.5,-0.9 211.5,-1 207.3,3.3 L3.1,215.9 C0.9,218.1 -0.1,221.1 0.1,224 C-5.32907052e-15,227 1,229.9 3.1,232.1 L207.3,444.8 C211.5,449.1 218.5,449 222.8,444.6 L252.7,414 C257,409.6 257.1,402.5 252.9,398.2 L85.7,224 L85.7,224 Z\" id=\"Shape\"></path></g></g></svg>');
+  background-repeat: no-repeat;
+  background-size: 12px 9px;
+}
+
+._pendo-kb-title_ {
+  color: #2a2c35;
+  padding-bottom: 10px;
+  margin: 0 10px 10px;
+  border-bottom: 1px solid #babcc5;
+  font-weight: 700;
+  font-size: inherit;
+  line-height: 24px;
+  -webkit-font-smoothing: antialiased;
+}
+
+._pendo-kb-body_ {
+  color: #2a2c35;
+  margin: 0 10px;
+  font-weight: 300;
+  font-size: inherit;
+  letter-spacing: 0;
+  line-height: 24px;
+  padding-bottom: 15px;
+  height: 325px;
+  overflow-y: scroll;
+}
+
+@supports (-moz-appearance:none) and (display:contents) {
+  ._pendo-section-content-article-chevron_ {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    margin-top: -5px;
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    background-repeat: no-repeat;
+    background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjU2cHgiIGhlaWdodD0iNDQ4cHgiIHZpZXdCb3g9IjAgMCAyNTYgNDQ4IiB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiPjxkZWZzPjwvZGVmcz48ZyBpZD0iQ2hldnJvbnMiIHN0cm9rZT0ibm9uZSIgc3Ryb2tlLXdpZHRoPSIxIiBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGQ9Ik04NS42MjUsMjIzLjg2MzQ3IEw4NS42MjUsMjIzLjg2MzQ3IEw4NS42MjUsMjIzLjg2MzQ3IEwyNTIuODI1LDQ5Ljc2MzQ2OTggQzI1Ny4wMjUsNDUuNDYzNDY5OCAyNTYuOTI1LDM4LjM2MzQ2OTggMjUyLjYyNSwzMy45NjM0Njk4IEwyMjIuNzI1LDMuMzYzNDY5NzYgQzIxOC40MjUsLTEuMDM2NTMwMjQgMjExLjQyNSwtMS4xMzY1MzAyNCAyMDcuMjI1LDMuMTYzNDY5NzYgTDMuMDI1LDIxNS43NjM0NyBDMC44MjUsMjE3Ljk2MzQ3IC0wLjE3NSwyMjAuOTYzNDcgMC4wMjUsMjIzLjg2MzQ3IEMtMC4wNzUsMjI2Ljg2MzQ3IDAuOTI1LDIyOS43NjM0NyAzLjAyNSwyMzEuOTYzNDcgTDIwNy4yMjUsNDQ0LjY2MzQ3IEMyMTEuNDI1LDQ0OC45NjM0NyAyMTguNDI1LDQ0OC44NjM0NyAyMjIuNzI1LDQ0NC40NjM0NyBMMjUyLjYyNSw0MTMuODYzNDcgQzI1Ni45MjUsNDA5LjQ2MzQ3IDI1Ny4wMjUsNDAyLjM2MzQ3IDI1Mi44MjUsMzk4LjA2MzQ3IEw4NS42MjUsMjIzLjg2MzQ3IEw4NS42MjUsMjIzLjg2MzQ3IFoiIGlkPSJjaGV2cm9uLWxlZnQiIGZpbGw9IiMyY2EwYzgiPjwvcGF0aD48L2c+PC9zdmc+');
+    background-size: 6px 10px;
+    background-position: left;
+  }
+}
+
+
+._pendo-article-content-main_ {
+    background-color: #f4f4f7;
+    border-radius: 3px;
+    padding: 15px 10px 0px 5px;
+    overflow-x: hidden;
+    max-width: 100%;
+    position: relative;
+    cursor: default;
+    line-height: 23px;
+    color: #3a3c45;
+    font-size: 15px;
+    &:first-child {
+      margin-top: 0;
+    }
+    p {
+        font-size:15px;
+      img {
+        margin: 0;
+        width: 100%;
+      }
+    }
+    h1, h2, h3 {
+      line-height: 1.2;
+      font-size: 18px;
+      border-bottom: 1px solid #333333;
+      line-height: 25px;
+      white-space: normal;
+      padding-bottom: 10px;
+      margin-bottom: 13px;
+      font-weight: bold;
+      color: #2a2c35;
+      margin-top: 10px;
+    }
+    h3 {
+      font-size: 1.322em;
+    }
+    h4 {
+      font-size: 1.15em;
+      border-bottom: 1px solid #333333;
+      line-height: 18px;
+      white-space: normal;
+      padding-bottom: 10px;
+      margin-bottom: 13px;
+      font-weight: bold;
+      color: #2a2c35;
+    }
+    h5 {
+      font-size: .87em;
+    }
+    h6, small {
+      font-size: .756em;
+    }
+    blockquote {
+      padding: 0px 20px 0px 20px;
+      margin: 20px 0;
+      font-size: 16px;
+      border-left: 5px solid #babcc5;
+      a {
+        font-size: 16px;
+      }
+      footer {
+        display: block;
+        font-size: 80%;
+        line-height: 1.42857;
+        color: rgba(0, 0, 0, 0.8);
+        &::before {
+          content: '— &nbsp;';
+        }
+      }
+      small {
+        display: block;
+        font-size: 80%;
+        line-height: 1.42857;
+        color: rgba(0, 0, 0, 0.8);
+        &::before {
+          content: '— &nbsp;';
+        }
+      }
+    }
+    table, thead, tbody, tfoot, tr, th, td {
+      max-width: 100%;
+      margin-top: 10px;
+      margin-bottom: 20px;
+      padding: 0px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+    }
+    tr {
+      margin-bottom: 10px;
+    }
+    tr:nth-child(even) {
+      background-image: linear-gradient(0, rgba(0,0,0,0.07),rgba(0,0,0,0.07));
+    }
+    dl {
+      margin-top: 0;
+      margin-bottom: 20px;
+    }
+    img {
+      width: 100%;
+    }
+    ul > li {
+        list-style-type: disc
+    }
+    ol > li {
+        list-style-type: decimal;
+    }
+  }
+  
+
+/* ------------------------------
+* ------- unused elements -------
+* ------------------------------ */
+
+/* animation */
+#_pendo-kb_ ._pendo-launcher-article-loading_ ._pendo-spinner_ {
+    top: 25%;
+  }
+
+  ._pendo-spinner_ {
+    animation: rotator 1s linear infinite;
+    height: 35px;
+    width: 100%;
+    position: absolute;
+    top: 50%;
+  }
+
+  ._pendo-animated-circle_ {
+    stroke-dasharray: 187;
+    stroke-dashoffset: 0;
+    transform-origin: center;
+    border-radius: 4px;
+    animation: dash 1s ease-in-out infinite, colors 4s ease-in-out infinite;
+  }
+
+a._pendo-article-link_._pendo-external-link_ {
+    padding-left: 25px;
+    white-space: nowrap;
+    margin-bottom: 10px;
+    text-overflow: ellipsis;
+}
+
+._pendo-external-link_ {
+  display: block;
+  margin: 13px 0px;
+  height: 16px;
+  width: 20px;
+  float: right;
+  clear: both;
+  background-size: 15px;
+  background-repeat: no-repeat;
+  background-image: url("data:image/svg+xml,%3C%3Fxml version='1.0' encoding='UTF-8'%3F%3E%3Csvg width='18px' height='18px' viewBox='0 0 18 18' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'%3E%3Ctitle%3EShape Copy%3C/title%3E%3Cdesc%3ECreated with Sketch.%3C/desc%3E%3Cg id='Page-1' stroke='none' stroke-width='1' fill='none' fill-rule='evenodd'%3E%3Cg id='Pendo-Widget-Design' transform='translate(-2453.000000, -1355.000000)' fill='%230677BA'%3E%3Cg id='Group-13' transform='translate(2155.000000, 1091.000000)'%3E%3Cpath d='M314,280 L300,280 L300,266 L307,266 L307,264 L300,264 C298.89,264 298,264.9 298,266 L298,280 C298,281.1 298.89,282 300,282 L314,282 C315.1,282 316,281.1 316,280 L316,273 L314,273 L314,280 L314,280 Z M309,264 L309,266 L312.59,266 L302.76,275.83 L304.17,277.24 L314,267.41 L314,271 L316,271 L316,264 L309,264 L309,264 Z' id='Shape-Copy'%3E%3C/path%3E%3C/g%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+
+._pendo-section-content-article-breadcrumbs_ {
+    line-height: 32px;
+    height: 35px;
+    font-size: 14pt;
+    text-overflow: ellipsis;
+    margin: 0px;
+    >h6 {
+      line-height: 18px;
+      font-weight: bold;
+      font-size: 14px;
+      white-space: normal;
+      text-overflow: ellipsis;
+      max-width: 280px;
+      margin-top: 15px;
+    }
+}

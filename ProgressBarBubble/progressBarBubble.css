@@ -1,63 +1,70 @@
-.container {
-    width: 500px;
+@active_color: #006193;
+@inactive_color: #7d7d7d;
+@left-margin: 10px;
+
+._pendo_container {
+    width: 480px;
     padding: 0;
     margin-top: 20px;
+    height: 45px;
+    margin-left: @left-margin;
 }
 
-.progressbar {
-    counter-reset: step;
+._pendo_progressbar {
+    counter-reset: '';
 }
 
-.progressbar li {
+._pendo_progressbar li {
     list-style-type: none;
-    width: 82px;
+    width: 65px;
     float: left;
     font-size: 10px;
     position: relative;
     text-align: center;
     text-transform: uppercase;
-    color: #7d7d7d;
+    color: @inactive_color;
 }
 
-.progressbar li:before {
-    width: 30px;
-    height: 30px;
-    content: counter(step);
+._pendo_progressbar li:before {
+    width: 25px;
+    height: 25px;
+    content: '';
     counter-increment: step;
-    line-height: 26px;
-    border: 2px solid #7d7d7d;
+    line-height: 21px;
+    border: 2px solid @inactive_color;
     display: block;
     text-align: center;
-    margin: 0 auto 10px auto;
+    margin: 0 auto 5px auto;
     border-radius: 50%;
     background-color: white;
     position: relative;
     z-index: 2;
 }
 
-.progressbar li:after {
+._pendo_progressbar li:after {
     width: 100%;
     height: 2px;
     content: '';
     position: absolute;
-    background-color: #7d7d7d;
-    top: 15px;
+    background-color: @inactive_color;
+    top: 13px;
     left: -50%;
     z-index: 1;
 }
 
-.progressbar li:first-child:after {
+._pendo_progressbar li:first-child:after {
     content: none;
 }
 
-.progressbar li.active {
-    color: rgb(71, 170, 56);
+._pendo_progressbar li.active {
+    color: @active_color;
 }
 
-.progressbar li.active:before {
-    border-color: rgb(71, 170, 56);
+._pendo_progressbar li.active:before {
+    border-color: @active_color;
+    background-color: @active_color;
 }
 
-.progressbar li.active + li:after {
-    background-color: rgb(71, 170, 56);
+._pendo_progressbar li.active + li:after {
+    background-color: @active_color;
 }

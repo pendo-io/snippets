@@ -1,4 +1,4 @@
-(function hideGuideOnBodyClick() {
+(function hideGuideOnBodyClick(dom) {
     dom(document).on('click', 'body', function hideGuide(e) {
         if (
             !dom(eventTarget(e)).closest('#pendo-guide-container').length

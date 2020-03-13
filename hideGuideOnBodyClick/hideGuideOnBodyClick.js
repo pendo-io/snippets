@@ -6,7 +6,7 @@
             pendo.onGuideDismissed();
         }
     });
-    ​
+    
     function eventTarget (e) {
         return (e && e.target) || e.srcElement;
     }

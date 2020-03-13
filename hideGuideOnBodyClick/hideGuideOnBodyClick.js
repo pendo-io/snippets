@@ -1,6 +1,6 @@
 pendo.dom(document).on('click', 'body', function hideGuide(e) {
     if (
-        !dom(eventTarget(e)).closest('#{{ID Goes Here}}').length
+        !dom(eventTarget(e)).closest('#pendo-guide-container').length
     ) {
         pendo.onGuideDismissed();
     }

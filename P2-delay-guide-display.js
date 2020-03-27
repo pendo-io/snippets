@@ -26,6 +26,6 @@
   // EXAMPLE: reveal after 3 seconds
   setTimeout(function () {
     pendoRevealGuide();
-  }, 10000)
+  }, 3000)
 
 })(pendo.dom, pendo._);

@@ -3,65 +3,29 @@
 
 // Attribution to NB for providing the P1 JS code for this function
 // WLH:  Updated and tested with P2 Guide Designer Lightbox and Tool Tip guides
+(function(dom, _) {
 
-function pendoHideGuide() {
-
-  pendo._.each(pendo.Sizzle('div#pendo-guide-container'), function(guide) {
-    guide.style.visibility = 'hidden';
-  })
-
-  pendo._.each(pendo.Sizzle('._pendo-backdrop_'), function(guide) {
-    guide.style.visibility = 'hidden';
-  })
-
-  pendo._.each(pendo.Sizzle('div#pendo-base._pendo-guide-tt_'), function(guide) {
-    guide.style.visibility = 'hidden';
-  })
-  
-  pendo._.each(pendo.Sizzle('div.pendo-tooltip-caret'), function(guide) {
-    guide.style.visibility = 'hidden';
-  })
-  
-  pendo._.each(pendo.Sizzle('div.pendo-tooltip-caret-border'), function(guide) {
-    guide.style.visibility = 'hidden';
-  })
-
-}
-
-function pendoRevealGuide() {
-  if (true) {
-    pendo._.each(pendo.Sizzle('div#pendo-guide-container'), function(guide) {
-      guide.style.visibility = '';
+  function pendoHideGuide() {
+    console.log('base: ', dom('#pendo-base'));
+    _.each(dom('#pendo-base'), function(elm) {
+      elm.style.display = "none";
     })
-    pendo._.each(pendo.Sizzle('._pendo-backdrop_'), function(guide) {
-      guide.style.visibility = '';
-    })
-    pendo._.each(pendo.Sizzle('.div#pendo-base._pendo-guide-tt_'), function(guide) {
-      guide.style.visibility = '';
-    })
-    pendo._.each(pendo.Sizzle('div.pendo-tooltip-caret-border'), function(guide) {
-    guide.style.visibility = '';
-    })
-    pendo._.each(pendo.Sizzle('div.pendo-tooltip-caret'), function(guide) {
-    guide.style.visibility = '';
-    })
-
-    
   }
-}
 
-// Hide guide immediately if not in Pendo Designer
- if (!pendo.designer) {
-  pendoHideGuide();
-}
-// If using CSS to hide a guide, reveal
- else {
-  pendoRevealGuide();
-}
+  function pendoRevealGuide() {
+    _.each(dom('#pendo-base'), function(elm) {
+      elm.style.display = "";
+    })
+  }
 
-// EXAMPLE: reveal after 3 seconds. Remove timeout and set conditional check
-setTimeout(function () {
-  if (true) {
+  // Hide guide immediately if not in Pendo Designer
+  if (!pendo.designerEnabled) {
+    pendoHideGuide();
+  }
+
+  // EXAMPLE: reveal after 3 seconds
+  setTimeout(function () {
     pendoRevealGuide();
-  }
-}, 3000)
+  }, 10000)
+
+})(pendo.dom, pendo._);

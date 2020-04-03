@@ -11,9 +11,7 @@ var fourthButtonText = "Button 4";
 var fourthButtonPadding = "290px;";
 
 if (pendo.getActiveGuide()) {
-    var firstButtonText = "Button 1";
     var row1 = pendo.dom('._pendo-button:contains("'+ firstButtonText+ '")')[0].parentElement.parentElement;
-
     var row2 = pendo.dom('._pendo-button:contains("'+ fourthButtonText+ '")')[0].parentElement;
 
     pendo.dom(row1).css("float: left;");

@@ -7,7 +7,7 @@
     function mouseoverHandler(e) {
         var tgt = e.target || e.srcElement;
         if (!dom(tgt).closest(step.elementPathRule).length) {
-            pendo.onGuideAdvanced();
+            pendo.onGuideDismissed();
             pendo.detachEvent(window, 'mouseover', mouseoverHandler);
         }
     }

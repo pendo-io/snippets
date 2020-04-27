@@ -1,6 +1,7 @@
 /*
-* By default, guides set to appear on hovering a target element do not dismiss when the visitor hovers off the target element
-* This snippet enables that behavior for target elements
+* By default, guides set to appear on hovering a target element do not 
+* dismiss when the visitor hovers off the target element, the way badge guides do
+* This snippet enables the badge-style behavior for target element tooltips
 */
 
 (function dismissGuideOnLeaveHover(dom) {

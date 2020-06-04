@@ -4,7 +4,7 @@
     // You can add as many element rules as you like in a list here
     var one = dom('#id-number-1'); // These element rules can be an id like #myId or a class like .myClass
     var two = dom('#id-number-2');
-    var elms = [one, two]; // if you add more elements to the list, you must also add them to the array
+    var elms = [one, two]; // if you add more elements to the list, you must also add them to the array like [one, two, three] etc.
 
     elms.forEach(function(elm) {
         pendo.attachEvent(dom(elm)[0], 'mouseover', advanceOnce);

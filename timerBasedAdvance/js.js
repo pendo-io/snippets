@@ -1,3 +1,4 @@
+//Credit to Mateusz Rybczonek for Timer Logic
 const TIME_LIMIT = 10;
 const FULL_DASH_ARRAY = 283;
 const WARNING_THRESHOLD = TIME_LIMIT/2;
@@ -137,3 +138,7 @@ function pauseTimer() {
 }
 
 pauseBtn.addEventListener("click", pauseTimer);
+
+step.after('teardown', function () {
+        clearInterval(timerInterval);
+});

@@ -7,12 +7,18 @@
     var elms = [one, two]; // if you add more elements to the list, you must also add them to the array like [one, two, three, four ...]
 
     elms.forEach(function(elm) {
-        pendo.attachEvent(dom(elm)[0], 'click', advanceOnce);
+        var elmList = dom(elm);
+        for (var i = 0; i < elmList.length; i++) {
+            pendo.attachEvent(dom(elmList[i])[0], 'click', advanceOnce);
+        }
     });
 
     step.after('teardown', function () { // remove listeners after step completes
         elms.forEach(function(elm) {
-            pendo.detachEvent(dom(elm)[0], 'click', advanceOnce);
+            var elmList = dom(elm);
+            for (var i = 0; i < elmList.length; i++) {
+                pendo.detachEvent(dom(elmList[i])[0], 'click', advanceOnce);
+            }
         });
     });
 

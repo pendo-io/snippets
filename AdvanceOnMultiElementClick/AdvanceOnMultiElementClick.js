@@ -1,4 +1,4 @@
-(function advanceGuideOnHover(dom) {
+(function advanceGuideOnClick(dom) {
     var advanceOnce = pendo._.once(pendo.onGuideAdvanced); // make sure the guide only advances one time
     
     // You can add as many element rules as you like in a list here

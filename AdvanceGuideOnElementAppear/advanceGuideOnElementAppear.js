@@ -20,4 +20,4 @@
     step.after('teardown', function () {
         pendo.detachEvent(document, 'click', checkForElementAndAdvance);
     });
-})(step,guide);
+})(pendo.dom,step);

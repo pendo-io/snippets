@@ -1,22 +1,31 @@
-/*
- *  Integration with Contentful Content Management System (CMS)
- *  Author: Bert Grantges
- *  
- *  This code leverages content stored withing the Contentful CMS to dynaimcally populate the pendo guide based on a specific content ID.
- *  The content ID is pulled from the base application - which can be set by other Pendo content, the underlying app etc.
+/** 
+ *  @name 			Contentful CMS - Dynamic Guide
+ *  @author			Bert Grantges
+ *  @description 	This code leverages content stored withing the Contentful CMS to dynaimcally populate the pendo guide based
+ * 				    on a specific content ID. The content ID is pulled from the base application - which can be set by other 
+ * 					Pendo content, the underlying app etc.
  * 
- *  For the purposes of this example - the content structure in Contentful is:
- *   - metric
- *      - title
- *      - description
- *      - longDescription
+ *  				For the purposes of this example - the content structure in Contentful is:
+ *   				- metric
+ *      				- title
+ *      				- description
+ *      				- longDescription
  */
-(function _initGuide(guide) {
+(function createDynamicGuide() {
+	
+	let contentfulAuthToken = 'CONTENTFUL_API_TOKEN';
+	let contentfulSpaceId = 'CONTENTFUL_CONTENT_SPACE_ID';
+	let contentId = window.ppContentGuideKey || 'YOUR_DEFAULT_CONTENT_KEY';
 
-	let contentId = window.ppContentGuideKey || 'DEFAULT_KEY';
-	_getGuideContent(contentId);
+	_getGuideContent(contentfulAuthToken, contentfulSpaceId, contentId);
 
-	function _updateGuideUI(obj) {
+	/**
+	 * @name 			_updateGuideUI
+	 * @private
+	 * @description		Updates the HTML elements of the guide based on a Contentful Content object
+	 * @param {Object} 	content 
+	 */
+	function _updateGuideUI(content) {
 
         // Get object references to the Guide Content (ui.html)
 		let guide = document.getElementById('pendo-guide-container');
@@ -26,10 +35,10 @@
 		let metricBtn = document.getElementById('metricBtn');
 
         // Set UI element text values based on the content object
-		title.innerText = obj.title;
-		details.innerText = obj.longDescription;
-		description.innerText = obj.description;
-		metricBtn.innerText = "View " + obj.title; 
+		title.innerText = content.title;
+		details.innerText = content.longDescription;
+		description.innerText = content.description;
+		metricBtn.innerText = "View " + content.title; 
         
         // IMPORTANT - Because of the dynamic nature of the guide, Pendo's original placement on the screen center is not correctly aligned.
         //             This code block updates the position of the primary guide based on the new calculated height of the guide.
@@ -41,13 +50,11 @@
      /**
       * _getGuideContent
       * Takes a content Id and returns the content from the Contentful CMS
-      * @param {} contentId 
+      * @param {String} contentId 
       */
-	function _getGuideContent(contentId) {
+	function _getGuideContent(token, spaceId, contentId) {
 
 		// Build out the API query based on your Contentful tokens, space id and content id
-        let token = 'CONTENTFUL_API_TOKEN';
-        let spaceId = 'CONTENTFUL_CONTENT_SPACE_ID';
 		let query = 'https://cdn.contentful.com/' + spaceId + '/ntbw5oht064d/environments/master/entries/' + contentId + '?access_token=' + token;
         
         
@@ -70,4 +77,4 @@
 		xhttp.send();
 	}
 
-})(document.getElementById('pendo-guide-container'));
+})();

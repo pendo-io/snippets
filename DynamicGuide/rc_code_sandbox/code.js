@@ -1,10 +1,29 @@
-(function _initGuide(){
+/**
+ *  @name 			Contentful CMS - Dynamic Glossary
+ *  @author			Bert Grantges
+ *  @description    This code sandbox for the Pendo Resource Center pulls a list of content entities from 
+ *                  Contentful CMS, and displays them in a searchable table. Clicking on any of the entries
+ *                  will pop up a guide as specified by the guide ID.
+ * 
+ */
+(function createGlossary(){
+    
+    // Auth and content specific location from Contentful CMS
+    let contentfulToken = 'CONTENTUFL_AUTH_TOKEN';
+    let contentfulSpaceId = 'CONTENTFUL_SPACE_ID';
     
     let input = document.getElementById("searchBox");
     input.onkeyup = _search;
     
-    _getGlossaryContent();
+    _getGlossaryContent(contentfulToken, contentfulSpaceId);
     
+    /**
+     * @name            _search
+     * @private
+     * @description     This function is called by the onKeyUp event of the searchbox, and show/hides values based
+     *                  on the filter
+     * 
+     */
     function _search(){
       let input, filter, table, tr, td, i, txtValue;
       input = document.getElementById("searchBox");
@@ -34,12 +53,13 @@
     }
     
     /**
-     * _getGlossaryContent
-     * Pulls data 
+     * @name            _getGlossaryContent
+     * @private
+     * @description     Pulls content data from the Contentful CMS
+     * @param {String}  token - your authorization token from Contentful 
+     * @param {String}  spaceId - the space id for your content in Contentful
      */
-    function _getGlossaryContent() {
-        let token = 'CONTENTUFL_AUTH_TOKEN';
-        let spaceId = 'CONTENTFUL_SPACE_ID';
+    function _getGlossaryContent(token, spaceId) {
 		let query = 'https://cdn.contentful.com/spaces/' + spaceId + '/environments/master/entries?access_token=' + token + '&order=fields.title&content_type=YOUR_CONTENT_TYPE';
 		
         let xhttp = new XMLHttpRequest(); 
@@ -55,9 +75,10 @@
 	}
     
     /**
-     * _generateTable
-     * Takes an array of content entries and builds out the glossary table
-     * @param {Array} items 
+     * @name            _generateTable
+     * @private
+     * @description     Takes an array of content entries and builds out the glossary table
+     * @param {Array}   items 
      */
     function _generateTable(items) {
 

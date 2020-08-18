@@ -13,6 +13,9 @@
  */
 (function _initGuide(guide) {
 
+	let contentId = window.ppContentGuideKey || 'DEFAULT_KEY';
+	_getGuideContent(contentId);
+
 	function _updateGuideUI(obj) {
 
         // Get object references to the Guide Content (ui.html)
@@ -53,12 +56,12 @@
 
 		xhttp.onreadystatechange = function () {
 			if (this.readyState == 4 && this.status == 200) {
-				result = JSON.parse(this.responseText);
                 
+                result = JSON.parse(this.responseText);
                 _updateGuideUI(result.fields);
                 
                 // Pendo Analytics Track Event - Custom Event based on guide title
-                pendo.track("Metric Guide: "+result.fields.title, {
+                pendo.track("Dynamic Guide: "+result.fields.title, {
                      contentId: result.sys.id, 
                 });
 			}
@@ -66,8 +69,5 @@
 		xhttp.open("GET", query, true);
 		xhttp.send();
 	}
-
-	let contentId = window.ppSignalGuideKey || 'DEFAULT_KEY';
-	_getGuideContent(contentId);
 
 })(document.getElementById('pendo-guide-container'));

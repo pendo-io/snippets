@@ -1,9 +1,9 @@
-(function(){
+(function _initGuide(){
     
     let input = document.getElementById("searchBox");
     input.onkeyup = _search;
     
-    _getContentfulData();
+    _getGlossaryContent();
     
     function _search(){
       let input, filter, table, tr, td, i, txtValue;
@@ -33,14 +33,20 @@
         }
     }
     
-    function _getContentfulData() {
-		let token = 'ybAoybDQ-xjQuWZeUCS8RZc-xz16hb0Q_-OggKzDWjU';
-		let query = 'https://cdn.contentful.com/spaces/ntbw5oht064d/environments/master/entries?access_token=' + token + '&order=fields.title&content_type=metrics';
+    /**
+     * _getGlossaryContent
+     * Pulls data 
+     */
+    function _getGlossaryContent() {
+        let token = 'CONTENTUFL_AUTH_TOKEN';
+        let spaceId = 'CONTENTFUL_SPACE_ID';
+		let query = 'https://cdn.contentful.com/spaces/' + spaceId + '/environments/master/entries?access_token=' + token + '&order=fields.title&content_type=YOUR_CONTENT_TYPE';
 		
         let xhttp = new XMLHttpRequest(); 
 		xhttp.onreadystatechange = function () {
 			if (this.readyState == 4 && this.status == 200) {
-				result = JSON.parse(this.responseText);
+                
+                result = JSON.parse(this.responseText);
 				_generateTable(result.items);
 			}
 		};
@@ -66,9 +72,12 @@
             
             anchor.appendChild(text);
             anchor.onclick = (e) => {
-                window.ppSignalGuideKey = item.sys.id;
-                console.log(window.ppSignalGuideKey);
-                pendo.showGuideById('qoBpFHtprekr0Jsc-lvhaKOWb7Q')
+
+                // Use the window object to hold the content id that the guide will needs to pull the content,
+                // then launch the dynamic guide
+                window.ppContentGuideKey = item.sys.id;
+                pendo.showGuideById('PENDO_GUIDE ID');
+
             };
             
             tableCell.appendChild(anchor);

@@ -2,8 +2,10 @@
 (function goToStepNoElement() {
     // Warning: .getPositionOfStep() is 1-based
     var nextStep = guide.steps[guide.getPositionOfStep(step)];
+    
     // The step of your guide you would like to go to when the element of the subsequent step isn't present
     var desiredStep = 5; //<--Step number as displayed in Pendo
+
     /* If you must defer this to guide load time or if the element is not already visible
     pendo._.defer(function(){setTimeout(function checkElementAndSkip() {*/
     (function checkElementAndSkip() {

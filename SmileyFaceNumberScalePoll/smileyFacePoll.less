@@ -1,0 +1,83 @@
+/* Smiley Faces Source URLs */
+@grey-face-1: url('https://pendo-static-5926218839621632.storage.googleapis.com/RfG4pvMVSdCfUAR6XkWNvI7QKCo/guide-media-76639afa-09bc-4226-a7b8-6c473d27b3fb');
+@grey-face-2: url('https://pendo-static-5926218839621632.storage.googleapis.com/RfG4pvMVSdCfUAR6XkWNvI7QKCo/guide-media-c455ccff-6850-41db-9a02-7b44de37f4b2');
+@grey-face-3: url('https://pendo-static-5926218839621632.storage.googleapis.com/RfG4pvMVSdCfUAR6XkWNvI7QKCo/guide-media-633f5928-a9f4-44ca-9d2b-5a2321b53100');
+@grey-face-4: url('https://pendo-static-5926218839621632.storage.googleapis.com/RfG4pvMVSdCfUAR6XkWNvI7QKCo/guide-media-aa503f85-9e18-4020-b490-cdd88c3186c7');
+@grey-face-5: url('https://pendo-static-5926218839621632.storage.googleapis.com/RfG4pvMVSdCfUAR6XkWNvI7QKCo/guide-media-5b91a381-c52a-451e-afc7-8b978af1cd54');
+
+@color-face-1: url('https://pendo-static-5926218839621632.storage.googleapis.com/RfG4pvMVSdCfUAR6XkWNvI7QKCo/guide-media-e141cc7d-8d5d-483b-addf-fa995db76a74');
+@color-face-2: url('https://pendo-static-5926218839621632.storage.googleapis.com/RfG4pvMVSdCfUAR6XkWNvI7QKCo/guide-media-bdeb7bde-392d-42c4-bee4-6b1b2e038d5e');
+@color-face-3: url('https://pendo-static-5926218839621632.storage.googleapis.com/RfG4pvMVSdCfUAR6XkWNvI7QKCo/guide-media-73f3f214-f9a2-4045-a338-1d711a73d5c9');
+@color-face-4: url('https://pendo-static-5926218839621632.storage.googleapis.com/RfG4pvMVSdCfUAR6XkWNvI7QKCo/guide-media-1402fa1c-ef86-4d22-8f81-cb2517c7b144');
+@color-face-5: url('https://pendo-static-5926218839621632.storage.googleapis.com/RfG4pvMVSdCfUAR6XkWNvI7QKCo/guide-media-cc7ac2fb-3a60-4c58-9ef5-d29e5d0c58db');
+
+/* Base Sizing & Color Styles */
+
+label.pendo-radio[class*="_pendo-number-scale-poll-"] {
+   background-repeat: no-repeat;
+   background-size: contain;
+   color: rgba(0, 0, 0, 0.0)!important; 
+   &:hover {
+       background-repeat: no-repeat!important;;
+       background-size: contain!important;;
+       color: rgba(0, 0, 0, 0.0)!important; 
+    }
+}
+
+/* Default Faces State */
+
+._pendo-number-scale-poll-1 { background-image: @grey-face-1; }
+._pendo-number-scale-poll-2 { background-image: @grey-face-2; }
+._pendo-number-scale-poll-3 { background-image: @grey-face-3; }
+._pendo-number-scale-poll-4 { background-image: @grey-face-4; }
+._pendo-number-scale-poll-5 { background-image: @grey-face-5; }
+
+/* Hover Faces State */
+
+label.pendo-radio._pendo-number-scale-poll-1:hover { background-image: @color-face-1!important; }
+label.pendo-radio._pendo-number-scale-poll-2:hover { background-image: @color-face-2!important; }
+label.pendo-radio._pendo-number-scale-poll-3:hover { background-image: @color-face-3!important; }
+label.pendo-radio._pendo-number-scale-poll-4:hover { background-image: @color-face-4!important; }
+label.pendo-radio._pendo-number-scale-poll-5:hover { background-image: @color-face-5!important; }
+
+/* Active States for Faces */
+
+input[type="radio"]._pendo-number-scale-poll-1-input:checked + label{
+	background-image: @color-face-1!important;
+    background-repeat: no-repeat!important;
+    background-size: contain!important;
+    background-color: #ffffff!important;
+    color: rgba(0, 0, 0, 0.0)!important; 
+}
+
+input[type="radio"]._pendo-number-scale-poll-2-input:checked + label{
+	background-image: @color-face-2!important;
+    background-repeat: no-repeat!important;
+    background-size: contain!important;
+    background-color: #ffffff!important;
+    color: rgba(0, 0, 0, 0.0)!important; 
+}
+
+input[type="radio"]._pendo-number-scale-poll-3-input:checked + label{
+	background-image: @color-face-3!important;
+    background-repeat: no-repeat!important;
+    background-size: contain!important;
+    background-color: #ffffff!important;
+    color: rgba(0, 0, 0, 0.0)!important; 
+}
+
+input[type="radio"]._pendo-number-scale-poll-4-input:checked + label{
+	background-image: @color-face-4!important;
+    background-repeat: no-repeat!important;
+    background-size: contain!important;
+    background-color: #ffffff!important;
+    color: rgba(0, 0, 0, 0.0)!important; 
+}
+
+input[type="radio"]._pendo-number-scale-poll-5-input:checked + label{
+	background-image: @color-face-5!important;
+    background-repeat: no-repeat!important;
+    background-size: contain!important;
+    background-color: #ffffff!important;
+    color: rgba(0, 0, 0, 0.0)!important; 
+}

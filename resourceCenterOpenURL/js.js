@@ -5,6 +5,6 @@
         step.eventRouter.eventable.trigger('pendoEvent', {
             action: 'returnToResourceCenterHome'
         });
-        window.pendo.BuildingBlocks.BuildingBlockResourceCenter.getResourceCenter().hide();
+        pendo.onGuideDismissed(pendo.BuildingBlocks.BuildingBlockResourceCenter.getResourceCenter().steps[0]);
     }
  })();

@@ -12,6 +12,7 @@
         } else {
           pendo.log(guide.id + ':advance 1 step');
           pendo.onGuideAdvanced();
+          
         }
     })();
 })();

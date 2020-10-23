@@ -2,6 +2,11 @@
 (function advanceGuideOnClickInIframe(dom) {
   var iframe = document.querySelector('YOUR_IFRAME_SELECTOR');
 
+  // Short circuit bad selector
+  if (!iframe) {
+    return;
+  }
+
   // Local state
   var isMouseOverIframe = false;
 

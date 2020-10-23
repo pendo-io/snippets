@@ -1,0 +1,57 @@
+{
+	"response": {
+		"location": "request",
+		"mimeType": "application/json"
+	},
+	"request": {
+        "name": "count-by-browser-and-device",
+        "pipeline": [
+            {
+                "source": {
+                    "pageEvents": {
+                        "pageId": "your-page-id-here",
+                        "blacklist": "apply"
+                    },
+                    "timeSeries": {
+                        "period": "dayRange",
+                        "first": "dateAdd(startOfPeriod(\"daily\",now()),-60,\"days\")",
+                        "last": "dateAdd(startOfPeriod(\"daily\",now()),-1,\"days\")"
+                    }
+                }
+            },
+            {
+                "identified": "visitorId"
+            },
+            {
+                "useragent": {
+                    "browser": "userAgent"
+                }
+            },
+            {
+                "filter": "pageId == `your-page-id-here`"
+            },
+            {
+                "group": {
+                    "group": [
+                        "browser.deviceType",
+                        "browser.os",
+                        "browser.name",
+                        "browser.version"
+                    ],
+                    "fields": [
+                        {
+                            "count": {
+                                "count": "visitorId"
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "sort": [
+                    "-count"
+                ]
+            }
+        ]
+    }
+}

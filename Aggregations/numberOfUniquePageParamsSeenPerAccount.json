@@ -1,0 +1,33 @@
+{
+    "response": {
+        "mimeType": "application/json"
+    },
+    "request": {
+        "name": "numberOfUniquePageParamsSeenPerAccount",
+        "pipeline": [
+            {
+                "source": {
+                    "pageEvents": {
+                        "pageId" : "PAGE-ID-HERE"
+                    },
+                    "timeSeries": {
+                        "first": "now()",
+                        "count": -30,
+                        "period": "dayRange"
+                    }
+                }
+            },
+            {
+                "group": {
+                    "group": [
+                        "accountId"
+                        ],
+                    "fields": {
+                        "numUniqueParams": { "count": "parameters.parameter" }
+                    }
+                }
+            }
+        ],
+        "requestId": "numberOfUniquePageParamsSeenPerAccount"
+    }
+}

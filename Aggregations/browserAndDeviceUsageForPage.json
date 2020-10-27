@@ -28,9 +28,6 @@
                 }
             },
             {
-                "filter": "pageId == `your-page-id-here`"
-            },
-            {
                 "group": {
                     "group": [
                         "browser.deviceType",

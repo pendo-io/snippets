@@ -6,7 +6,7 @@ var textBoxQuestionText = "Tell us more about your choice";
 var isTextBoxVisible = true;
 
 if(!pendo.designerEnabled) {
-	pendo.dom('._pendo-open-text-poll-wrapper')[0].parentElement.parentElement.parentElement.style.display = "none";
+    pendo.dom('._pendo-open-text-poll-wrapper')[0].parentElement.parentElement.parentElement.style.display = "none";
     pendo.dom('.bb-text:contains('+ textBoxQuestionText +')')[0].style.display = "none";
     isTextBoxVisible = false;
 }
@@ -19,6 +19,7 @@ pendo.dom('.pendo-radio').on('click', '.pendo-radio', function(e) {
     } else if (e.target.parentElement.innerText!="Other" && isTextBoxVisible) {
         pendo.dom('._pendo-open-text-poll-wrapper')[0].parentElement.parentElement.parentElement.style.display = "none";
         pendo.dom('.bb-text:contains('+ textBoxQuestionText +')')[0].style.display = "none";
+        pendo.dom('._pendo-open-text-poll-input')[0].value="";
         isTextBoxVisible = false;
     }
 });

@@ -4,7 +4,7 @@
     var nextStep = guide.steps[guide.getPositionOfStep(step)];
 
     // Enter the path of the URL after the domain/subdomain, first slash included
-    var properUrl = "/demo_site/integrations.html";
+    var properUrl = "/demo_site";  //example - https://www.domain.com/demo_site -> /demo_site
     // The step of your guide you would like to go to when the URL path matches
     var desiredStep = 3; //<--Step number as displayed in Pendo
 

@@ -44,8 +44,7 @@ if(!pendo.designerEnabled) {
         }
     }
 
-    processRequiredQuestions();
-    pendo.dom("#pendo-guide-container")[0].addEventListener("click", function(){
+    function evaluateRequiredQuestions() {
         var allRequiredComplete = true;
         for(var i = 0; i < requiredPollIds.length; i++) {
             if (pendo.dom("._pendo-open-text-poll-wrapper[data-pendo-poll-id='" + requiredPollIds[i] + "']")[0]) {
@@ -70,6 +69,18 @@ if(!pendo.designerEnabled) {
         } else {
             disableEligibleButtons(textForDisabledButtons);
         }
+    }
+
+    processRequiredQuestions();
+
+    document.querySelectorAll("._pendo-open-text-poll-input").forEach(textbox => {
+        textbox.addEventListener("input", function() {
+            evaluateRequiredQuestions();
+        })
+    })
+
+    pendo.dom("#pendo-guide-container")[0].addEventListener("click", function(){
+        evaluateRequiredQuestions();
     });
 
 }

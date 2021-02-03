@@ -3,7 +3,7 @@ Put this code snippet in a custom code block on a tooltip guide pointing to the 
 Set the guide to display on 'Target Element', with the settings 'display on click' and 'display every time'
 Add this line to the CSS tab of the custom code block on the guide:
 display: none !important;
-End result: The 2.0 Pendo Resource Center will hide itself when a click is registered outside of the resource center container
+End result: The 2.0 Pendo Resource Center will hide itself when a click is registered outside of the resource center container. This won't work if the Resource Center is activated via target element.
 */
 (function offclickRC(dom) {
     if (!pendo.designerEnabled) {

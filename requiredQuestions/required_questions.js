@@ -12,7 +12,7 @@ function disableEligibleButtons(textForDisabledButtons) {
     for(var i=0; i < textForDisabledButtons.length; i++) {
         var eligibleButtons = pendo.dom("._pendo-button:contains('" + textForDisabledButtons[i] + "')");
         for (var k=0; k < eligibleButtons.length; k++) {
-            eligibleButtons[i].disabled = true;
+            eligibleButtons[k].disabled = true;
         }
     }
 }
@@ -21,7 +21,7 @@ function enableEligibleButtons(textForDisabledButtons) {
     for(var i=0; i < textForDisabledButtons.length; i++) {
         var eligibleButtons = pendo.dom("._pendo-button:contains('" + textForDisabledButtons[i] + "')");
         for (var k=0; k < eligibleButtons.length; k++) {
-            eligibleButtons[i].disabled = false;
+            eligibleButtons[k].disabled = false;
         }
     }
 }

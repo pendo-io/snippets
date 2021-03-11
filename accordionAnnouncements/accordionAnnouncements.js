@@ -1,6 +1,6 @@
 (function (step, guide) {
     // Retrieve StepID from step object
-    var stepId = step.id;
+    var stepId = step.guideId;
     
     var target = pendo.dom("#pendo-resource-center-container")[0];
     var observer = new MutationObserver(function(mutations) {
@@ -25,7 +25,7 @@
 })(step, guide);
 
 function createAccordions(stepId){
-    if(pendo.dom("#pendo-g-" + stepId + " #pendo-guide-container")[0]) {
+   if(pendo.dom("#pendo-g-" + stepId + " #pendo-guide-container")[0]) {
         // Get first element which will be the header
 
         var announcementHeader = pendo.dom("#pendo-g-" + stepId + " #pendo-guide-container")[0].children[0];

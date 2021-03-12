@@ -1,0 +1,51 @@
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap');
+
+* {
+    font-family: 'Source Sans Pro', sans-serif;
+    font-size: 14px;
+}
+
+#pendo-guide-container {
+    position: absolute !important;
+}
+
+#guideContainer {
+    padding: 30px;
+}
+
+h1#title {
+    font-size: 24px;
+    font-weight: 600;
+    color: #000046;
+    margin:0px;
+}
+
+div#description, div#details {
+	margin-top:15px;
+    margin-bottom:15px;
+}
+
+div#description {
+    font-size: 18px;
+}
+
+div#btnBar {
+    margin-top: 30px;
+}
+
+div#btnBar button {
+    height: 40px;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    border-radius: 4px;
+    border: 1px solid;
+    box-sizing: border-box;
+    cursor: pointer !important;
+}
+
+div#btnBar button#metricBtn{
+    background-color: #1026a4;
+    color: #ffffff;
+    border-color:  #1026a4;
+}

@@ -1,5 +1,4 @@
 (function (step, guide) {
-    // Retrieve StepID from step object
     var stepId = step.id;
     var guideId = step.guideId;
 
@@ -7,8 +6,16 @@
     var observer = new MutationObserver(function(mutations) {
         mutations.forEach(function(mutation) {
             if (mutation.addedNodes.length) {
+                if(!target.classList.contains('_pendo-acc-enabled')) {
+                    target.classList.add('_pendo-acc-enabled');
+                }
                 createAccordions(stepId, guideId);
-                target.classList.add('_pendo-acc-enabled');
+            }
+            if (mutation.removedNodes.length) {
+                if (mutation.removedNodes[0].dataset.layout == "AnnouncementsModule") {
+                    target.classList.remove('_pendo-acc-enabled');
+                    observer.disconnect();
+                }
             }
         })
     })
@@ -21,11 +28,12 @@
     };
 
     if(!target.classList.contains('_pendo-acc-enabled')){
-        observer.observe(target, config);
+        observer.observe(target, config); 
     }
 })(step, guide);
 
 function createAccordions(stepId, guideId){
+
    var validId = "";
    if(pendo.dom("#pendo-g-" + stepId + " #pendo-guide-container")[0]) {
         validId = stepId;

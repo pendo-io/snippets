@@ -80,7 +80,9 @@ if(!pendo.designerEnabled) {
     })
 
     pendo.dom("#pendo-guide-container")[0].addEventListener("click", function(){
-        evaluateRequiredQuestions();
+        if(!event.target.classList.contains("_pendo-button")) {
+           evaluateRequiredQuestions(); 
+        }
     });
 
 }

@@ -1,5 +1,5 @@
 # Pendo Custom Snippets Repository
-This library of custom code snippets has been created by Pendo Professional Services, intended to extend the capabailities of Pendo products.  All snippets in this library are *free* to use, and as such, there is NO WARRANTY, SLA or SUPPORT for these snippets.  Please do not reach out to Pendo Support for help with these snippets, as custom code is outside of the remit of their team and responsibilities.
+This library of custom code snippets has been created by Pendo Professional Services, intended to extend the capabilities of Pendo products.  All snippets in this library are *free* to use, and as such, there is NO WARRANTY, SLA or SUPPORT for these snippets.  Please do not reach out to Pendo Support for help with these snippets, as custom code is outside of the remit of their team and responsibilities.
 
 For documentation on standard Pendo functionality, please visit the [Pendo Help Center](https://help.pendo.io/).
 

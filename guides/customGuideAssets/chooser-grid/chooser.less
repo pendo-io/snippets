@@ -1,0 +1,356 @@
+@pink-darker-1: #bd1746;
+@pink-darker-2: #9c0038;
+@pink-darker-3: #79002b;
+@pink-primary: #ec2059;
+@pink-lighter-1: #ff3467;
+@pink-lighter-2: #ffdde6;
+@gray-darker-1: #1a1c25;
+@gray-primary: #2a2c35;
+@gray-lighter-1: #3a3c45;
+@gray-lighter-2: #6a6c75;
+@gray-lighter-3: #9a9ca5;
+@gray-lighter-4: #BABCC5;
+@gray-lighter-5: #DADCE5;
+@gray-lighter-6: #EAECF1;
+@gray-lighter-7: #F4F4F7;
+@gray-lighter-8: #F8F8F9;
+@green-darker-2: darken(@green-primary, 20%);
+@green-darker-1: darken(@green-primary, 10%);
+@green-primary: #2feeb8;
+@green-lighter-1: lighten(@green-primary, 10%);
+@green-lighter-2: lighten(@green-primary, 20%);
+@beta-mint: #2FEEB8;
+@beta-mint-light: #D3FDF1;
+@link-blue: #2ca0c8;
+@tag-orange-darker: #FF7107;
+@tag-orange-lighter: #FFB053;
+@tag-green-darker: #00C583;
+@tag-green-lighter: #03ED9F;
+@tag-blue-darker: #009BD5;
+@tag-blue-lighter: #34C8FF;
+@tag-purple-darker: #8369C1;
+@tag-purple-lighter: #AF90F8;
+@yellow-lighter:#F2C80F;
+@body-text: #555;
+@white: #fff;
+@black: #000;
+@fontFamily: 'proxima-nova', sans-serif;
+
+@pagerouter-arrow-background: @gray-primary;
+@tooltip-arrow-background: @gray-primary;
+@arrow-border: transparent;
+
+///********************** //
+// * main guide styling * //
+// ********************** //
+// NOTE: do NOT give it a class or ID in the guide CSS.
+// Without a class/id, the following styles will apply directly to #_pendo_g_ + (guide.id) */
+width: auto !important;
+height: auto !important;
+left: 0 !important;
+right: 0 !important;
+top: 0 !important;
+bottom: 0 !important;
+margin-top: 0 !important;
+margin-left: 0 !important;
+z-index: 2147483648;
+overflow: hidden !important;
+._pendo-guide-container_ {
+  -webkit-border-radius: 0px !important;
+  -moz-border-radius: 0px !important;
+  border-radius: 0px !important;
+  background-color: transparent;
+  padding: 40px;
+  color: #333;
+  line-height: 140%;
+  left: 0 !important;
+  right: 0 !important;
+  top: 0 !important;
+  bottom: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  box-shadow: none !important;
+  z-index: 2147483648;
+}
+
+._pendo-guide-container_ ._pendo-guide-content_ {
+  text-align: left;
+  padding: 0
+}
+
+._pendo-guide-content_ {
+  width: 100%;
+  height: 100%;
+}
+
+._pendo-guide-container_ ._pendo-close-guide_ {
+  display: inline;
+  font-size: 48px;
+  font-weight: 100;
+  top: 6px;
+  right: 15px;
+  color: @gray-lighter-2;
+  z-index: 999;
+}
+
+._pendo-guide-container_ ._pendo-close-guide_:hover {
+  color: @gray-primary;
+  transition: all 350ms;
+}
+
+._pendo-guide-background_ {
+  background-color: @gray-lighter-6;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  height: 100vh;
+  z-index: 1;
+  &::before {
+    content: '';
+    display: block;
+    position: absolute;
+    left: 0;
+    width: 100%;
+    top: 0;
+    height: 100%;
+    z-index: 0;
+    background-color: @gray-lighter-7;
+    background-repeat: repeat-x;
+    background-image: -webkit-linear-gradient(-29deg, @gray-lighter-6 0%, @gray-lighter-6 50%, @gray-lighter-7 50%, @gray-lighter-7 100%);
+    background-image: -moz-linear-gradient(-29deg, @gray-lighter-6 0%, @gray-lighter-6 50%, @gray-lighter-7 50%, @gray-lighter-7 100%);
+    background-image: -o-linear-gradient(-29deg, @gray-lighter-6 0%, @gray-lighter-6 50%, @gray-lighter-7 50%, @gray-lighter-7 100%);
+    background-image: linear-gradient(-29deg, @gray-lighter-6 0%, @gray-lighter-6 50%, @gray-lighter-7 50%, @gray-lighter-7 100%);
+  }
+  &::after {
+    content: '';
+    display: block;
+    position: absolute;
+    left: 0;
+    width: 100%;
+    top: 0;
+    height: 100%;
+    z-index: 1;
+    background-color: transparent;
+    background-repeat: repeat-x;
+    background-image: -webkit-linear-gradient(29deg, transparent, @gray-lighter-6);
+    background-image: -moz-linear-gradient(29deg, transparent, @gray-lighter-6);
+    background-image: -o-linear-gradient(29deg, transparent, @gray-lighter-6);
+    background-image: linear-gradient(29deg, transparent, @gray-lighter-6);
+  }
+}
+
+._pendo-guide-foreground_ {
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  justify-content: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  margin-left: 72px;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+}
+
+.skip-wrapper {
+  float: left;
+  padding: 11px 20px 12px 0;
+}
+
+._pendo-guide-cards-header_ {
+  width: 90%;
+  max-width: 1200px;
+  min-width: 320px;
+  margin: 2em auto 2em 2em;
+  z-index: 1;
+  -webkit-animation: pendo-card-fade-in 300ms ease-in-out 0ms both;
+  animation: pendo-card-fade-in 300ms ease-in-out 0ms both;
+  h1 {
+    font: 400 30px/32px @fontFamily;
+    color: @gray-primary;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  &._pendo-card-fade-out_ {
+    -webkit-animation: pendo-card-fade-out 300ms ease-in-out 0ms both;
+    animation: pendo-card-fade-out 300ms ease-in-out 0ms both;
+  }
+}
+
+._pendo-guide-card-grid_ {
+  padding: 5px;
+  list-style: none;
+  margin: auto;
+  background: transparent;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+
+._pendo-guide-card-grid_>* {
+  width: 23%;
+  min-width: 200px;
+  max-width: 270px;
+  min-height: 300px;
+  flex: 1 1 auto;
+  margin: 10px;
+}
+
+._pendo-guide-card-grid_ li {
+  background: @white;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+}
+
+html {
+  box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+._pendo-guide-cards-container_ {
+  width: 90%;
+  max-width: 1200px;
+  min-width: 320px;
+  margin: 2em auto;
+  z-index: 1;
+  transform: translateY(-23px);
+  -webkit-animation: pendo-card-fade-in 300ms ease-in-out 0ms both;
+  animation: pendo-card-fade-in 300ms ease-in-out 0ms both;
+  &._pendo-card-fade-out_ {
+    -webkit-animation: pendo-card-fade-out 300ms ease-in-out 0ms both;
+    animation: pendo-card-fade-out 300ms ease-in-out 0ms both;
+  }
+}
+
+._pendo-guide-card_ {
+  position: relative;
+  &::before {
+    content: '';
+    display: block;
+    position: absolute;
+    z-index: -1;
+    height: 50%;
+    width: 94%;
+    left: 3%;
+    right: 3%;
+    bottom: 0px;
+    -webkit-border-radius: 40px;
+    -moz-border-radius: 40px;
+    border-radius: 40px;
+    box-shadow: 0 10px 45px @gray-lighter-5;
+    transition: all 350ms;
+  }
+  &:hover {
+    cursor: pointer;
+    &::before {
+      box-shadow: 0 15px 50px #caccd5;
+    }
+  }
+}
+
+._pendo-guide-header_ {
+  height: 210px;
+}
+
+._pendo-guide-footer_ {
+  height: 10px;
+  text-align: center;
+  h3 {
+    font-size: 1.15em;
+    color: rgba(0, 0, 0, 0.53);
+    margin: 0;
+    font-weight: 600;
+    letter-spacing: 0.25px;
+    text-transform: none;
+    text-decoration: none;
+    line-height: 20px;
+    color: #2a2c35;
+    padding: 0 10px;
+    &::hover {
+      text-decoration: none;
+    }
+  }
+  h4 {
+    font-size: .8em;
+    color: rgba(0, 0, 0, 0.53);
+    margin: 0;
+    font-weight: 400;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-decoration: none;
+    line-height: 20px;
+    color: #2a2c35;
+    &::hover {
+      text-decoration: none;
+    }
+  }
+}
+
+._pendo-guide-header-icon_ {
+  width: 100%;
+  height: 100%;
+}
+
+div[class^="_pendo-guide-icon-"] {
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100%;
+  width: 100%;
+}
+
+div[class$="valueDriverOne_"] {
+  /* Add images here */
+  background-image: url("https://via.placeholder.com/1000x1000.png");
+  background-size: 60%;
+}
+
+div[class$="valueDriverTwo_"] {
+  /* Add images here */
+  background-image: url("https://via.placeholder.com/1000x1000.png");
+  background-size: 60%;
+}
+
+div[class$="valueDriverThree_"] {
+  /* Add images here */
+  background-image: url("https://via.placeholder.com/1000x1000.png");
+  background-size: 60%;
+}
+
+div[class$="valueDriverFour_"] {
+  /* Add images here */
+  background-image: url("https://via.placeholder.com/1000x1000.png");
+  background-size: 60%;
+}
+
+._pendo-guide-screen-message_ {
+  display: none;
+  max-width: 450px;
+  z-index: 2;
+  font-size: 18px;
+  color: @gray-primary;
+  font-weight: 300;
+}
+
+button:focus {
+  outline: 0;
+}

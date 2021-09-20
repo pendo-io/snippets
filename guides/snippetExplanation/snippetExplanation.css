@@ -1,0 +1,4 @@
+/*CSS that will hide the explanation HTML when the designer is not open*/
+.pendo-hide {
+    display: none !important;
+}

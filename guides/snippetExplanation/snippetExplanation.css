@@ -2,3 +2,8 @@
 .pendo-hide {
     display: none !important;
 }
+
+/*Uncomment the CSS below if your code block is added to a step that you want the end user to see*/
+/*.code-explanation{
+    background-color: WhiteSmoke !important;
+}*/

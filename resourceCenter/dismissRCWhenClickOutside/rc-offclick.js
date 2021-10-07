@@ -15,7 +15,7 @@ End result: The 2.0 Pendo Resource Center will hide itself when a click is regis
             pendo.pro.hideRC = function(e) {
                 var tgt = e.target || e.srcElement;
                 if (!dom(tgt).closest('#pendo-resource-center-container').length) {
-                    pendo.BuildingBlocks.BuildingBlockResourceCenter.getResourceCenter().hide();
+                    pendo.BuildingBlocks.BuildingBlockResourceCenter.dismissResourceCenter();
                 }
             }
             pendo.attachEvent(document, 'click', pendo.pro.hideRC);

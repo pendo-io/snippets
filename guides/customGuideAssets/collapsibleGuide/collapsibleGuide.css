@@ -1,0 +1,33 @@
+/* collapse button */
+.pendo-expand-collapse-button {
+  background: #171717;
+  border-radius: 2px;
+  cursor: pointer;
+  display: inline-block;
+  height: 25px;
+  left: 47%;
+  position: absolute;
+  top: -26px;
+  width: 70px;
+  text-align: center;
+}
+
+/* collapse arrow in expanded state */
+.pendo-expand-collapse-arrow {
+  border: solid #fff;
+  border-left-color: transparent;
+  border-top-color: transparent;
+  border-width: 0 2px 2px 0;
+  content: '';
+  display: inline-block;
+  height: 17px;
+  transform: rotate(45deg);
+  width: 17px;
+  cursor: pointer;
+}
+
+/* collapse arrow in collapsed state */
+#pendo-guide-container.collapse .pendo-expand-collapse-arrow {
+  margin-top: 10px;
+  transform: rotate(225deg);
+}

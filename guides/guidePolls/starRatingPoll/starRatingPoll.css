@@ -1,0 +1,48 @@
+/* star image source URLs */
+@star-1: url('https://pendo-static-6508245000126464.storage.googleapis.com/iOd313VAlbpLJfcYL-FDhrTtwCc/guide-media-1d799f5c-e520-422f-9b0c-0b1b6d418088');
+@star-1-active: url('https://pendo-static-6508245000126464.storage.googleapis.com/iOd313VAlbpLJfcYL-FDhrTtwCc/guide-media-60dcbad5-abc5-4769-9f99-37bef7ab2d8d');
+
+/* default star styles */
+label.pendo-radio[class*="_pendo-number-scale-poll-"] {
+    background-image: @star-1;
+    background-repeat: no-repeat;
+    color: rgba(0, 0, 0, 0.0) !important;
+}
+
+/* default hover star styles */
+label.pendo-radio[class*="_pendo-number-scale-poll-"]:hover {
+    background-image: @star-1 !important;
+    background-repeat: no-repeat !important;
+    color: rgba(0, 0, 0, 0.0) !important;
+    opacity: 0.5 !important;
+} 
+
+/* dynamic color-filled star styles */
+.star-filled {
+    background-image: @star-1-active !important;
+    background-repeat: no-repeat !important;
+    background-color: #ffffff !important;
+}
+
+/* hover state for selected star */
+input[type="radio"]._pendo-number-scale-poll-1-input:checked+label:hover {
+    background-image: @star-1-active !important;
+    background-repeat: no-repeat !important;
+    opacity: 1 !important;
+}
+input[type="radio"]._pendo-number-scale-poll-2-input:checked+label:hover {
+    background-image: @star-1-active !important;
+    opacity: 1 !important;
+}
+input[type="radio"]._pendo-number-scale-poll-3-input:checked+label:hover {
+    background-image: @star-1-active !important;
+    opacity: 1 !important;
+}
+input[type="radio"]._pendo-number-scale-poll-4-input:checked+label:hover {
+    background-image: @star-1-active !important;
+    opacity: 1 !important;
+}
+input[type="radio"]._pendo-number-scale-poll-5-input:checked+label:hover {
+    background-image: @star-1-active !important;
+    opacity: 1 !important;
+}

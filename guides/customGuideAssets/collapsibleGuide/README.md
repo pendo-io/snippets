@@ -1,0 +1,3 @@
+* This is designed to work with a bottom-aligned banner guide with a header section at the top which will remain visible when the guide collapses. The collapse action works by simply moving the guide down below the bottom of the screen but leaves the "collapse" button and the "close guide" button visible
+* You could also collapse the guide all the way so that only the collapse button remains visible at the bottom of the page. The amount that the guide collapses is controlled by the “offset” variable
+* The collapsed state is saved in sessionStorage so that when users navigate between pages, the guide will stay collapsed or expanded

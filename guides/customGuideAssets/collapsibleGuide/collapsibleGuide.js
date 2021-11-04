@@ -13,21 +13,21 @@ var offset = '276px' //edit this value based on the height of your guide minus t
   guideContainer.appendChild(collapseButton);
 
   //check sessionStorage for initial collapse state
-  if (sessionStorage.pendoFTUstatus === "collapse") {
+  if (sessionStorage.pendoCollapseStatus === "collapse") {
     guideContainer.style.top = offset;
     guideContainer.classList.add("collapse");
   }
 
   //toggle collapse/expand state on button click
   dom(".pendo-expand-collapse-button").on("click", function () {
-    if (sessionStorage.pendoFTUstatus === "collapse") {
+    if (sessionStorage.pendoCollapseStatus === "collapse") {
       guideContainer.style.top = "0px";
       guideContainer.classList.remove("collapse");
-      sessionStorage.pendoFTUstatus = "expand";
+      sessionStorage.pendoCollapseStatus = "expand";
     } else {
       guideContainer.style.top = offset;
       guideContainer.classList.add("collapse");
-      sessionStorage.pendoFTUstatus = "collapse";
+      sessionStorage.pendoCollapseStatus = "collapse";
     }
   });
 })(pendo.dom);

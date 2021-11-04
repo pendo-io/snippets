@@ -1,0 +1,34 @@
+{
+	"response": {
+		"location": "request",
+		"mimeType": "application/json"
+	},
+	"request": {
+        "name": "guide-element-clicks-and-actions",
+        "pipeline": [
+            {
+                "source": {
+                    "guideEvents": null,
+                    "timeSeries": {
+                        "period": "dayRange",
+                        "first": "dateAdd(startOfPeriod(\"daily\",now()),-2,\"days\")",
+                        "last": "dateAdd(startOfPeriod(\"daily\",now()),-1,\"days\")"
+                    }
+                }
+            },
+            {
+              "filter": "type == `guideActivity`"
+            },
+            {
+              "unmarshal": {
+                "action": "uiElementActions"
+              }
+            },
+            {
+              "unwind": {
+                "field": "action"
+              }
+            }
+        ]
+    }
+}

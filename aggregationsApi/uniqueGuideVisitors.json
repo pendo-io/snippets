@@ -1,0 +1,35 @@
+{
+	"response": {
+		"location": "request",
+		"mimeType": "application/json"
+	},
+	"request": {
+        "name": "unique-guide-visitors",
+        "pipeline": [
+            {
+                "source": {
+                    "guidesSeen": null,
+                    "timeSeries": {
+                      "period": "dayRange",
+                      "first": "dateAdd(startOfPeriod(\"daily\",now()),-2,\"days\")",
+                      "last": "dateAdd(startOfPeriod(\"daily\",now()),-1,\"days\")"
+                    }
+                }
+            },
+            {
+              "group": {
+                "group": [
+                  "guideId"
+                ],
+                "fields": [
+                  {
+                    "count": {
+                      "count": "visitorId"
+                    }
+                  }
+                ]
+              }
+            } 
+        ]
+    }
+}

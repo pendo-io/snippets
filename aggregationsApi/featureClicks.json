@@ -1,0 +1,21 @@
+{
+	"response": {
+		"location": "request",
+		"mimeType": "application/json"
+	},
+	"request": {
+        "name": "guide-views",
+        "pipeline": [
+            {
+                "source": {
+                    "featureEvents": null,
+                    "timeSeries": {
+                        "period": "dayRange",
+                        "first": "dateAdd(startOfPeriod(\"daily\",now()),-2,\"days\")",
+                        "last": "dateAdd(startOfPeriod(\"daily\",now()),-1,\"days\")"
+                    }
+                }
+            }
+        ]
+    }
+}

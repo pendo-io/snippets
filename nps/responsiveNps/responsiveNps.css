@@ -1,0 +1,75 @@
+/* Landscape phone / all tablet  ----------- */
+@media (min-device-width : 525px) and (max-device-width : 768px) {
+    
+    [class^="_pendo-nps-poll-"] {
+        padding-top: 10px;
+    }
+
+    ._pendo-nps-poll-upperbound-label, ._pendo-nps-poll-lowerbound-label {
+    	text-align: center!important;
+        position:fixed!important
+    }
+    
+    ._pendo-nps-poll-wrapper {
+        display: -webkit-box;
+		display: -moz-box;
+		display: -ms-flexbox;
+		display: -moz-flex;
+		display: -webkit-flex;
+		display: flex;
+	    justify-content: center;
+    	padding: 5px;
+        -webkit-flex-wrap: wrap;
+    	flex-wrap: wrap;
+        width: 425px;
+        margin: auto;
+    }
+
+    .pendo-radio {
+        margin-top: 10px;
+        margin-right: 0px;
+    }
+
+    ._pendo-nps-poll-6 {
+		margin-left: 30px;
+    }
+
+}
+
+/* Smartphones (portrait) ----------- */
+@media (min-device-width : 300px) and (max-device-width : 524px) {
+
+    ._pendo-nps-poll-wrapper {
+        display: -webkit-box;
+		display: -moz-box;
+		display: -ms-flexbox;
+		display: -moz-flex;
+		display: -webkit-flex;
+		display: flex;
+	    justify-content: center;
+    	padding: 5px;
+        -webkit-flex-wrap: wrap;
+    	flex-wrap: wrap;
+        width: 250px;
+        margin: auto;
+    }
+
+    .pendo-radio {
+        margin-top: 10px;
+        margin-right: 0px;
+    }
+
+    ._pendo-nps-poll-0 {
+		margin-left: -10px;
+    }
+    
+     [class^="_pendo-nps-poll-"] {
+        padding-top: 10px;
+    }
+
+     ._pendo-nps-poll-upperbound-label, ._pendo-nps-poll-lowerbound-label {
+    	text-align: center!important;
+        position:fixed!important
+    }
+
+}

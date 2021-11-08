@@ -2,9 +2,9 @@
 //You could also collapse the guide all the way so that only the collapse button remains visible at the bottom of the page. The amount that the guide collapses (moves down) is controlled by the “offset” variable
 //The collapsed state is saved in sessionStorage so that when users navigate between pages, the guide will stay collapsed or expanded
 
-var offset = '276px' //edit this value based on the height of your guide minus the height of the header you want to remain visible
-
 (function (dom) {
+  var offset = '276px' //edit this value based on the height of your guide minus the height of the header you want to remain visible
+  
   //create collapse/expand button with arrow inside
   var collapseHtml = `<div class="pendo-expand-collapse-button"><span class="pendo-expand-collapse-arrow"></span></div>`;
   var collapseButton = document.createElement("div");

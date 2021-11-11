@@ -1,13 +1,14 @@
 /* collapse button */
 .pendo-expand-collapse-button {
-  background: #171717;
-  border-radius: 2px;
+  background: #4f4f4f;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
   cursor: pointer;
   display: inline-block;
   height: 25px;
   left: 47%;
   position: absolute;
-  top: -26px;
+  top: -25px;
   width: 70px;
   text-align: center;
 }
@@ -20,9 +21,9 @@
   border-width: 0 2px 2px 0;
   content: '';
   display: inline-block;
-  height: 17px;
+  height: 16px;
   transform: rotate(45deg);
-  width: 17px;
+  width: 16px;
   cursor: pointer;
 }
 

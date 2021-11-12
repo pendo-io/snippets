@@ -1,0 +1,44 @@
+{
+    "response": {
+        "mimeType": "application/json"
+    },
+    "request": {
+        "pipeline": [
+            {
+                "source": {
+                    "visitors": null
+                }
+            },
+            {
+                "eval": {
+                    "accountId": "metadata.auto.accountids"
+                }
+            },
+            {
+                "unwind": {
+                    "field": "accountId",
+                    "keepEmpty": true
+                }
+            },
+            {
+                "bulkExpand": {
+                    "account": {
+                        "account": "accountId"
+                    }
+                }
+            },
+            {
+                "segment": {
+                    "id": "AaGis2qVoULvwIQZV1TNnOocpU8"
+                }
+            },
+            {
+                "group": {
+                    "group": [
+                        "visitorId"
+                    ]
+                }
+            }
+        ]
+    }
+}

@@ -6,7 +6,7 @@
             action: 'returnToResourceCenterHome'
         });
         setTimeout(function(){
-            pendo.onGuideDismissed(pendo.BuildingBlocks.BuildingBlockResourceCenter.getResourceCenter().steps[0]);
+            pendo.onGuideAdvanced();
         }, 250);
     }
  })();

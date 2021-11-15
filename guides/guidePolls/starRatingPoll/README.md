@@ -1,4 +1,6 @@
 * This code affects number-scale polls only
 * Your guide must contain a number scale poll with options #1-5 only
 * This will affect all active number scale polls within the guide step
-* To implement the customization, add a custom code building block to your guide and add the JavaScript and CSS in their respective tabs within the code block
+* To implement the customization, add a custom code building block to your guide and add the JavaScript and CSS in their respective tabs within the code block!
+
+[Screen Shot 2021-11-15 at 4 37 47 PM](https://user-images.githubusercontent.com/41085020/141869608-46d5a116-a9fb-4537-a93e-53f4a8ab98db.png)

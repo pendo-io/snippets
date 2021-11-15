@@ -7,6 +7,7 @@ label.pendo-radio[class*="_pendo-number-scale-poll-"] {
     background-image: @star-1;
     background-repeat: no-repeat;
     color: rgba(0, 0, 0, 0.0) !important;
+    background-color: #FFFFFF00 !important;
 }
 
 /* default hover star styles */
@@ -14,6 +15,7 @@ label.pendo-radio[class*="_pendo-number-scale-poll-"]:hover {
     background-image: @star-1 !important;
     background-repeat: no-repeat !important;
     color: rgba(0, 0, 0, 0.0) !important;
+    background-color: #FFFFFF00 !important;
     opacity: 0.5 !important;
 } 
 

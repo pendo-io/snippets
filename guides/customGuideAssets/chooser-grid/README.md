@@ -24,5 +24,6 @@ Creating an experience to provide multiple options from a single guide experienc
 - Guide Id: You can find the id for a guide in the URL on the Pendo application
 
 ## Miscellaneous Notes
+- This guide won't fully work in preview mode. The added guides for the buttons will not be available to launch. It is recommended to test in a staging environment.
 - Editing the container will now require a click on the edit button in the step tray. There will no longer be an option to click on the border around the guide to edit the container settings to adjust the dismiss x icon color or other properties.
 - This code is using undocumented APIs from the Pendo object found by inspection in the Browsers Developer Tools console. There is risk in using undocumented code which can lead to unintended future behavior if the functionality changes.

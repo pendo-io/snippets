@@ -20,7 +20,7 @@
             //pendo.goToStep({destinationStepId: "N9d7QgG8ZxOBqeUmZr4dn92yltE"});  <-- Example Step ID
         } else {
           pendo.log(guide.id + ':advance 1 step');
-          pendo.onGuideAdvanced(step);
+          pendo.onGuideAdvanced();
         }
     })();
 })();

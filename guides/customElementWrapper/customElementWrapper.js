@@ -34,7 +34,7 @@
     // the code to be called when the dom has loaded
     function init() {
       
-      // Help function defined in outer scope
+      // Helper function defined in outer scope, attribute set after wrapElementsWithDiv runs
       wrapElementsWithDiv(document.getElementById('pendo-guide-container')).setAttribute('id', 'kurt');
 
     }

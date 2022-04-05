@@ -1,0 +1,15 @@
+/** 
+
+  * There might be cases when the inner border-radius will differ from the outer one. 
+  * Usually, this will happen when the border-width is greater than the border-radius, this will result in a right angle.
+  * @property {border} Should be larger than the broder radius, for the step to have right angles.
+  * @property {border-radius} Should be smaller than the border
+  * @returns Styled step with outer square edges as border, and inner rounded edges
+  * https://nikitahl.com/adjust-element-inner-border-radius/
+
+*/
+
+#kurt {
+    border: 20px solid rgb(52, 18, 201);
+    border-radius:0px;
+}

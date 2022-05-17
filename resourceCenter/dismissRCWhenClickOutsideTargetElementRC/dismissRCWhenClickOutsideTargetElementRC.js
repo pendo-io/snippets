@@ -10,7 +10,13 @@ pendo.initialize({
         guidesLoaded: () => {
             const hideResourceCenterOffClick = e => {
                 let tgt = e.target;
-                if (pendo.dom('#pendo-resource-center-container').length && !pendo.dom(tgt).closest('#pendo-resource-center-container').length && !pendo.dom(tgt).closest(pendo.BuildingBlocks.BuildingBlockResourceCenter.getResourceCenter().steps[0].elementPathRule).length) {
+                let resourceCenterDescendant = false;
+                for (let i = 0; i < e.path.length; i++) {
+                    if (e.path[i].id === "pendo-resource-center-container") {
+                        resourceCenterDescendant = true;
+                    };
+                };
+                if (pendo.dom('#pendo-resource-center-container').length && !resourceCenterDescendant && !pendo.dom(tgt).closest(pendo.BuildingBlocks.BuildingBlockResourceCenter.getResourceCenter().steps[0].elementPathRule).length) {
                     pendo.BuildingBlocks.BuildingBlockResourceCenter.dismissResourceCenter();
                 };
             };
@@ -26,4 +32,4 @@ pendo.initialize({
     account: {
         // account object here
     },
-})
+});

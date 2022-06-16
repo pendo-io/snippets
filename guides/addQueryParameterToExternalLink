@@ -1,0 +1,28 @@
+ //As currently written, this adds ?visitor=visitorID to the end of an external link. The external link is added to the guide via a text block in the Designer.
+ //You can only reference metadata being currently sent via the Pendo agent. To see what values are available, use pendo.validateInstall() in the Developer Console.
+ //Use ${pendo.accountId} to provide the Account ID value
+ //Use ${pendo.getSerializedMetadata().visitor.metadataname} to get the value of a visitor level metadata field. Replace 'metadataname' with the name of the metadata field.
+ //Use ${pendo.getSerializedMetadata().account.metadataname} to get the value of an account level metadata field
+
+
+
+(function (guide, step, dom) {
+    var textLinkElement = dom('._pendo-text-link');
+
+    if (!pendo._.isUndefined(textLinkElement) && !pendo._.isUndefined(pendo.visitorId)) {
+        var previousUrlLink = textLinkElement[0].href;
+        var newUrlLink = previousUrlLink + `?visitor=${pendo.visitorId}`;   
+        //Replace ?visitor with whatever you want the query parameter to be named
+        //Replace ${pendo.visitorId} with the function that generates the query parameter value
+        textLinkElement[0].href = newUrlLink;
+    }
+    
+    dom('._pendo-button-primaryButton').on('click', function() {
+        window.open(textLinkElement[0].href);
+        pendo.onGuideDismissed();
+    });
+    
+    dom(textLinkElement).on('click', function() {
+        pendo.onGuideDismissed();
+    });
+})(guide, step, pendo.dom);

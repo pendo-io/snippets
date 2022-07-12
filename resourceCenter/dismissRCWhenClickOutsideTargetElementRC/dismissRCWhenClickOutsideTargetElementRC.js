@@ -10,9 +10,10 @@ pendo.initialize({
         guidesLoaded: () => {
             const hideResourceCenterOffClick = e => {
                 let tgt = e.target;
+                let path = e.composedPath();
                 let resourceCenterDescendant = false;
-                for (let i = 0; i < e.path.length; i++) {
-                    if (e.path[i].id === "pendo-resource-center-container") {
+                for (let i = 0; i < path.length; i++) {
+                    if (path[i].id === "pendo-resource-center-container") {
                         resourceCenterDescendant = true;
                     };
                 };

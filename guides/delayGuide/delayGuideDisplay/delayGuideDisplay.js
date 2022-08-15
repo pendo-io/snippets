@@ -15,6 +15,7 @@
   function pendoRevealGuide() {
     _.each(dom('#pendo-base'), function(elm) {
       elm.style.display = "";
+      pendo.flexElement(pendo.dom('#pendo-guide-container')[0])
     })
   }
 

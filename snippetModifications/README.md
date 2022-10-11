@@ -1,0 +1,4 @@
+## Snippet Modifications
+While the primary function of the Pendo Snippet is to initialize the Pendo Agent on your application, it can also be used to inject sitewide modifications to Pendo functionality.  There are many potential applications for this, including adding DOM attributes to Pendo guides, modifying guide behaviors, and others that are covered in the [Agent API Options](https://developers.pendo.io/docs/?bash#options) portion of our developer docs.  
+
+Note that this section does NOT cover [Pendo Metadata](https://support.pendo.io/hc/en-us/articles/360031832072-Visitor-and-Account-Metadata), which is core product functionality and should be handled per the standard snippet initiatlization procedures.  

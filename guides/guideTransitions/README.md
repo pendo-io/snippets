@@ -4,17 +4,21 @@ Custom CSS to animate the transitions between your guide steps
 
 ## Demo
 
+### Guide Flip
+
 ![](flipAnimation.gif)
-Guide Flip
+
+### Fade In Fade Out
 
 ![](fadeInAnimation.gif)
-Fade In Fade Out
+
+### Slide In Slide Out
 
 ![](slideInAnimation.gif)
-Slide In Slide Out
+
+### Zoom In Zoom Out
 
 ![](zoomInAnimation.gif)
-Zoom In Zoom Out
 
 ## Usage
 

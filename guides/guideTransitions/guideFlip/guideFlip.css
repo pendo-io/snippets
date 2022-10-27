@@ -1,0 +1,83 @@
+.flip-in {
+	animation: FlipIn 1.2s linear !important;
+	backface-visibility: hidden !important;
+	animation-fill-mode: both !important;
+}
+
+@keyframes FlipIn {
+	0% {
+		transform: perspective(500px) rotateY(180deg);
+		transform-style: preserve-3d;
+	}
+	100% {
+		transform: perspective(500px) rotateY(0deg);
+		transform-style: preserve-3d;
+	}
+}
+
+.flip-in-prev {
+	animation: FlipInPrev 1.2s linear !important;
+	backface-visibility: hidden !important;
+	animation-fill-mode: both !important;
+}
+
+@keyframes FlipInPrev {
+	0% {
+		transform: perspective(500px) rotateY(-180deg);
+		transform-style: preserve-3d;
+	}
+	100% {
+		transform: perspective(500px) rotateY(0deg);
+		transform-style: preserve-3d;
+	}
+}
+
+.flip {
+	animation: Flip 1.2s linear !important;
+	backface-visibility: hidden !important;
+	animation-fill-mode: both !important;
+}
+
+@keyframes Flip {
+	0% {
+		transform: perspective(500px) rotateY(0deg);
+		transform-style: preserve-3d;
+	}
+	100% {
+		transform: perspective(500px) rotateY(-180deg);
+		transform-style: preserve-3d;
+	}
+}
+
+.flip-previous {
+	animation: FlipPrevious 1.2s linear !important;
+	backface-visibility: hidden !important;
+	animation-fill-mode: both !important;
+}
+
+@keyframes FlipPrevious {
+	0% {
+		transform: perspective(500px) rotateY(0deg);
+		transform-style: preserve-3d;
+	}
+	100% {
+		transform: perspective(500px) rotateY(180deg);
+		transform-style: preserve-3d;
+	}
+}
+
+#next-btn,
+#prev-btn {
+	background-color: teal;
+	color: white;
+	padding: 10px 16px;
+	border-radius: 5px;
+	margin: 5px;
+}
+
+.pendo-guide-btns {
+	display: flex;
+	align-items: center;
+	align-content: space-around;
+	justify-content: center;
+}

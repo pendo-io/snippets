@@ -1,0 +1,44 @@
+#pendo-guide-container {
+	opacity: 0;
+	animation: FadeIn 1s linear;
+	animation-fill-mode: both;
+}
+
+@keyframes FadeIn {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+
+.fade-out {
+	animation: FadeOut 1s linear !important;
+	animation-fill-mode: both;
+}
+
+@keyframes FadeOut {
+	0% {
+		opacity: 1;
+	}
+	100% {
+		opacity: 0;
+	}
+}
+
+#next-btn,
+#prev-btn {
+	background-color: teal;
+	color: white;
+	padding: 10px 16px;
+	border-radius: 5px;
+	margin: 5px;
+}
+
+.pendo-guide-btns {
+	display: flex;
+	align-items: center;
+	align-content: space-around;
+	justify-content: center;
+}

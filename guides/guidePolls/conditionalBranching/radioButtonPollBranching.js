@@ -56,7 +56,7 @@ if(!pendo.designerEnabled) {
         var checkedPollLabelStepIndex = checkedPollLabel.getAttribute("goToStep");
 
         for (i = 0; i < guideButtons.length; i++) {
-            if(textForBranchingButtons.includes(guideButtons[i].innerText) && (checkedPollLabelStepIndex)) {
+            if(textForBranchingButtons.map(t => t.toLowerCase()).includes(guideButtons[i].innerText.toLowerCase()) && (checkedPollLabelStepIndex)) {
                 let clone = guideButtons[i].cloneNode(true);
                 let innerText = guideButtons[i].innerText;
                 guideButtons[i].replaceWith(clone);

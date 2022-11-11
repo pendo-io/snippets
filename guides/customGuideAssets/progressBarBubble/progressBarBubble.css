@@ -1,5 +1,8 @@
+/* progress bar active & inactive state color controls */
 @active_color: #006193;
 @inactive_color: #7d7d7d;
+
+/* progress bar position controls */
 @left-margin: -13.5px;
 
 /* progress bar container position controls */

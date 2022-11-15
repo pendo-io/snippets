@@ -1,0 +1,51 @@
+/* to be used if needed for customization */
+._PS_container-up-caret {
+}
+
+._PS_container-down-caret {
+}
+
+._PS_container-left-caret {
+}
+
+._PS_container-right-caret {
+}
+
+/* styles actually used in default */
+.pendo-tooltip-caret-border::before {
+    content: "\00a0";
+    position: absolute;
+    background-repeat: no-repeat;
+    background-position: top right;
+    width: 16px;
+}
+
+#pendo-guide-container {
+    box-shadow: none!important;
+}
+
+.pendo-tooltip-caret-border {
+    border-color: transparent!important;
+}
+
+.pendo-tooltip-caret {
+    display: none!important;
+}
+
+._PS_pendo-left-caret::before {
+    transform: rotate(-0.25turn) scaleX(-1);
+    transform-origin: top center;
+}
+
+._PS_pendo-right-caret::before {
+    transform: rotate(0.25turn) scaleX(1);
+    transform-origin: top center;
+}
+
+._PS_pendo-up-caret::before {
+    transform: scaleX(-1);
+}
+
+._PS_pendo-down-caret::before {
+    transform: scaleY(-1) translateY(100%) scaleX(-1);
+}

@@ -1,0 +1,4 @@
+/* use the bellw line to hide the metadeta value fetched by the html code */
+._pendo-hidden-account_ {
+    display: none;
+}

@@ -11,10 +11,12 @@ Inspired by: https://support.pendo.io/hc/en-us/articles/360032206811-Recipe-Usin
 
 Here we have 2 option to trigger the dynamic permalik
 
-1. Using a clickable image in the guide, use the 
+**1. Using a clickable image in the guide, use the UsingClickableImage folder for codes.**
 
 <img width="576" alt="Screenshot 2022-12-14 at 3 52 33 PM" src="https://user-images.githubusercontent.com/15645502/207569904-bbdd89e1-1167-4922-af61-081c0992f570.png">
 
-2. Using default button provided within guides, use the 
+
+
+**2. Using default button provided within guides, use the UsingDefaultGuideButtons folder for codes**
 
 <img width="576" alt="Screenshot 2022-12-14 at 3 53 33 PM" src="https://user-images.githubusercontent.com/15645502/207570079-d22f104b-60e9-4368-b8f7-a12371803a1f.png">

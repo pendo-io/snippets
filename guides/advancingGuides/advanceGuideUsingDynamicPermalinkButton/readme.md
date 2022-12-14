@@ -1,4 +1,4 @@
-Using hidden metadata within the guide containers HTML to use in the guide permalinks url as dynamics placeholder.
+# Using hidden metadata within the guide containers HTML to use in the guide permalinks url as dynamics placeholder.
 
 This can be used in situations where you want to redirect a user to a different page and trigger the guide automatically using a button in a another guide  or from an resource center module such as **onboarding module**.
 

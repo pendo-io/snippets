@@ -1,0 +1,8 @@
+/* use the below lines in the CSS tab in your code block to hide these metadeta values you just fetched from displaying in your guide itself */
+._pendo-hidden-account_ {
+    display: none;
+}
+
+._pendo-hidden-visitor_ {
+    display: none;
+}

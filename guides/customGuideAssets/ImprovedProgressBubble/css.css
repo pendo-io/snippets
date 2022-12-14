@@ -1,0 +1,23 @@
+@property --progress {
+    syntax: '<percentage>';
+    inherits: false;
+    initial-value: 0%;
+  }
+  
+  .g-progress {
+      margin: auto;
+      width: 370px;
+      height: 8px;
+      border-radius: 8px;
+      background: linear-gradient(90deg, #0f0, #0ff var(--progress), transparent 0);
+      border: 1px solid #eee;
+      transition: .3s --progress;
+  }
+  
+  .right {
+      color: white;
+      position: absolute;
+      font-weight: bold;
+      right: 20px;
+      padding: 2px;
+  }

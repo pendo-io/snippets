@@ -1,0 +1,27 @@
+table {
+    width: 100%; 
+    }
+    td{
+    height:100px;
+    text-align: center;
+    color: white;
+    border: 8px solid transparent;
+    transition: all 0.1s ease-in-out;
+    padding-top:10px;
+    }
+    .icon{
+    height:100px;
+    }
+    
+    td:hover{
+    cursor: pointer;
+    -webkit-box-shadow: inset 0px 0px 20px -2px rgba(236,240,241,0.9);
+    -moz-box-shadow: inset 0px 0px 20px -2px rgba(236,240,241,0.9);
+    box-shadow: inset 0px 0px 20px -2px rgba(236,240,241,0.9);
+    }
+    td:hover .icon{
+    
+    }
+    .opt1{
+    
+    }

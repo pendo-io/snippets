@@ -7,6 +7,14 @@ Example: your application URL has a customer name in it like https://customer_na
 You can even trigger Resource Center or module within the RC on a specific page using this.
 This helps in reducing the count of steps required before reaching the target page to start the actual guide journey.
 
+Use pendo.validateInstall() in the Developer Console to check what metadata being currently sent via the Pendo agent.
+
+Use ${pendo.accountId} to provide the Account ID value
+
+Use ${pendo.getSerializedMetadata().visitor.metadataname} to get the value of a visitor level metadata field. Replace 'metadataname' with the name of the metadata field.
+
+Use ${pendo.getSerializedMetadata().account.metadataname} to get the value of an account level metadata field
+
 Inspired by: https://support.pendo.io/hc/en-us/articles/360032206811-Recipe-Using-Metadata-in-Javascript#create-a-guide-0-0
 
 Here we have 2 option to trigger the dynamic permalik

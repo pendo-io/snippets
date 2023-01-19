@@ -7,6 +7,6 @@ if(!pendo.designerEnabled) {
   hiddenBox[0].parentElement.parentElement.parentElement.style.display = "none";
 }
 
-function syncFields(event) {
+pendo.syncFields = function(event) {
     hiddenBox[0].innerText = pendo.dom("#datepicker")[0].value;
 }

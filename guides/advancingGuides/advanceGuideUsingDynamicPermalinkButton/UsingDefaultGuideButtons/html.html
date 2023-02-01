@@ -1,3 +1,9 @@
-<!--Exposing hidden metadata from the guides HTML, you can use visitor or account metadata below depending on what you need in the Permalink URL-->
+<!-- Exposing hidden metadata from the guides HTML -->
+<!-- You can use visitor or account metadata below depending on what you need in the Permalink URL -->
+
 <span class="_pendo-hidden-account_"><%= metadata.account.name %></span>
-<span class="_pendo-hidden-visitor"><%= metadata.visitor.email %></span>
+<span class="_pendo-hidden-visitor_"><%= metadata.visitor.email %></span>
+
+<!-- **Warning** -->
+<!-- Use the above one in case if you are choosing to use method 2 in the js_for_clickable_image.js file -->
+<!-- You will have to hide these values using the css.css file as well -->

@@ -1,5 +1,5 @@
 var logicCheckTimeoutAmmountInMilliseconds = 750; //set as 0 if no delay is required
-var skippedNumberOfSteps = 1 //Number needs to be 1 or greater.
+var skippedNumberOfSteps = 1; //Number needs to be 1 or greater.
 
 
 if(!pendo.designerEnabled){
@@ -27,8 +27,8 @@ function skipStepsNoElement() {
                     pendo.log(guide.id + `:advance ${1 + skippedNumberOfSteps} steps`);
                     pendo.goToStep({destinationStepId: skipToStepId});
                 } else{
-                    pendo.log(`skipStepNoElement did not find any remaining guide steps. dismissing guide.`)
-                    pendo.onGuideDismissed()
+                    pendo.log(`skipStepNoElement did not find any remaining guide steps. dismissing guide.`);
+                    pendo.onGuideDismissed();
                 }
                 
             } else {

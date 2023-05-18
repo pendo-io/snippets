@@ -69,6 +69,34 @@ if(!pendo.designerEnabled) {
         var checkedPollInputId = pendo.dom('input.pendo-radio[data-pendo-poll-id]:checked')[0].id;
         var checkedPollLabel = pendo.dom('label[for="' + checkedPollInputId + '"]')[0];
         var checkedPollLabelStepIndex = checkedPollLabel.getAttribute("goToStep");
+
+        var responses = [];
+        var questions = pendo.Sizzle('[data-pendo-poll-id]');
+        responses = responses.concat(pendo._.map(questions, function(question) {
+            var input = pendo.Sizzle('textarea,input:text,select,input:radio:checked', question);
+            if (input && input.length && input[0].value) {
+                var pollId = question.getAttribute('data-pendo-poll-id');
+                var curPoll = pendo._.find(step.guide.polls, function(poll) {
+                    return poll.id === pollId;
+                });
+                var pollValue = input[0].value;
+                if (curPoll && curPoll.numericResponses) {
+                    pollValue = parseInt(pollValue, 10);
+                }
+                return {
+                    'pollId': pollId,
+                    'value':  pollValue
+                };
+            }
+        }));
+
+        if (step.response && responses) {
+            step.response(pendo._.compact(responses));
+            console.debug("Responses recorded")
+        } else {
+            console.debug('[Agent] Error! Trying to submit a poll response but step does not have response function!');
+        }
+
         pendo.goToStep({destinationStepId: pendo.getActiveGuide().guide.steps[checkedPollLabelStepIndex-1].id})
     }
 }
@@ -133,4 +161,3 @@ if(pendo.designerEnabled) {
 
     addRequiredMutationListener();
 }
-

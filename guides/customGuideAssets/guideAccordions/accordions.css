@@ -1,0 +1,63 @@
+/* Panel style */
+.accordion .a-container .a-panel {
+    width: 100%;
+    color: #262626;
+    -webkit-transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
+    opacity: 0;
+    height: auto;
+    max-height: 0;
+    overflow: hidden;
+    padding: 0px 10px;
+}
+/* Panel style when active */
+.accordion .a-container.active .a-panel {
+    padding: 10px 0;
+    opacity: 1;
+    height: auto;
+    max-height: 500px;
+}
+.a-btn {
+    cursor: pointer!important;
+    font-weight: 700;
+}
+.a-container {
+    padding: 14px 0 4px;
+    border-bottom: 1px #EFEEF2 solid;
+}
+.a-btn::after {
+    background-image: url("https://www.pendo.io/wp-content/themes/pendo-components/assets/images/pendo/components/chevron-down-icon@2x.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    display: inline;
+    position: absolute;
+    white-space: pre;
+    content: "\00a0";
+    width: 10px;
+    margin-top: 7px;
+    right: 40px;
+    }
+
+.pill-button {
+  background-color: #fff;
+  border: none;
+  color: #128397;
+  padding: 8px 12px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  margin: 2px 4px;
+  cursor: pointer;
+  border-radius: 16px;
+  border: 1px #128397 solid;
+  font-weight: 400;
+}
+
+.pill-checkbox:checked + label {
+  background-color: #128397;
+  color: #fff;
+}
+
+input[type="checkbox"] {
+	display: none;
+}

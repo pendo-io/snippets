@@ -1,0 +1,9 @@
+/* Only use in case if you using method 2 in js_for_clickable_image.js file. */
+/* Use the below lines in the CSS tab to prevent the metadeta values from displaying in your guide. */
+._pendo-hidden-account_ {
+    display: none;
+}
+
+._pendo-hidden-visitor_ {
+    display: none;
+}

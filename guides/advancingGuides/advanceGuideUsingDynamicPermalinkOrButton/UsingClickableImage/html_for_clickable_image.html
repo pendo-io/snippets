@@ -1,0 +1,20 @@
+<!-- Exposing hidden metadata from the guides HTML -->
+<!-- You can use visitor or account metadata below depending on what you need in the Permalink URL -->
+
+<span class="_pendo-hidden-account_"><%= metadata.account.name %></span>
+<span class="_pendo-hidden-visitor_"><%= metadata.visitor.email %></span>
+
+<!-- **Warning** -->
+<!-- Use the above one in case if you are choosing to use method 2 in the js_for_clickable_image.js file -->
+<!-- You will have to hide these values using the css.css file as well -->
+
+<!-- Code below will remain the same for both methods listed in js_for_clickable_image.js file -->
+<!--Upload the image you want here to pendo using image block in the guide, copy the image URL and then use it anywhere you want in any guide.-->
+<table>
+   <tr>
+      <td class="opt opt1">
+         <img class="icon" src="image link here">
+         <p>Connect Salesforce</p>
+      </td>
+   </tr>
+</table>

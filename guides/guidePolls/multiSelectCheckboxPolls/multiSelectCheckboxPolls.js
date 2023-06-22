@@ -15,7 +15,7 @@ pendo._.each(radios, function(radio) {
 
 var hiddenBox = pendo.dom('._pendo-open-text-poll-input[placeholder="hidden box"');
 if(!pendo.designerEnabled) {
-  hiddenBox[0].parentElement.parentElement.parentElement.style.display = "none";
+  hiddenBox[0].parentElement.parentElement.parentElement.parentElement.style.display = "none";
 }
 
 var chkArray = [];

@@ -1,0 +1,19 @@
+.pendo-radio-select{
+    display: flex;
+    width: 100%;
+}
+[id^="pendo-select-container"]{
+    display:flex !important;
+    width: 100%;
+}
+
+[id^="pendo-radio-select"]{
+    display:flex !important;
+    width: 100%;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+[id^="pendo-element"]{
+    width:50%;
+}

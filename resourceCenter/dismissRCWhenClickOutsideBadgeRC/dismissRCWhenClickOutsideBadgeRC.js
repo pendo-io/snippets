@@ -13,7 +13,7 @@ End result: The 2.0 Pendo Resource Center will hide itself when a click is regis
             }
         }
 
-	    if(!pendo.pro.hideRC) {
+        if (!pendo.pro.hideRC) {
             pendo.pro.hideRC = function(e) {
                 const tgt = e.target || e.srcElement;
                 if (!dom(tgt).closest('#pendo-resource-center-container').length) {
@@ -28,8 +28,8 @@ End result: The 2.0 Pendo Resource Center will hide itself when a click is regis
 
         pendo.onGuideDismissed(guide.steps[guide.getPositionOfStep(step) - 1]);
 
-        if(pendo.pro.rcHidden) {
-	        pendo.BuildingBlocks.BuildingBlockResourceCenter.getResourceCenter().show();
+        if (pendo.pro.rcHidden) {
+            pendo.BuildingBlocks.BuildingBlockResourceCenter.getResourceCenter().show();
             pendo.pro.rcHidden = false;
         } else {
             pendo.BuildingBlocks.BuildingBlockResourceCenter.dismissResourceCenter();

@@ -8,19 +8,32 @@ End result: The 2.0 Pendo Resource Center will hide itself when a click is regis
 (function offclickRC(dom) {
     if (!pendo.designerEnabled) {
         if (!pendo.pro) {
-            pendo.pro = {}
+            pendo.pro = {
+                rcHidden: true,
+            }
         }
-        //window.alert("The Resource Center badge was hovered over.");
-	    if(!pendo.pro.hideRC) {
+
+        if (!pendo.pro.hideRC) {
             pendo.pro.hideRC = function(e) {
-                var tgt = e.target || e.srcElement;
+                const tgt = e.target || e.srcElement;
                 if (!dom(tgt).closest('#pendo-resource-center-container').length) {
                     pendo.BuildingBlocks.BuildingBlockResourceCenter.dismissResourceCenter();
+                    pendo.pro.rcHidden = true;
+                } else if (tgt.classList.contains("_pendo-resource-center-close-button")) {
+                    pendo.pro.rcHidden = true;
                 }
             }
             pendo.attachEvent(document, 'click', pendo.pro.hideRC);
         }
+
         pendo.onGuideDismissed(guide.steps[guide.getPositionOfStep(step) - 1]);
-        pendo.BuildingBlocks.BuildingBlockResourceCenter.getResourceCenter().show();
+
+        if (pendo.pro.rcHidden) {
+            pendo.BuildingBlocks.BuildingBlockResourceCenter.getResourceCenter().show();
+            pendo.pro.rcHidden = false;
+        } else {
+            pendo.BuildingBlocks.BuildingBlockResourceCenter.dismissResourceCenter();
+            pendo.pro.rcHidden = true;
+        }
     }
 })(pendo.dom);

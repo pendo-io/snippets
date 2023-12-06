@@ -37,7 +37,6 @@ pendo.dom('input').on("click", 'input[type="checkbox"]', function(e) {
         if (index !== -1) chkArray.splice(index, 1);
     }
 
-    console.log("hit it");
     hiddenTextBox.innerText = chkArray.join(",");
 });
 

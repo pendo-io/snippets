@@ -1,4 +1,4 @@
-(function pendoCustomMain() {
+(function skipStepNoElement() {
     var logicCheckTimeoutAmmountInMilliseconds = 1500; //set as 0 if no delay is required
     var skippedNumberOfSteps = 1; //Number needs to be 1 or greater.
 

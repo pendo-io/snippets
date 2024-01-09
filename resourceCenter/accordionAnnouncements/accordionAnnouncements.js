@@ -35,24 +35,24 @@
 
 function createAccordions(stepId, guideId){
    var validId = "";
-   if(pendo.dom("#pendo-g-" + stepId + " #pendo-guide-container")[0]) {
+   if(pendo.dom("#pendo-g-" + stepId + " [id^='pendo-guide-container']")[0]) {
         validId = stepId;
    }
 
-   if(pendo.dom("#pendo-g-" + guideId + " #pendo-guide-container")[0]) {
+   if(pendo.dom("#pendo-g-" + guideId + " [id^='pendo-guide-container']")[0]) {
         validId = guideId;
    }
 
-   if(pendo.dom("#pendo-g-" + validId + " #pendo-guide-container")[0]) {
+   if(pendo.dom("#pendo-g-" + validId + " [id^='pendo-guide-container']")[0]) {
         // Get first element which will be the header
 
-        var announcementHeader = pendo.dom("#pendo-g-" + validId + " #pendo-guide-container")[0].children[0];
+        var announcementHeader = pendo.dom("#pendo-g-" + validId + " [id^='pendo-guide-container']")[0].children[0];
         announcementHeader.style.cursor = "pointer";
         announcementHeader.classList.add('_pendo-acc-collapsed');
         localStorage.setItem("_pendo_rc_" + guideId, "true");
 
         // Get rest of elements for accordion
-        var accordionContents = [].slice.call(pendo.dom("#pendo-g-" + validId + " #pendo-guide-container")[0].children).slice(1);
+        var accordionContents = [].slice.call(pendo.dom("#pendo-g-" + validId + " [id^='pendo-guide-container']")[0].children).slice(1);
         pendo._.each(accordionContents, function(elem) {
             if(elem.classList.contains('_pendo-row')){
                 if(elem.children.length>1) {
@@ -75,7 +75,7 @@ function createAccordions(stepId, guideId){
         announcementHeader.addEventListener('click', expandable, false);
 
         function expandable() {
-            accordionContents = [].slice.call(pendo.dom("#pendo-g-" + validId + " #pendo-guide-container")[0].children).slice(1);
+            accordionContents = [].slice.call(pendo.dom("#pendo-g-" + validId + " [id^='pendo-guide-container']")[0].children).slice(1);
             if(!announcementHeader.classList.contains('_pendo-acc-active')) {
                 pendo.dom("#pendo-g-" + validId)[0].style.height = "auto";
                 announcementHeader.classList.add('_pendo-acc-active');
@@ -117,15 +117,15 @@ function reverseEng(stepId, guideId) {
 	window.addEventListener('resize', function() {
         setTimeout(function(){
 		var validId = "";
-		if(pendo.dom("#pendo-g-" + stepId + " #pendo-guide-container")[0]) {
+		if(pendo.dom("#pendo-g-" + stepId + " [id^='pendo-guide-container']")[0]) {
 			validId = stepId;
 		}
 
-		if(pendo.dom("#pendo-g-" + guideId + " #pendo-guide-container")[0]) {
+		if(pendo.dom("#pendo-g-" + guideId + " [id^='pendo-guide-container']")[0]) {
 			validId = guideId;
 		}
-		accordionContents = [].slice.call(pendo.dom("#pendo-g-" + validId + " #pendo-guide-container")[0].children).slice(1);
-		if(pendo.dom("#pendo-g-" + validId + " #pendo-guide-container")[0].children[0].classList.contains('_pendo-acc-collapsed')) {
+		accordionContents = [].slice.call(pendo.dom("#pendo-g-" + validId + " [id^='pendo-guide-container']")[0].children).slice(1);
+		if(pendo.dom("#pendo-g-" + validId + " [id^='pendo-guide-container']")[0].children[0].classList.contains('_pendo-acc-collapsed')) {
         	pendo._.each(accordionContents, function(elem) {
             	if(elem.classList.contains('_pendo-row')){
                 	pendo._.each(elem.children, function(child) {
@@ -135,7 +135,7 @@ function reverseEng(stepId, guideId) {
                 	elem.style.display = "none";
             	}
         	});
-      	} else if (!pendo.dom("#pendo-g-" + validId + " #pendo-guide-container")[0].children[0].classList.contains('_pendo-acc-collapsed')){
+      	} else if (!pendo.dom("#pendo-g-" + validId + " [id^='pendo-guide-container']")[0].children[0].classList.contains('_pendo-acc-collapsed')){
       			var learnMore = pendo.dom(".pendo-mock-flexbox-row [id^='pendo-link-']")[0];
            	    learnMore.parentElement.parentElement.parentElement.parentElement.style.position = "unset";
                 learnMore.parentElement.parentElement.parentElement.parentElement.style.paddingRight = "12px";

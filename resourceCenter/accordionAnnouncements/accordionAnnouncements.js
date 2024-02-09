@@ -1,4 +1,5 @@
 (function (step, guide) {
+    if (!pendo.designerEnabled) {
     var stepId = step.id;
     var guideId = step.guideId;
 
@@ -10,7 +11,6 @@
                     target.classList.add('_pendo-acc-enabled');
                 }
                 createAccordions(stepId, guideId);
-                reverseEng(stepId, guideId);
             }
             if (mutation.removedNodes.length) {
                 if (mutation.removedNodes[0].dataset.layout == "AnnouncementsModule") {
@@ -29,11 +29,13 @@
     };
 
     if(!target.classList.contains('_pendo-acc-enabled')){
-        observer.observe(target, config);
+        observer.observe(target, config); 
     }
+  }
 })(step, guide);
 
 function createAccordions(stepId, guideId){
+
    var validId = "";
    if(pendo.dom("#pendo-g-" + stepId + " [id^='pendo-guide-container']")[0]) {
         validId = stepId;
@@ -51,6 +53,7 @@ function createAccordions(stepId, guideId){
         announcementHeader.classList.add('_pendo-acc-collapsed');
         localStorage.setItem("_pendo_rc_" + guideId, "true");
 
+
         // Get rest of elements for accordion
         var accordionContents = [].slice.call(pendo.dom("#pendo-g-" + validId + " [id^='pendo-guide-container']")[0].children).slice(1);
         pendo._.each(accordionContents, function(elem) {
@@ -64,10 +67,10 @@ function createAccordions(stepId, guideId){
                 	});
                 }
                 pendo._.each(elem.children, function(child) {
-                	child.style.display = "none";
+                	child.style.display = "none"; 
                 });
             } else {
-                elem.style.display = "none";
+                elem.style.display = "none";  
             }
         });
 
@@ -88,59 +91,26 @@ function createAccordions(stepId, guideId){
                             });
                         } else {
                             pendo._.each(elem.children, function(child) {
-                              child.style.display = "block";
-                          });
+                          		child.style.display = "block";
+                        	});
                         }
                     } else {
-                        elem.style.display = "block";
-                    }
+                        elem.style.display = "block";  
+                    }  
                 });
-                window.dispatchEvent(new Event('resize'));
             } else {
                 announcementHeader.classList.remove('_pendo-acc-active');
                 announcementHeader.classList.add('_pendo-acc-collapsed');
                 pendo._.each(accordionContents, function(elem) {
                     if(elem.classList.contains('_pendo-row')){
                         pendo._.each(elem.children, function(child) {
-                           child.style.display = "none";
+                           child.style.display = "none"; 
                         });
                     } else {
-                        elem.style.display = "none";
-                    }
+                        elem.style.display = "none";  
+                    } 
                 });
             }
         };
-    }
-}
-
-function reverseEng(stepId, guideId) {
-	window.addEventListener('resize', function() {
-        setTimeout(function(){
-		var validId = "";
-		if(pendo.dom("#pendo-g-" + stepId + " [id^='pendo-guide-container']")[0]) {
-			validId = stepId;
-		}
-
-		if(pendo.dom("#pendo-g-" + guideId + " [id^='pendo-guide-container']")[0]) {
-			validId = guideId;
-		}
-		accordionContents = [].slice.call(pendo.dom("#pendo-g-" + validId + " [id^='pendo-guide-container']")[0].children).slice(1);
-		if(pendo.dom("#pendo-g-" + validId + " [id^='pendo-guide-container']")[0].children[0].classList.contains('_pendo-acc-collapsed')) {
-        	pendo._.each(accordionContents, function(elem) {
-            	if(elem.classList.contains('_pendo-row')){
-                	pendo._.each(elem.children, function(child) {
-                    	child.style.display = "none";
-                	});
-            	} else {
-                	elem.style.display = "none";
-            	}
-        	});
-      	} else if (!pendo.dom("#pendo-g-" + validId + " [id^='pendo-guide-container']")[0].children[0].classList.contains('_pendo-acc-collapsed')){
-      			var learnMore = pendo.dom(".pendo-mock-flexbox-row [id^='pendo-link-']")[0];
-           	    learnMore.parentElement.parentElement.parentElement.parentElement.style.position = "unset";
-                learnMore.parentElement.parentElement.parentElement.parentElement.style.paddingRight = "12px";
-           	    learnMore.parentElement.parentElement.parentElement.parentElement.parentElement.style.minHeight = "unset";
-      }
-        }, 50);
-	}, false);
+    }   
 }

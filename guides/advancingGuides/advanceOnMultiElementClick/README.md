@@ -18,7 +18,7 @@ This code snippet allows you to advance the guide onclick from multiple DOM elem
 
 ## Installation
 
-Copy and paste the snippet into the JavaScript section of the guide step that should advance on multiple elements.
+Copy and paste the snippet into the JavaScript section of a code block of the guide step that should advance on multiple elements.
 
 ## Usage
 

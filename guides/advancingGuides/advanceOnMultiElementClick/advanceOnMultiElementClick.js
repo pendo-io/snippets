@@ -18,7 +18,6 @@
   // remove listeners after step completes
   step.after("teardown", () => {
     elements.forEach((elm) => {
-      console.log(elm);
       for (let i = 0; i < elm.length; i++)
         pendo.detachEvent(elm[i], "click", advanceOnce);
     });

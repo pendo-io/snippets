@@ -1,25 +1,25 @@
 (function advanceGuideOnClick(dom) {
-    var advanceOnce = pendo._.once(pendo.onGuideAdvanced); // make sure the guide only advances one time
-    
-    // You can add as many element rules as you like in a list here
-    var one = dom('#myId'); // These element rules can be an id like #myId or a class like .myClass
-    var two = dom('.myClass');
-    var elms = [one, two]; // if you add more elements to the list, you must also add them to the array like [one, two, three, four ...]
+  const advanceOnce = pendo._.once(pendo.onGuideAdvanced); // makes sure the guide only advances one time
 
-    elms.forEach(function(elm) {
-        var elmList = dom(elm);
-        for (var i = 0; i < elmList.length; i++) {
-            pendo.attachEvent(dom(elmList[i])[0], 'click', advanceOnce);
-        }
+  // you can add as many element rules as you like
+  // these element rules can be an id like #myId or a class like .myClass
+  const elementGroup1 = dom("#myId");
+  const elementGroup2 = dom(".myClass");
+
+  // add each elementGroup to the elements array
+  const elements = [elementGroup1, elementGroup2];
+
+  // adds listeners to each element
+  elements.forEach((elm) => {
+    for (let i = 0; i < elm.length; i++)
+      pendo.attachEvent(elm[i], "click", advanceOnce);
+  });
+
+  // remove listeners after step completes
+  step.after("teardown", () => {
+    elements.forEach((elm) => {
+      for (let i = 0; i < elm.length; i++)
+        pendo.detachEvent(elm[i], "click", advanceOnce);
     });
-
-    step.after('teardown', function () { // remove listeners after step completes
-        elms.forEach(function(elm) {
-            var elmList = dom(elm);
-            for (var i = 0; i < elmList.length; i++) {
-                pendo.detachEvent(dom(elmList[i])[0], 'click', advanceOnce);
-            }
-        });
-    });
-
-})(pendo.dom)
+  });
+})(pendo.dom);

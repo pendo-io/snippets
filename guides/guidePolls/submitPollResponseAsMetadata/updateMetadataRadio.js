@@ -20,7 +20,7 @@ function updatePersona() {
     const visitor = window.pendo.getSerializedMetadata().visitor;
 
     // Update the visitor metadata with the selected user role
-    // If different key required other than persona, change below.
+    // If different key required other than persona, change below
     window.pendo.updateOptions({
         account: {
             ...account,

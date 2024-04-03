@@ -6,7 +6,8 @@ var userRole; // This variable will hold the selected user role
 document.querySelector('[id^="pendo-select-container-"]').addEventListener('change', getChecked);
 
 function getChecked() {
-    // Update the global userRole variable with the selected radio button's label
+    // Update the global userRole variable with the selected radio button's label, update poll values to pass in different roles
+    // Note that userRole is a variable, passing in the radio button selection.
     userRole = pendo.dom(`[for="${pendo.dom('#pendo-guide-container input:radio:checked')[0].id}"]`)[0].textContent;
 }
 
@@ -19,6 +20,7 @@ function updatePersona() {
     const visitor = window.pendo.getSerializedMetadata().visitor;
 
     // Update the visitor metadata with the selected user role
+    // If different key required other than persona, change below.
     window.pendo.updateOptions({
         account: {
             ...account,

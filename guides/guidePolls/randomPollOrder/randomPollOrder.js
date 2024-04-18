@@ -1,7 +1,7 @@
-const pollWrapper=document.querySelector("[id^='pendo-radio-select-']");
-const pollChildren=pollWrapper.children;
-const childCount = pollChildren.length-1; 
-const pollNewOrder=[];
+let pollWrapper=document.querySelector("[id^='pendo-radio-select-']");
+let pollChildren=pollWrapper.children;
+let childCount = pollChildren.length-1; 
+let pollNewOrder=[];
 for(let n=0;n<childCount;n++){
 	let randomNumber = Math.floor(Math.random() * childCount);
 	while(pollNewOrder.includes(randomNumber)){

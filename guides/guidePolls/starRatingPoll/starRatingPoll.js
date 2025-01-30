@@ -1,7 +1,9 @@
 (function (step, guide, dom) {
   //change color of stars when a selection is made
-  dom('[id^="pendo-poll-choice"]').on('click', function () {
-      var starLabels = dom('label.pendo-radio[class*="_pendo-number-scale-poll-"]')
+  dom('[id^="pendo-poll-choice"]').on('click', function (event) {
+      var clickedPoll = event.target.closest("._pendo-number-scale-poll-wrapper");
+      var starLabels = dom('label.pendo-radio[class*="_pendo-number-scale-poll-"]', clickedPoll);
+      
       //remove fill class from all stars (to handle user changing rating after selection)
       for (let i = 0; i < starLabels.length; i++) {
           starLabels[i].classList.remove('star-filled')

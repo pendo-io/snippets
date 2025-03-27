@@ -1,10 +1,37 @@
-// Title: P2 Guides - Render, but hide guide until X
-// The following should operate without error for any P2 guide type.
+// Pendo Pro: Delay Guide Step Based on Aria Label Seconds Value
 
-// Attribution to NB for providing the P1 JS code for this function
-// WLH:  Updated and tested with P2 Guide Designer Lightbox and Tool Tip guides
 (function(dom, _) {
+    
+  function parseInput(input) {
+  // Remove any spaces around the input string and parse it into an object
+  const trimmedInput = input.trim();
+  if (trimmedInput[0] === '{' && trimmedInput[trimmedInput.length - 1] === '}') {
+    // Remove the curly braces and split the content by the colon
+    const content = trimmedInput.slice(1, trimmedInput.length - 1);
+    const [key, value] = content.split(':').map(item => item.trim());
 
+    // Check if the key is 'delay'
+    if (key === "delay") {
+      // Try to parse the value as an integer
+      const parsedValue = parseInt(value, 10);
+
+      // If the value is a valid integer, return it; otherwise, handle the error gracefully
+      if (!isNaN(parsedValue)) {
+        return parsedValue;
+      } else {
+        console.error("Error: The value is not a valid integer.");
+        return null; // Gracefully handle non-integer values
+      }
+    } else {
+      console.error("Error: The key is not 'delay'.");
+      return null; // Handle the case where the key isn't 'delay'
+    }
+  } else {
+    console.error("Error: Invalid input format. Please use the format '{key: value}'.");
+    return null; // Handle invalid input format
+  }
+}
+    
   function pendoHideGuide() {
     console.log('base: ', dom('#pendo-base'));
     _.each(dom('#pendo-base'), function(elm) {
@@ -14,8 +41,9 @@
 
   function pendoRevealGuide() {
     _.each(dom('#pendo-base'), function(elm) {
-      elm.style.display = "";
-      pendo.flexElement(pendo.dom('#pendo-guide-container')[0])
+      elm.style.display = "block";
+      window.dispatchEvent(new Event('resize'));
+      pendo.flexElement(pendo.dom('#pendo-guide-container')[0]);
     })
   }
 
@@ -25,8 +53,12 @@
   }
 
   // EXAMPLE: reveal after 3 seconds
-  setTimeout(function () {
-    pendoRevealGuide();
-  }, 3000)
+  
+    if(parseInput(pendo.dom("#pendo-guide-container")[0].ariaLabel)){
+        setTimeout(function () {
+            pendoRevealGuide();
+        }, parseInput(pendo.dom("#pendo-guide-container")[0].ariaLabel)*1000)
+    };
+    
 
 })(pendo.dom, pendo._);

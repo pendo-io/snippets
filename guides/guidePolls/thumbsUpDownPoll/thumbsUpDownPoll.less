@@ -1,0 +1,36 @@
+/* Thumbs Source URLs. Replace with desired images */
+@thumbs-up: url('https://pendo-static-5095337838772224.storage.googleapis.com/gozEh3mC5dq_WniLABg0jIHOboo/guide-media-d7e65aed-7a46-441b-b138-bb6e99757fa0');
+@thumbs-down: url('https://pendo-static-5095337838772224.storage.googleapis.com/gozEh3mC5dq_WniLABg0jIHOboo/guide-media-3b7a15c7-aaa5-4dbc-90c3-682a5c1ef7df');
+
+/* Base Sizing & Color Styles */
+
+._pendo-yes-no-poll-yes-button {
+   background-repeat: no-repeat;
+   background-size: auto;
+   color: rgba(0, 0, 0, 0.0)!important;
+    background-position: 49% 45%;
+   &:hover {
+       background-repeat: no-repeat!important;
+       background-size: auto!important;
+       color: rgba(0, 0, 0, 0.0)!important;
+       background-position: 49% 45%!important;
+    }
+}
+    
+._pendo-yes-no-poll-no-button {
+   background-repeat: no-repeat;
+   background-size: auto;
+   color: rgba(0, 0, 0, 0.0)!important;
+    background-position: 48% 52%;
+   &:hover {
+       background-repeat: no-repeat!important;
+       background-size: auto!important;
+       color: rgba(0, 0, 50, 0.0)!important;
+       background-position: 48% 52%!important;
+    }
+}
+
+/* Default Thumb State */
+
+._pendo-yes-no-poll-yes-button, ._pendo-yes-no-poll-yes-button:hover { background-image: @thumbs-up!important; }
+._pendo-yes-no-poll-no-button, ._pendo-yes-no-poll-no-button:hover { background-image: @thumbs-down!important; }

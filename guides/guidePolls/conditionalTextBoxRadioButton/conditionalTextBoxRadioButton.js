@@ -20,7 +20,6 @@ if(!pendo.designerEnabled) {
 for(var i=0; i < pendo.dom(".pendo-radio").length; i++) {
   // Loop through each element and attach a click event listener
   pendo.dom(".pendo-radio")[i].addEventListener('click', (e) => {
-    debugger;
     if ((e.target.parentElement.getAttribute("showhidden") || e.target.getAttribute("showhidden")) && !isTextBoxVisible) {
         pendo.dom('._pendo-row:has(._pendo-open-text-poll-wrapper)')[0].style.display = "block";
         pendo.dom('[hiddenTextArea')[0].style.display = "block"; 

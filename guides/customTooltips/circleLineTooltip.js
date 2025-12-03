@@ -6,8 +6,15 @@ if(!pendo.designerEnabled) {
     var target = pendo.dom("#pendo-base")[0];
     var observer = new MutationObserver(function(mutations) {
         mutations.forEach(function(mutation) {
-            if (mutation.previousSibling.classList.contains("pendo-tooltip-caret") && pendo.dom("[class*='_PS_pendo']").length == 0) { 
+            if (mutation.previousSibling) {
+                if (mutation.previousSibling.classList.contains("pendo-tooltip-caret") && pendo.dom("[class*='_PS_pendo']").length == 0) { 
                rotateCaret(target);
+                }
+            }
+            if (mutation.nextSibling) {
+                if (mutation.nextSibling.classList.contains("pendo-tooltip-caret") && pendo.dom("[class*='_PS_pendo']").length == 0) { 
+               rotateCaret(target);
+                }
             }
         })
     })

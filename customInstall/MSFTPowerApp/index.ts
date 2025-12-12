@@ -71,13 +71,26 @@ export
                     // This is the actual Pendo initialization logic, which could be used without the validation logic above if preferred.
                     pendo.initialize({
                         visitor: {
-                            visitorField1: this._visitorValue1,
-                            visitorField2: this._visitorValue2,
+                            id: this._visitorValue1, // Required if user is logged in
+                            visitorField2: this._visitorValue2, // replace visitorField2 with actual field name, such as email or other metadata you'll be passing
                             visitorField3: this._visitorValue3
+                            // You can add any additional visitor level key-values here,
+                            // as long as it's not one of the reserved names, 
+                                // email
+                                // full_name
+                                // role 
                         },
                         account: {
-                            accountField1: this._accountValue1,
-                            accountField2: this._accountValue2
+                            id: this._accountValue1, // Highly recommended, required if using Pendo Feedback or OEM Adopt
+                            accountField2: this._accountValue2 // replace accountField2 with actual field name
+                            // You can add any additional account level key-values here,
+                            // as long as it's not one of the reserved names,
+                                // name
+                                // is_paying
+                                // monthly_value
+                                // planLevel
+                                // planPrice
+                                // creationDate
                         }
                     });
                 }

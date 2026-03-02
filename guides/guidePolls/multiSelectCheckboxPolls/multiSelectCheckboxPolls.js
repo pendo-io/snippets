@@ -4,19 +4,24 @@
 // created through the designer, and then an open text poll that contains
 // the question header text "[hidden]".
 //
+const guideContainerSelector = "[id^=pendo-guide-container]"; // flexible for overlay and embed guides
+const containerSelectorId = `pendo-g-${guide.id}`;
 
 var radios = pendo.dom('input[type="radio"]');
 pendo._.each(radios, function(radio) {
-  radio.type="checkbox"
+    radio.type = "checkbox";
 });
 
-var hiddenPollId = pendo.dom('[data-pendo-poll-id]:contains("[hidden]")')[0].attributes["data-pendo-poll-id"].value;
-var hiddenTextBox = pendo.dom("textarea[data-pendo-poll-id=" + hiddenPollId + "]")[0];
+var hiddenPollId = pendo.dom('[data-pendo-poll-id]:contains("[hidden]")')[0]
+    .attributes["data-pendo-poll-id"].value;
+var hiddenTextBox = pendo.dom(
+    "textarea[data-pendo-poll-id=" + hiddenPollId + "]",
+)[0];
 
-if(!pendo.designerEnabled) {
-  pendo.dom("#pendo-guide-container")[0].style.opacity = 0;
-  hiddenElements = pendo.dom("[data-pendo-poll-id=" + hiddenPollId + "]");
-  setTimeout(() => {
+if (!pendo.designerEnabled) {
+    pendo.dom(guideContainerSelector)[0].style.opacity = 0;
+    hiddenElements = pendo.dom("[data-pendo-poll-id=" + hiddenPollId + "]");
+    setTimeout(() => {
         for (var key of Object.keys(hiddenElements)) {
             if (hiddenElements[key] && hiddenElements[key].tagName) {
                 hiddenElements[key].style.display = "none";
@@ -26,9 +31,9 @@ if(!pendo.designerEnabled) {
 }
 
 var chkArray = [];
-pendo.dom('input').on("click", 'input[type="checkbox"]', function(e) {
+pendo.dom("input").on("click", 'input[type="checkbox"]', function(e) {
     var labelName = e.target.id;
-    var label = pendo.dom('label[for="'+labelName+'"]')[0].innerText; 
+    var label = pendo.dom('label[for="' + labelName + '"]')[0].innerText;
 
     if (!chkArray.includes(label)) {
         chkArray.push(label);
@@ -41,6 +46,9 @@ pendo.dom('input').on("click", 'input[type="checkbox"]', function(e) {
 });
 
 setTimeout(() => {
-    pendo.dom("#pendo-guide-container")[0].style.opacity = 1;
-    pendo.flexElement(pendo.dom('#pendo-guide-container')[0]);
+    const actualHeight = pendo.dom(guideContainerSelector).height();
+    const heightWithPx = `${actualHeight}px`;
+    pendo.dom(containerSelectorId).css({ height: heightWithPx });
+    pendo.dom(guideContainerSelector)[0].style.opacity = 1;
+    pendo.flexElement(pendo.dom("#pendo-guide-container")[0]);
 }, 50);

@@ -3,11 +3,6 @@ function handleClick(event) {
   if (event.target.closest('[id^="pendo-"], [class*="_pendo-"], .pendo-guide')) {
     return;
   }
-
-  if (hasAdvanced) return;
-
-  hasAdvanced = true;
-
   try {
     pendo.onGuideAdvanced();
   } catch (e) {}

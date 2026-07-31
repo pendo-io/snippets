@@ -3,7 +3,7 @@ var pageUrlTextBox = pendo.dom("textarea[data-pendo-poll-id='"+ pollId + "']");
 var pageUrlLabel = pendo.dom("._pendo-open-text-poll-question:contains('[PAGE URL]')");
 
 if (!pendo.designerEnabled) {
-	pageUrlTextBox[0].parentElement.parentElement.parentElement.style.display = "none";
+	pageUrlTextBox[0].closest("._pendo-row").style.display = "none";
 	pageUrlLabel[0].style.display = "none";
 }
 

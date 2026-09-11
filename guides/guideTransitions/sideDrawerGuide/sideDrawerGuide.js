@@ -24,7 +24,8 @@ function handleClick(e) {
   var guideEl = document.getElementById(GUIDE_ID);
   if (!guideEl) return;
 
-  if (e.target.id === 'pendo-close-guide-4deb3b95') { // ← UPDATE: close button ID of this blade guide
+     var closeBtn = e.target.closest('._pendo-close-guide_, ._pendo-close-guide, [id^="pendo-close-guide-"]');
+   if (closeBtn) {
     closeAndRestore();
     return;
   }

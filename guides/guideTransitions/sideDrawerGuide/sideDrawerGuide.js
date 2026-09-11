@@ -11,8 +11,12 @@ function restore() {
 }
 
 function closeAndRestore() {
-  var guideEl = document.getElementById(GUIDE_ID);
-  if (guideEl) guideEl.remove();
+     if (typeof pendo !== 'undefined' && typeof pendo.onGuideDismissed === 'function') {
+     pendo.onGuideDismissed();
+   } else {
+     var guideEl = document.getElementById(GUIDE_ID);
+     if (guideEl) guideEl.remove();
+   }
   restore();
 }
 

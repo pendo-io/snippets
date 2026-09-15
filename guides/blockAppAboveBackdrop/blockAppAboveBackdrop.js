@@ -4,7 +4,8 @@
         if (p_backdrop) {
             // console.log("Backdrop found.");
             const p_open = pendo.dom(step.elementPathRule)[0]; // section shown above backdrop
-            const p_top_backdrop = document.querySelector('.pendo-backdrop-region-top'); // top secton of backdrop
+            const p_top_backdrop = document.querySelector('.pendo-backdrop-region-top'); // top section of backdrop
+            if (!p_open || !p_top_backdrop) return;
 
             const top_height = p_top_backdrop.getBoundingClientRect().height + "px"; // get height of top section
             const top_pos_left = p_top_backdrop.getBoundingClientRect().left + "px"; // get left position offset of top section

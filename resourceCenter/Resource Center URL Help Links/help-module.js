@@ -1,3 +1,4 @@
+(function (step, guide) {
 var kbMap = [
   { match: /dashboard/i, url: "https://support.pendo.io/hc/en-us/articles/360032304991-Dashboards" },
   { match: /accounts/i, url: "https://support.pendo.io/hc/en-us/articles/360032334631-Accounts" },
@@ -20,3 +21,4 @@ if (btn) {
     window.open(getArticleForCurrentPage(), '_blank');
   });
 }
+  })(step, guide);

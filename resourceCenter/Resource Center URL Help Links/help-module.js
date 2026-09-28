@@ -8,7 +8,7 @@ var kbMap = [
 var fallbackUrl = "https://support.pendo.io/hc/en-us";
 
 function getArticleForCurrentPage() {
-  var target = window.location.pathname + window.location.hash + window.location.search;
+  var target = window.location.pathname + window.location.hash.split('?')[0];
   for (var i = 0; i < kbMap.length; i++) {
     if (kbMap[i].match.test(target)) return kbMap[i].url;
   }

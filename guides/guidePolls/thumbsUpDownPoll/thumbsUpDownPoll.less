@@ -1,36 +1,114 @@
-/* Thumbs Source URLs. Replace with desired images */
-@thumbs-up: url('https://pendo-static-5095337838772224.storage.googleapis.com/gozEh3mC5dq_WniLABg0jIHOboo/guide-media-d7e65aed-7a46-441b-b138-bb6e99757fa0');
-@thumbs-down: url('https://pendo-static-5095337838772224.storage.googleapis.com/gozEh3mC5dq_WniLABg0jIHOboo/guide-media-3b7a15c7-aaa5-4dbc-90c3-682a5c1ef7df');
+HTML 
 
-/* Base Sizing & Color Styles */
+<div id="thumbs-poll" class="thumbs-poll" style="visibility:hidden;opacity:0;">
+  <button type="button" id="thumbs-poll-yes" class="thumbs-poll-btn" aria-label="Yes">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="32" height="32">
+      <path fill="#2E7D32" d="M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.59 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-2z"/>
+    </svg>
+  </button>
+  <button type="button" id="thumbs-poll-no" class="thumbs-poll-btn" aria-label="No">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="32" height="32">
+      <path fill="#C62828" d="M15 3H6c-.83 0-1.54.5-1.84 1.22l-3.02 7.05c-.09.23-.14.47-.14.73v2c0 1.1.9 2 2 2h6.31l-.95 4.57-.03.32c0 .41.17.79.44 1.06L9.83 23l6.59-6.59c.36-.36.58-.86.58-1.41V5c0-1.1-.9-2-2-2zm4 0v12h4V3h-4z"/>
+    </svg>
+  </button>
+</div>
+CSS (the hide rules are removed because the inline style handles that now)
 
-._pendo-yes-no-poll-yes-button {
-   background-repeat: no-repeat;
-   background-size: auto;
-   color: rgba(0, 0, 0, 0.0)!important;
-    background-position: 49% 45%;
-   &:hover {
-       background-repeat: no-repeat!important;
-       background-size: auto!important;
-       color: rgba(0, 0, 0, 0.0)!important;
-       background-position: 49% 45%!important;
-    }
-}
-    
-._pendo-yes-no-poll-no-button {
-   background-repeat: no-repeat;
-   background-size: auto;
-   color: rgba(0, 0, 0, 0.0)!important;
-    background-position: 48% 52%;
-   &:hover {
-       background-repeat: no-repeat!important;
-       background-size: auto!important;
-       color: rgba(0, 0, 50, 0.0)!important;
-       background-position: 48% 52%!important;
-    }
+.thumbs-poll {
+  display: flex;
+  gap: 16px;
+  margin-top: 8px;
 }
 
-/* Default Thumb State */
+.thumbs-poll-btn {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 6px !important;
+  cursor: pointer;
+  border-radius: 6px;
+  line-height: 0;
+}
 
-._pendo-yes-no-poll-yes-button, ._pendo-yes-no-poll-yes-button:hover { background-image: @thumbs-up!important; }
-._pendo-yes-no-poll-no-button, ._pendo-yes-no-poll-no-button:hover { background-image: @thumbs-down!important; }
+.thumbs-poll-btn:hover {
+  background: rgba(0, 0, 0, 0.06) !important;
+}
+
+.thumbs-poll-btn svg {
+  display: block;
+}
+JavaScript
+
+(function () {
+  var PREFIX = '[thumbs-poll]';
+  var TIMEOUT_MS = 10000;
+
+  function log() {
+    var a = Array.prototype.slice.call(arguments);
+    a.unshift(PREFIX);
+    console.log.apply(console, a);
+  }
+
+  function findNative(label) {
+    var scope = document.getElementById('pendo-guide-container') || document;
+    var buttons = scope.querySelectorAll('button');
+    for (var i = 0; i < buttons.length; i++) {
+      var b = buttons[i];
+      if (b.closest('#thumbs-poll')) continue;
+      if ((b.textContent || '').trim().toLowerCase() === label) return b;
+    }
+    return null;
+  }
+
+  function hide(el) {
+    el.style.setProperty('display', 'none', 'important');
+  }
+
+  var observer = null;
+  var done = false;
+
+  function tryInit() {
+    if (done) return;
+
+    var yesNative = findNative('yes');
+    var noNative = findNative('no');
+
+    // Hide native buttons the instant they exist, before the next paint
+    if (yesNative) hide(yesNative);
+    if (noNative) hide(noNative);
+
+    var poll = document.getElementById('thumbs-poll');
+    var yesBtn = document.getElementById('thumbs-poll-yes');
+    var noBtn = document.getElementById('thumbs-poll-no');
+
+    if (!(poll && yesBtn && noBtn && yesNative && noNative)) return;
+
+    done = true;
+    if (observer) observer.disconnect();
+
+    yesBtn.addEventListener('click', function () { yesNative.click(); });
+    noBtn.addEventListener('click', function () { noNative.click(); });
+
+    // Reveal only now that everything is wired
+    poll.style.visibility = 'visible';
+    poll.style.opacity = '1';
+    log('ready');
+  }
+
+  tryInit();
+
+  if (!done) {
+    observer = new MutationObserver(tryInit);
+    observer.observe(document.documentElement, { childList: true, subtree: true });
+
+    setTimeout(function () {
+      if (done) return;
+      done = true;
+      observer.disconnect();
+      log('gave up; native buttons not found');
+      // Poll stays hidden. To show it anyway, uncomment:
+      // var p = document.getElementById('thumbs-poll');
+      // if (p) { p.style.visibility = 'visible'; p.style.opacity = '1'; }
+    }, TIMEOUT_MS);
+  }
+})();

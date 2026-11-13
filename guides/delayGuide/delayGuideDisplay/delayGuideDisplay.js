@@ -3,6 +3,10 @@
 (function(dom, _) {
     
   function parseInput(input) {
+  if (typeof input !== 'string') {
+    console.error("Error: No aria label found. Please set the guide step's aria label to '{delay: seconds}'.");
+    return null;
+  }
   // Remove any spaces around the input string and parse it into an object
   const trimmedInput = input.trim();
   if (trimmedInput[0] === '{' && trimmedInput[trimmedInput.length - 1] === '}') {
@@ -32,33 +36,55 @@
   }
 }
     
+  // When a guide renders, Pendo sets aria-hidden="true" on the other top-level
+  // elements of <body>. While the guide itself is hidden, that would leave the
+  // whole page invisible to screen readers, so we lift aria-hidden for the
+  // duration of the delay and put it back when the guide is revealed.
+  var ariaHiddenElements = [];
+
+  function releaseAriaHidden() {
+    _.each(document.body.children, function(elm) {
+      if (elm.getAttribute('aria-hidden') === 'true' && !elm.querySelector('#pendo-base') && elm.id !== 'pendo-base') {
+        elm.removeAttribute('aria-hidden');
+        ariaHiddenElements.push(elm);
+      }
+    });
+  }
+
+  function restoreAriaHidden() {
+    _.each(ariaHiddenElements, function(elm) {
+      elm.setAttribute('aria-hidden', 'true');
+    });
+    ariaHiddenElements = [];
+  }
+
   function pendoHideGuide() {
-    console.log('base: ', dom('#pendo-base'));
     _.each(dom('#pendo-base'), function(elm) {
       elm.style.display = "none";
-    })
+    });
+    releaseAriaHidden();
+    // Pendo may apply aria-hidden just after the code block runs, so check again
+    setTimeout(releaseAriaHidden, 0);
   }
 
   function pendoRevealGuide() {
     _.each(dom('#pendo-base'), function(elm) {
       elm.style.display = "block";
-      window.dispatchEvent(new Event('resize'));
-      pendo.flexElement(pendo.dom('#pendo-guide-container')[0]);
-    })
+    });
+    restoreAriaHidden();
+    window.dispatchEvent(new Event('resize'));
+    pendo.flexElement(pendo.dom('#pendo-guide-container')[0]);
   }
 
-  // Hide guide immediately if not in Pendo Designer
-  if (!pendo.designerEnabled) {
+  // Read the delay (in seconds) from the guide step's aria label, e.g. {delay: 3}.
+  // Only hide the guide if there is a valid, positive delay to wait for;
+  // otherwise it would stay hidden forever.
+  var guideContainer = pendo.dom("#pendo-guide-container")[0];
+  var delaySeconds = guideContainer ? parseInput(guideContainer.ariaLabel) : null;
+
+  if (!pendo.designerEnabled && delaySeconds > 0) {
     pendoHideGuide();
+    setTimeout(pendoRevealGuide, delaySeconds * 1000);
   }
-
-  // EXAMPLE: reveal after 3 seconds
-  
-    if(parseInput(pendo.dom("#pendo-guide-container")[0].ariaLabel)){
-        setTimeout(function () {
-            pendoRevealGuide();
-        }, parseInput(pendo.dom("#pendo-guide-container")[0].ariaLabel)*1000)
-    };
-    
 
 })(pendo.dom, pendo._);

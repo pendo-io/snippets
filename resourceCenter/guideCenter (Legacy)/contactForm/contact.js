@@ -96,15 +96,29 @@
   init();
   contactController();
 
-  var i, dropped = false;
+  var i, dropped = false, pendingUploads = 0;
 
   var onSelectFile = function(files) {
     uploadsProgress();
     // @TODO: check to see if filetype and/or size is acceptable prior to uploading
     // reject if not
     var remoteCallsRemaining = files.length;
+    // Keep submit disabled until every upload has finished (or failed)
+    pendingUploads += files.length;
+    formSubmit.disabled = pendingUploads > 0;
+    var finishUpload = function() {
+      --remoteCallsRemaining;
+      pendingUploads = Math.max(0, pendingUploads - 1);
+      if (pendingUploads === 0 && !formSubmit.classList.contains('is-submitting')) {
+        formSubmit.disabled = false;
+      }
+      if (remoteCallsRemaining <= 0) {
+        updateScrollPosition();
+        resetUploadsProgress();
+      }
+    };
     for (i = 0; i < files.length; i++) {
-      var file = files[i];
+      let file = files[i];
       let reader = new FileReader();
       reader.onload = function(e) {
         fetch(zendeskApiAddress + 'api/v2/uploads.json?filename=' + escape(file.name), {
@@ -130,20 +144,16 @@
 
             var fragment = document.createDocumentFragment();
 
-            removeAttachment = document.createElement('button');
+            var removeAttachment = document.createElement('button');
             removeAttachment.className = '_pendo-contact-form__drop-zone-remove-attachment_';
             removeAttachment.type = 'button';
             removeAttachment.innerHTML = '<ts-icon class="ts_icon_times_circle">&times;</ts-icon>';
 
-            attachmentPreview = document.createElement('img');
+            var attachmentPreview = document.createElement('img');
             attachmentPreview.className = '_pendo-contact-form__drop-zone-preview_';
-            attachmentPreview.onload = function() {
-              --remoteCallsRemaining;
-              if (remoteCallsRemaining <= 0) {
-                updateScrollPosition();
-                resetUploadsProgress();
-              }
-            }
+            attachmentPreview.onload = finishUpload;
+            // Non-image attachments have no preview, but the upload still succeeded
+            attachmentPreview.onerror = finishUpload;
             attachmentPreview.src = data.upload.attachment.content_url;
 
             fragment.appendChild(removeAttachment);
@@ -155,13 +165,14 @@
 
 
             var uploads = uploadsTokenList();
-            dropzoneToken = data.upload.token;
+            var dropzoneToken = data.upload.token;
             uploads.push(dropzoneToken);
             dropzoneUploads.value = (uploads.join());
           }
           return;
         }).catch(function(error) {
           handleErrors('uploads');
+          finishUpload();
           return;
         });
       };
@@ -170,7 +181,7 @@
   }
 
   var onSubmitForm = function(e) {
-    formData = new FormData(form);
+    var formData = new FormData(form);
     var email = formData.get('email');
     var subject = formData.get('subject');
     var body = formData.get('body');
@@ -185,7 +196,7 @@
             subject: subject,
             comment: {
               body: body,
-              uploads: [formData.get('uploads')]
+              uploads: (formData.get('uploads') || '').split(',').filter(function(token) { return token; })
             },
             requester: {
               name: email,
@@ -199,6 +210,7 @@
         }
         form.style.display = 'none';
         formSubmit.classList.remove('is-submitting');
+        formSubmit.disabled = false;
         success.style.display = 'block';
         setTimeout(function() {
           formClose.click();
@@ -206,6 +218,8 @@
         setTimeout(function() {
           success.style.display = 'none';
           form.reset();
+          // reset() doesn't clear hidden inputs, so drop the old upload tokens
+          dropzoneUploads.value = '';
           var allAttachments = document.getElementsByClassName('_pendo-contact-form__drop-zone-attachment_');
           while (allAttachments[0]) {
             allAttachments[0].parentNode.removeChild(allAttachments[0]);
@@ -215,6 +229,8 @@
         return;
       })
       .catch(function(error) {
+        formSubmit.classList.remove('is-submitting');
+        formSubmit.disabled = pendingUploads > 0;
         handleErrors('submit');
         return;
       });
@@ -222,6 +238,10 @@
 
   form.addEventListener('submit', function(e) {
     e.preventDefault();
+    // Don't submit while attachments are still uploading
+    if (pendingUploads > 0 || formSubmit.classList.contains('is-submitting')) {
+      return;
+    }
     formSubmit.disabled = true;
     formSubmit.classList.add('is-submitting');
     onSubmitForm();
@@ -259,7 +279,7 @@
     dropzone.classList.remove('dragover');
     dropzoneMask.style.display = 'none';
     dropzoneOverlayDragover.style.display = 'none';
-    files = e.target.files || e.dataTransfer.files;
+    var files = e.target.files || e.dataTransfer.files;
     onSelectFile(files);
     return dropped = false;
   }
@@ -279,7 +299,7 @@
   }
 
   var handleErrors = function(errorType) {
-    errorMessage = document.createElement('p');
+    var errorMessage = document.createElement('p');
     errorMessage.id = '_pendo-contact-form__notice__error_' + Date.now();
     errorMessage.className = '_pendo-contact-form__notice_ is-error';
     if (errorType === 'submit') {
@@ -307,6 +327,7 @@
   var uploadsProgress = function() {
     dropzoneUploadsProgress.style.display = 'block';
     var dropzonePercentUploaded = 0;
+    var uploadsDisplayCurrentStyle;
     var animateUpload = setInterval(function() {
       var dropzoneUploadsFill = 100 - dropzonePercentUploaded;
       dropzoneUploadsProgressCircleFill.style.strokeDashoffset = dropzoneUploadsFill;
@@ -343,7 +364,7 @@
     this.parentNode.remove();
 
     function removeAttachmentTokenFromUploads() {
-      index = uploads.indexOf(attachmentToRemoveToken);
+      var index = uploads.indexOf(attachmentToRemoveToken);
       if (index > -1) {
         uploads.splice(index, 1);
         return dropzoneUploads.value = (uploads.join());

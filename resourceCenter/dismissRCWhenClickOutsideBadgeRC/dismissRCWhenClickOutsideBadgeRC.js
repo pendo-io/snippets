@@ -8,9 +8,11 @@ End result: The 2.0 Pendo Resource Center will hide itself when a click is regis
 (function offclickRC(dom) {
     if (!pendo.designerEnabled) {
         if (!pendo.pro) {
-            pendo.pro = {
-                rcHidden: true,
-            }
+            pendo.pro = {};
+        }
+        // initialize separately in case another snippet created pendo.pro first
+        if (typeof pendo.pro.rcHidden === "undefined") {
+            pendo.pro.rcHidden = true;
         }
 
         if (!pendo.pro.hideRC) {
@@ -28,8 +30,13 @@ End result: The 2.0 Pendo Resource Center will hide itself when a click is regis
 
         pendo.onGuideDismissed(guide.steps[guide.getPositionOfStep(step) - 1]);
 
+        const resourceCenter = pendo.BuildingBlocks.BuildingBlockResourceCenter.getResourceCenter();
+        if (!resourceCenter) {
+            return;
+        }
+
         if (pendo.pro.rcHidden) {
-            pendo.BuildingBlocks.BuildingBlockResourceCenter.getResourceCenter().show();
+            resourceCenter.show();
             pendo.pro.rcHidden = false;
         } else {
             pendo.BuildingBlocks.BuildingBlockResourceCenter.dismissResourceCenter();

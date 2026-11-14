@@ -4,6 +4,9 @@
     var guideId = step.guideId;
 
     var target = pendo.dom("#pendo-resource-center-container")[0];
+    if (!target) {
+        return;
+    }
     var observer = new MutationObserver(function(mutations) {
         mutations.forEach(function(mutation) {
             if (mutation.addedNodes.length) {
@@ -13,7 +16,9 @@
                 createAccordions(stepId, guideId);
             }
             if (mutation.removedNodes.length) {
-                if (mutation.removedNodes[0].dataset.layout == "AnnouncementsModule") {
+                var removedNode = mutation.removedNodes[0];
+                // skip text nodes, which have no dataset
+                if (removedNode.nodeType === 1 && removedNode.dataset.layout == "AnnouncementsModule") {
                     target.classList.remove('_pendo-acc-enabled');
                     observer.disconnect();
                 }
@@ -51,6 +56,8 @@ function createAccordions(stepId, guideId){
         var announcementHeader = pendo.dom("#pendo-g-" + validId + " [id^='pendo-guide-container']")[0].children[0];
         announcementHeader.style.cursor = "pointer";
         announcementHeader.classList.add('_pendo-acc-collapsed');
+        // contents are re-hidden below, so keep the header state in sync
+        announcementHeader.classList.remove('_pendo-acc-active');
         localStorage.setItem("_pendo_rc_" + guideId, "true");
 
 
@@ -74,8 +81,12 @@ function createAccordions(stepId, guideId){
             }
         });
 
-        announcementHeader.removeEventListener('click', expandable, false); // remove existing eventListeners
-        announcementHeader.addEventListener('click', expandable, false);
+        // only wire the header once; a new expandable is created on every call,
+        // so removeEventListener could never remove the previous one
+        if (announcementHeader.dataset.pendoAccWired !== "true") {
+            announcementHeader.dataset.pendoAccWired = "true";
+            announcementHeader.addEventListener('click', expandable, false);
+        }
 
         function expandable() {
             accordionContents = [].slice.call(pendo.dom("#pendo-g-" + validId + " [id^='pendo-guide-container']")[0].children).slice(1);

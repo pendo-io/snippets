@@ -26,30 +26,38 @@
         pendo.pro = {};
     }
 
-    // if the event listener already exists, just return
-    if (pendo.pro.hideRC) {
+    // dismiss ourselves (the hidden helper guide) on every path
+    function dismissSelf() {
+        pendo.onGuideDismissed(guide.steps[guide.getPositionOfStep(step) - 1]);
+    }
+
+    // if the event listener already exists, just dismiss
+    if (typeof pendo.pro.hideRC === "function") {
+        dismissSelf();
         return;
     }
 
-    // exit if no RC is found
+    // no RC yet: don't attach, but let a later run try again
     if (!pendo.BuildingBlocks.BuildingBlockResourceCenter.getResourceCenter()) {
-        pendo.log("RC offclick disabled, no RC found");
-        pendo.pro.hideRC = true;
+        pendo.log("RC offclick not attached yet, no RC found");
+        dismissSelf();
         return;
     }
 
     // event listener to hide the RC if a click is registered outside of the RC
     pendo.pro.hideRC = function (e) {
         // if the RC isn't shown, don't do anything
-        if (
-            !pendo.BuildingBlocks.BuildingBlockResourceCenter.getResourceCenter().isShown()
-        ) {
+        const rc = pendo.BuildingBlocks.BuildingBlockResourceCenter.getResourceCenter();
+        if (!rc || !rc.isShown()) {
             return;
         }
 
         // get the target of the click and the RC node
         const tgt = e.target || e.srcElement;
         const rcNode = dom("#pendo-resource-center-container")[0];
+        if (!rcNode) {
+            return;
+        }
 
         // if the target is outside of the RC and outside of the custom element,
         // hide the RC
@@ -65,6 +73,5 @@
     pendo.attachEvent(document, "click", pendo.pro.hideRC);
     pendo.log("RC offclick attached");
 
-    // dismiss ourselves
-    pendo.onGuideDismissed(guide.steps[guide.getPositionOfStep(step) - 1]);
+    dismissSelf();
 })(pendo.dom);

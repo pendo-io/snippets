@@ -22,12 +22,18 @@
 	}
 
 	// Runs the exit animation once, then navigates; later clicks are ignored
-	function navigate(animationClass, navFn) {
+	// rememberDirection: store this step so the next step can pick its entry animation.
+	// It's false when there is no next step to read it (Next on the last step).
+	function navigate(animationClass, navFn, rememberDirection) {
 		if (isNavigating) return;
 		isNavigating = true;
 		if (nextBtn) nextBtn.disabled = true;
 		if (prevBtn) prevBtn.disabled = true;
-		sessionStorage.setItem(previousKey, currentStep);
+		if (rememberDirection) {
+			sessionStorage.setItem(previousKey, currentStep);
+		} else {
+			sessionStorage.removeItem(previousKey);
+		}
 		pendoContainer.classList.toggle(animationClass);
 		navTimer = setTimeout(function () {
 			navTimer = null;
@@ -37,7 +43,11 @@
 
 	if (typeof step.after === 'function') {
 		step.after('teardown', function () {
-			if (navTimer) clearTimeout(navTimer);
+			if (navTimer) {
+				// The step closed before navigating, so no step will read the stored direction
+				clearTimeout(navTimer);
+				sessionStorage.removeItem(previousKey);
+			}
 			navTimer = null;
 		});
 	}
@@ -46,7 +56,7 @@
 		nextBtn.onclick = function () {
 			navigate('flip', function () {
 				pendo.onGuideAdvanced();
-			});
+			}, currentStepIndex < currentGuide.steps.length - 1);
 		};
 	}
 
@@ -57,7 +67,7 @@
 			prevBtn.onclick = function () {
 				navigate('flip-previous', function () {
 					pendo.onGuidePrevious();
-				});
+				}, true);
 			};
 		}
 	}

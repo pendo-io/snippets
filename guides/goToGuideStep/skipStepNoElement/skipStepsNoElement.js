@@ -52,4 +52,4 @@
             pendo.log(`invisible step styling fixed (guide container display removed & backdrop display removed for invisible step)`)
         }
     }
-})
+})();

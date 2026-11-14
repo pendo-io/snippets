@@ -67,7 +67,7 @@
       var takeMeButton = dom(e.target || e.srcElement).closest('._pendo-guide-takeme-wrapper_');
 
       var destinationButton = dom(e.target || e.srcElement).closest('.step-indicator');
-      var destinationIndex = destinationButton.attr('data-index');
+      var destinationIndex = parseInt(destinationButton.attr('data-index'), 10);
       var guideContent = dom('._pendo-guide-card-content_');
 
       if (dismissButton.length) {

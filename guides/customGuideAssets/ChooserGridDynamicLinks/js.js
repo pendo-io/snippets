@@ -17,19 +17,20 @@
           img_3: 'opt3', // Place image id between the quotation marks
        };
 
-        // Uncomment the below get the account name metadata value to be used ahead in the URL using pendo.getSerializedMetadata.
-        var account_name = pendo.getSerializedMetadata().account.name;
+        // Uncomment the below to get the account name metadata value to be used ahead in the URL using pendo.getSerializedMetadata.
+        // var account_name = pendo.getSerializedMetadata().account.name;
 
         // build your URL by using the account name metadata directly.
-        var newurl = "https://" + account_name + ".app.com/settings/manage?pendo=guide_id"
+        // var newurl = "https://" + account_name + ".app.com/settings/manage?pendo=guide_id"
  
        var advanceButton = pendo.dom(e.target || e.srcElement).closest('.guide-image');
  
        // This command will show the guide of the ID provided
        if (advanceButton.length) {
-          var imageClass = advanceButton[0].classList[0];
-          var guideId = Object.keys(imageClasses).find(key => imageClasses[key] === imageClass);
-          guideId = guides[guideId];
+          // Find which of the configured image classes (opt1, opt2, ...) the clicked cell has
+          var imageKey = Object.keys(imageClasses).find(key => advanceButton[0].classList.contains(imageClasses[key]));
+          var guideId = imageKey && guides['guide_' + imageKey.split('_')[1]];
+          if (!guideId) return;
  
           // This command dismisses the current active guide.
           pendo.onGuideDismissed();

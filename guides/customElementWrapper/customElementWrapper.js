@@ -19,19 +19,16 @@
     const parent = newChild.parentElement;
     const element = document.createElement("" + elementTag); // ensures that 'elementTag' is really a string
     
-    element.appendnewChild(newChild);
-    parent.appendnewChild(element);
+    // Put the wrapper where the element was, then move the element inside it
+    parent.insertBefore(element, newChild);
+    element.appendChild(newChild);
     
     return element;
   }
   
   // Explicit block scope
   {
-    // Function reference - init() function will run after the window.onload event is fired.
-    // https://stackoverflow.com/questions/8830074/what-is-the-difference-between-window-onload-init-and-window-onload-init
-    window.onload = init;
-  
-    // the code to be called when the dom has loaded
+    // The guide is already rendered when the code block runs, so init() is called directly
     function init() {
       
       // Helper function defined in outer scope, attribute set after wrapElementsWithDiv runs

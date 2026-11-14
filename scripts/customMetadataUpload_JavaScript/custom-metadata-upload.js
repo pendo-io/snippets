@@ -25,7 +25,7 @@ let csvFile = Papa.parse(fs.readFileSync(options.file, 'utf8'), {
 	worker: false,
 });
 let file_contents = csvFile.data;
-let headers = file_contents.shift().slice(1, 4);
+let headers = file_contents.shift().slice(1);
 let request_body_array = [];
 
 file_contents.forEach((row) => {

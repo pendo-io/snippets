@@ -15,7 +15,6 @@ gem install logger
 gem install optparse
 gem install httparty
 gem install csv
-gem install pry
 ```
 
 ---

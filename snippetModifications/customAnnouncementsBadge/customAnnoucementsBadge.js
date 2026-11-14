@@ -54,7 +54,7 @@
                     '<div class="pendo-secondary-notification-bubble-unread-count" style="font-weight: 400; font-family: inherit; height: 100%; display: inline-block; line-height: 26px; vertical-align: middle; color: rgb(255, 255, 255); white-space: pre-wrap;"></div>' + '</div> ';
                 pendo.backUpPulseAnimation = '<style id="pendo-secondary-resource-center-bubble-animation">@keyframes pulse { 0% { opacity: 1; transform: scale(1); } 100% { opacity: 0; transform: scale(1.6) } } .pendo-resource-center-badge-secondary-notification-bubble::before {content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 100%; z-index: -1; animation: pulse 2s infinite; will-change: transform; }</style>';
                 //This line must be updated to hold the module id of the rc module you want to draw a Homeview badge on
-                pendo.customModuleSelector = '[data-pendo-module-guide-id="ZtnRUQ36CyBVVxrbifBN-gMnLWI@pQqHDQbxwFzIXVZrd4J5sQrpfno"] > ._pendo-text-link > ._pendo-row > .pendo-mock-flexbox-row > .pendo-mock-flexbox-element'
+                pendo.customModuleSelector = '[data-pendo-module-guide-id="YOUR_MODULE_GUIDE_ID"] > ._pendo-text-link > ._pendo-row > .pendo-mock-flexbox-row > .pendo-mock-flexbox-element'
                 pendo.bodyObserver = null;
                 pendo.RCObserver = null;
                 //state variable to avoid duplicate badges

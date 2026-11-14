@@ -2,10 +2,18 @@
 	var currentGuide = pendo.findGuideById(step.guideId);
 	var currentStepIndex = pendo._.indexOf(currentGuide.steps, step);
 	var currentStep = currentStepIndex + 1;
-	var previousStep = sessionStorage.getItem('previous');
-	var pendoContainer = document.getElementById('pendo-guide-container');
-	var nextBtn = document.getElementById('next-btn');
-	var prevBtn = document.getElementById('prev-btn');
+	// Namespaced per guide and cleared after reading, so a stale value never sets the direction
+	var previousKey = 'previous-' + currentGuide.id;
+	var previousStep = Number(sessionStorage.getItem(previousKey)) || 0;
+	sessionStorage.removeItem(previousKey);
+	var guideRoot = (typeof step !== 'undefined' && step && step.guideElement && step.guideElement[0]) || document.querySelector('[id^="pendo-guide-container"]');
+	if (!guideRoot) return;
+	// Embedded guides use a suffixed container id, so match by prefix
+	var pendoContainer = guideRoot.querySelector('[id^="pendo-guide-container"]') || guideRoot;
+	var nextBtn = guideRoot.querySelector('#next-btn');
+	var prevBtn = guideRoot.querySelector('#prev-btn');
+	var isNavigating = false;
+	var navTimer = null;
 
 	if (currentStep < previousStep) {
 		pendoContainer.classList.toggle('slide-in-right');
@@ -13,22 +21,44 @@
 		pendoContainer.classList.toggle('slide-in-left');
 	}
 
-	nextBtn.onclick = function () {
-		pendoContainer.classList.toggle('slide-out-right');
-		setTimeout(() => {
-			pendo.onGuideAdvanced();
+	// Runs the exit animation once, then navigates; later clicks are ignored
+	function navigate(animationClass, navFn) {
+		if (isNavigating) return;
+		isNavigating = true;
+		if (nextBtn) nextBtn.disabled = true;
+		if (prevBtn) prevBtn.disabled = true;
+		sessionStorage.setItem(previousKey, currentStep);
+		pendoContainer.classList.toggle(animationClass);
+		navTimer = setTimeout(function () {
+			navTimer = null;
+			navFn();
 		}, 1000);
-	};
+	}
 
-	if (currentStepIndex == 0) {
-		prevBtn.style.display = 'none';
-	} else {
-		prevBtn.onclick = function () {
-			sessionStorage.setItem('previous', currentStep);
-			pendoContainer.classList.toggle('slide-out-left');
-			setTimeout(() => {
-				pendo.onGuidePrevious();
-			}, 1000);
+	if (typeof step.after === 'function') {
+		step.after('teardown', function () {
+			if (navTimer) clearTimeout(navTimer);
+			navTimer = null;
+		});
+	}
+
+	if (nextBtn) {
+		nextBtn.onclick = function () {
+			navigate('slide-out-right', function () {
+				pendo.onGuideAdvanced();
+			});
 		};
+	}
+
+	if (prevBtn) {
+		if (currentStepIndex == 0) {
+			prevBtn.style.display = 'none';
+		} else {
+			prevBtn.onclick = function () {
+				navigate('slide-out-left', function () {
+					pendo.onGuidePrevious();
+				});
+			};
+		}
 	}
 })(pendo.dom, pendo.guides);

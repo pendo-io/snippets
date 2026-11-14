@@ -47,7 +47,6 @@
 
         events: {
             ready: function () {
-                console.log('trigger ready')
                 //first thing we do is set up html templates for the new badge - these can be moved if preferred
                 pendo.secondaryHomeViewBubble = '<div id="pendo-secondary-home-view-bubble" class="_pendo-secondary-home-view-bubble" style="position: absolute; border-radius: 20px; height: 26px; line-height: 0px; padding: 0px 10px; right: 20px; top: 50%; margin-top: -14px; box-sizing: content-box; background-color: rgb(236, 32, 89); display: block;"><div id="pendo-secondary-home-view-count" style="display: inline-block; vertical-align: middle; line-height: 26px; font-weight: 400; font-family: inherit; color: rgb(255, 255, 255); white-space: pre-wrap;"></div></div>';
                 pendo.secondaryRCBadgeTemplate = '<div id="pendo-secondary-badge-bubble" class="pendo-resource-center-badge-secondary-notification-bubble" style="position: absolute; border-radius: 20px; line-height: 0px; height: 26px; box-sizing: content-box; top: -2px; left: -12px; padding: 0px 10px; margin-left: 0px; margin-top: 0px;">' +
@@ -69,9 +68,12 @@
 
     // helper function to draw badge - calls updateSecondaryBadge to set the number
     pendo.drawSecondaryRCBadge = function () {
-        document
-            .getElementsByClassName("_pendo-resource-center-badge-container")[0]
-            .innerHTML += pendo.secondaryRCBadgeTemplate + pendo.backUpPulseAnimation;
+        var badgeContainer = document.getElementsByClassName("_pendo-resource-center-badge-container")[0];
+        if (!badgeContainer) {
+            return;
+        }
+        // insertAdjacentHTML keeps Pendo's existing badge DOM and listeners intact
+        badgeContainer.insertAdjacentHTML('beforeend', pendo.secondaryRCBadgeTemplate + pendo.backUpPulseAnimation);
         pendo.secondaryRCBadgeUnreadCount = document.getElementsByClassName('pendo-secondary-notification-bubble-unread-count')[0];
         pendo.updateSecondaryRCBadge();
         pendo.isSecondaryBadgeDrawn = true;
@@ -90,7 +92,17 @@
     }
     // updates number inside the RC secondary badge to the number in pendo.alerts
     pendo.updateSecondaryRCBadge = function () {
-        pendo.secondaryRCBadgeUnreadCount.innerText = pendo.alerts;
+        if (pendo.secondaryRCBadgeUnreadCount) {
+            pendo.secondaryRCBadgeUnreadCount.innerText = pendo.alerts;
+        }
+    }
+
+    // returns the unseen announcement count, or 0 when there is no RC or announcements module
+    pendo.getUnseenAnnouncementCount = function () {
+        var rc = pendo.BuildingBlocks && pendo.BuildingBlocks.BuildingBlockResourceCenter &&
+            pendo.BuildingBlocks.BuildingBlockResourceCenter.getResourceCenter();
+        var notifications = rc && rc.attributes && rc.attributes.notifications;
+        return (notifications && notifications.totalUnseenCount) || 0;
     }
     // updates the RC Secondary Homeview badge to the the number in pendo.alerts
     pendo.updateSecondaryHomeViewBadge = function () {
@@ -107,9 +119,10 @@
         // create an observer instance
         pendo.bodyObserver = new MutationObserver(function (mutations) {
             mutations.forEach(function (mutation) {
-                if (mutation.addedNodes.length) {
+                // skip text and comment nodes, which have no classList
+                if (mutation.addedNodes.length && mutation.addedNodes[0].nodeType === 1) {
                     if (mutation.addedNodes[0].classList.contains('pendo-notification-bubble-unread-count')) {
-                        pendo.setAlerts(pendo.BuildingBlocks.BuildingBlockResourceCenter.getResourceCenter().attributes.notifications.totalUnseenCount);
+                        pendo.setAlerts(pendo.getUnseenAnnouncementCount());
                     }
                     if (mutation.addedNodes[0].id == 'pendo-resource-center-container') {
                         pendo.addRCMutationListener(); //if the RC container is added start listening to what's happening inside
@@ -122,7 +135,7 @@
                         pendo.isSecondaryBadgeDrawn = true;
                     }
                 } else if (mutation.removedNodes.length) {
-                    if (mutation.removedNodes[0].id == 'pendo-resource-center-container') {
+                    if (mutation.removedNodes[0].id == 'pendo-resource-center-container' && pendo.RCObserver) {
                         pendo.RCObserver.disconnect(); // if the rc container is removed switch off the mutation listener
                     }
                 }
@@ -147,7 +160,7 @@
         // create an observer instance
         pendo.RCObserver = new MutationObserver(function (mutations) {
             mutations.forEach(function (mutation) {
-                if (mutation.addedNodes.length && pendo.alerts > 0) {
+                if (mutation.addedNodes.length && mutation.addedNodes[0].nodeType === 1 && pendo.alerts > 0) {
                     if (mutation.addedNodes[0].classList.contains('_pendo-resource-center-view-transitions')) {
                         pendo.drawSecondaryHomeViewBadge();
                         pendo.isSecondaryBadgeDrawn = true;
@@ -173,8 +186,7 @@
      * @note this is the only function that needs to be called - updates pendo.alerts var and updates or removes the badges
      */
     pendo.setAlerts = function (alertNum = 0) {
-        // This attribute appears to always be there on the resource center. Might be adjusted to validate it exists before setting.
-        var announcementNumber = pendo.BuildingBlocks.BuildingBlockResourceCenter.getResourceCenter().attributes.notifications.totalUnseenCount;
+        var announcementNumber = pendo.getUnseenAnnouncementCount();
         /* IF THE ABOVE FAILS, AS A BACKUP THE LINE BELOW WILL PULL THE INNER TEXT FROM THE ORIGINAL PENDO BADGE THAT SHOULD NOW BE HIDDEN */
         //var announcementNumber = pendo.dom('.pendo-notification-bubble-unread-count')[0].innerText
         if (announcementNumber > 0) {

@@ -176,6 +176,11 @@
           return;
         });
       };
+      // If the file can't be read, onload never fires: report it and release the pending count
+      reader.onerror = function() {
+        handleErrors('uploads');
+        finishUpload();
+      };
       reader.readAsArrayBuffer(file);
     }
   }

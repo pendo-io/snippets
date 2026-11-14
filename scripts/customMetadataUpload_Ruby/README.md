@@ -23,12 +23,17 @@ gem install pry
 ## Instructions
 
 ```shell
-$ ruby custom_metadata_upload.rb --help
-Usage: custom_metadata_upload.rb [options]
-    -f, --file n                     CSV Metadata File
-    -i, --integration_key n          Pendo Integration Key
-    -t, --type n                     ID Type (options are 'visitor' or 'account')
+$ ruby custom_metadata_upload.rb -f <csv file> -i <integration key> -t <visitor|account>
 ```
+
+| Option | Description |
+|---|---|
+| `-f` | Path to the CSV file to import |
+| `-i` | Pendo integration key (needs write access) |
+| `-t` | Metadata type: `visitor` or `account` |
+| `-d` | Enables the HTTP debugger |
+
+The script sends requests to `app.pendo.io`. If your subscription is hosted in another region, change `endpoint_url` in the script to the host you sign in to Pendo with (for example `app.eu.pendo.io`).
 
 ---
 

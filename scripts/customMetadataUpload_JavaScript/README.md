@@ -42,6 +42,8 @@ Options:
 $ node custom-metadata-upload.js -f custom-metadata-test.csv -i cded0000-0000-0000-0000-00008980000.us -t visitor
 ```
 
+The script sends requests to `app.pendo.io`. If your subscription is hosted in another region, change `apiUrl` in the script to the host you sign in to Pendo with (for example `app.eu.pendo.io`).
+
 ## File Format
 
 The CSV file _must_ have headers, with the correct metadata key names that you wish to upload. The first column _must_ either be visitorID or accountID, case sensitive.

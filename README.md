@@ -45,3 +45,21 @@ This repository contains custom HTML/CSS/JS snippets that can be used specifical
 While the primary function of the Pendo Snippet is to initialize the Pendo Agent on your application, it can also be used to inject sitewide modifications to Pendo functionality. There are many potential applications for this, including adding DOM attributes to Pendo guides, modifying guide behaviors, and others that are covered in the [Agent API](https://agent.pendo.io).
 
 Note that this section does NOT cover [Pendo Metadata](https://support.pendo.io/hc/en-us/articles/360031832072-Visitor-and-Account-Metadata), which is core product functionality and should be handled per the standard snippet initiatlization procedures.
+
+## Scripts
+
+The `scripts` folder contains command-line scripts, in JavaScript (Node.js) and Ruby, that call the [Pendo API](https://engageapi.pendo.io). Currently these upload custom visitor or account metadata from a CSV file. Each script has its own README with installation steps, options, and the expected CSV format.
+
+The scripts need a Pendo integration key with write access, and API access is a paid feature of the Pendo platform. They send requests to `app.pendo.io`; if your subscription is hosted in another region, change the host in the script to the one you use to sign in to Pendo.
+
+## Custom Install
+
+The `customInstall` folder contains reference patterns for installing Pendo in environments where the standard snippet needs extra handling. `MSFTPowerApp` shows one approach for Microsoft Power Apps component framework (PCF) solutions. It is a pattern to follow, not a drop-in project; see its readme for details.
+
+## Other
+
+The `other` folder contains utilities and experiments that don't fit elsewhere:
+
+- `decode-jzb.js`: decodes the compressed `jzb` parameter that the Pendo agent sends, for debugging.
+- `frontEndTracking`: examples of sending front-end errors and slow-performance events to Pendo as track events (see its readme).
+- `test`: Jasmine specs for older versions of some deprecated snippets. They depend on Pendo's internal agent test setup and can't be run from this repository.

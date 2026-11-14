@@ -11,7 +11,7 @@ Checks whether the target element of the next step is present and visible. If it
 
 1. Add a Custom Code Block to the step that comes right before the element-targeted step, and paste one of the two files into its JS tab.
 2. Set `desiredStep` to the step number (as shown in Pendo, starting at 1) to jump to when the element is missing. The defaults are `5` in `gotoStepNoElement.js` and `11` in `goToStepNoElementWithDelay.js`.
-3. Optional: to target a step by ID instead of by number, comment out the `pendo.goToStep` line that uses `desiredStep` and uncomment the line with `destinationStepId`, replacing the example ID `"N9d7QgG8ZxOBqeUmZr4dn92yltE"` with your step ID. The comments describe the step ID as the stronger reference.
+3. Optional: to target a step by ID instead of by number, comment out the `pendo.goToStep` line that uses `desiredStep` and uncomment the line with `destinationStepId`, replacing the example ID `"N9d7QgG8ZxOBqeUmZr4dn92yltE"` with your step ID. Also delete the trailing `<-- Example Step ID` note on that line; left in place, it is a JavaScript syntax error and the snippet won't run. The comments describe the step ID as the stronger reference.
 4. For the delayed version, change `1500` in the `setTimeout` call to adjust the wait in milliseconds.
 
 ## Notes

@@ -13,6 +13,6 @@ Dismisses a tooltip guide when the visitor moves the mouse off its target elemen
 
 ## Notes
 
-- The code listens for `mouseover` on the whole window. When the mouse moves away from the target element, it calls `pendo.onGuideDismissed()` and removes the listener.
-- Test that visitors can still reach any buttons in the tooltip: moving the mouse from the target onto the tooltip passes outside the target element.
+- The code listens for `mouseover` on the whole window. The guide stays open while the mouse is over the target element or over the tooltip itself (`#pendo-guide-container`), so visitors can move onto the tooltip to use its buttons. As soon as the mouse is over anything else, it calls `pendo.onGuideDismissed()` and removes the listener.
+- If the guide closes some other way, the listener is removed when the step is torn down, so it can't dismiss later guides.
 - The guide is dismissed (not just hidden), so it follows your guide's normal dismissal rules.

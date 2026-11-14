@@ -11,7 +11,7 @@ Checks the current URL path when the step loads. If it matches a path you set, t
 1. Paste the code into the JS tab of a Custom Code Block on the routing step.
 2. Set `properUrl` to the path after the domain, including the leading slash. Default: `"/demo_site"` (for `https://www.domain.com/demo_site`).
 3. Set `desiredStep` to the step number (as shown in Pendo, starting at 1) to jump to when the path matches. Default: `3`.
-4. Optional: to target a step by ID instead of by number, comment out the `pendo.goToStep` line that uses `desiredStep` and uncomment the line with `destinationStepId`, replacing the example ID `"N9d7QgG8ZxOBqeUmZr4dn92yltE"` with your step ID.
+4. Optional: to target a step by ID instead of by number, comment out the `pendo.goToStep` line that uses `desiredStep` and uncomment the line with `destinationStepId`, replacing the example ID `"N9d7QgG8ZxOBqeUmZr4dn92yltE"` with your step ID. Also delete the trailing `<-- Example Step ID` note on that line; left in place, it is a JavaScript syntax error and the snippet won't run.
 
 ## Notes
 

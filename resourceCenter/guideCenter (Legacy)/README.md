@@ -27,6 +27,7 @@ Adds a "Contact Us" panel to the Guide Center with email, subject, and message f
 - The snippet uses `fetch` and the File API; check these against your product's browser support requirements.
 - The requester's name and email are both set to the value of the email field.
 - After a successful submit the form shows a confirmation, closes after 3 seconds, and resets. On failure, an error notice is shown for 5 seconds.
+- The submit button is disabled when the form is submitted and is never re-enabled, either by the reset after a success or after a failure. Visitors can't retry a failed request or send a second request without the Guide Center being rendered again.
 - The file contains several `@TODO` comments, including that file type and size are not checked before upload.
 
 ## onboardingProgress/guideProgress

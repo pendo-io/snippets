@@ -31,9 +31,13 @@ $ ruby custom_metadata_upload.rb -f <csv file> -i <integration key> -t <visitor|
 | `-f` | Path to the CSV file to import |
 | `-i` | Pendo integration key (needs write access) |
 | `-t` | Metadata type: `visitor` or `account` |
-| `-d` | Enables the HTTP debugger |
+| `-d` | Has no effect at the moment: the value is stored but never used, and the option expects a value (for example `-d true`). It can be left out. |
 
-The script sends requests to `app.pendo.io`. If your subscription is hosted in another region, change `endpoint_url` in the script to the host you sign in to Pendo with (for example `app.eu.pendo.io`).
+The script sends requests to `app.pendo.io`. If your subscription is hosted in another region, edit `endpoint_url` in the script and replace only the `app.pendo.io` part with the host you sign in to Pendo with, keeping `https://` and the rest of the path. For example, for EU subscriptions:
+
+```ruby
+endpoint_url = "https://app.eu.pendo.io/api/v1/metadata/#{options[:type]}/custom/value"
+```
 
 ---
 

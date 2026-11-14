@@ -42,7 +42,13 @@ Options:
 $ node custom-metadata-upload.js -f custom-metadata-test.csv -i cded0000-0000-0000-0000-00008980000.us -t visitor
 ```
 
-The script sends requests to `app.pendo.io`. If your subscription is hosted in another region, change `apiUrl` in the script to the host you sign in to Pendo with (for example `app.eu.pendo.io`).
+The `-d` (`--debug`) option has no effect at the moment: its value is stored but never used.
+
+The script sends requests to `app.pendo.io`. If your subscription is hosted in another region, edit `apiUrl` in the script and replace only the `app.pendo.io` part with the host you sign in to Pendo with, keeping `https://` and the rest of the path. For example, for EU subscriptions:
+
+```js
+let apiUrl = `https://app.eu.pendo.io/api/v1/metadata/${options.type}/custom/value`;
+```
 
 ## File Format
 

@@ -50,7 +50,7 @@ Note that this section does NOT cover [Pendo Metadata](https://support.pendo.io/
 
 The `scripts` folder contains command-line scripts, in JavaScript (Node.js) and Ruby, that call the [Pendo API](https://engageapi.pendo.io). Currently these upload custom visitor or account metadata from a CSV file. Each script has its own README with installation steps, options, and the expected CSV format.
 
-The scripts need a Pendo integration key with write access, and API access is a paid feature of the Pendo platform. They send requests to `app.pendo.io`; if your subscription is hosted in another region, change the host in the script to the one you use to sign in to Pendo.
+The scripts need a Pendo integration key with write access, and API access is a paid feature of the Pendo platform. They send requests to `app.pendo.io`; if your subscription is hosted in another region, replace only that host name in the script's endpoint URL with the one you use to sign in to Pendo (each script's README shows an example).
 
 ## Custom Install
 

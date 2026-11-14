@@ -31,13 +31,6 @@
                 "segment": {
                     "id": "SEGMENT ID"
                 }
-            },
-            {
-                "group": {
-                    "group": [
-                        "visitorId"
-                    ]
-                }
             }
         ]
     }

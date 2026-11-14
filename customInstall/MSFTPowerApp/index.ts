@@ -14,7 +14,7 @@ declare
 var pendo: any;
 
 export
-    class <YOUR-PCF - COMPONENT - NAME >
+    class YourPcfComponentName // Rename to your PCF component's class name
         implements ComponentFramework.StandardControl < IInputs, IOutputs > {
             private _divContainer: HTMLDivElement;
 
@@ -25,13 +25,16 @@ export
             private _visitorValue3: any = "";
 
             private _accountValue1: any = "";
-            private _accountValue1: any = "";
+            private _accountValue2: any = "";
 
             private _context: ComponentFramework.Context<IInputs>;
 
             // Optionally, declare callpendo as a lever to enable/disable Pendo initialization
             // This could be set true or false elsewhere as an easy control
             private _callpendo: any = "";
+
+            // PCF calls updateView many times; only initialize Pendo once
+            private _pendoInitialized = false;
             constructor() {
             }
 
@@ -66,7 +69,8 @@ export
 
                 // If all fields above had values, and callpendo is true, proceed.
 
-                if (fieldsHaveValues && this._callpendo === "true") {
+                if (!this._pendoInitialized && fieldsHaveValues && this._callpendo === "true") {
+                    this._pendoInitialized = true;
 
                     // This is the actual Pendo initialization logic, which could be used without the validation logic above if preferred.
                     pendo.initialize({

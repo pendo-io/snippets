@@ -22,12 +22,19 @@ if(!pendo.designerEnabled) {
     
    if (target) observer.observe(target, config);  
 
-    // Stop observing and remove the injected styles when the guide closes
+    // All instances share one <style id="pendoSvgStyles"> element, so count the active
+    // instances and only remove it when the last one closes
+    pendo._circleLineTooltipUsers = (pendo._circleLineTooltipUsers || 0) + 1;
+
+    // Stop observing, and remove the injected styles once no instance needs them
     if (step && step.after) {
         step.after('teardown', function () {
             observer.disconnect();
-            var styleElem = document.getElementById("pendoSvgStyles");
-            if (styleElem) styleElem.parentNode.removeChild(styleElem);
+            pendo._circleLineTooltipUsers = Math.max(0, (pendo._circleLineTooltipUsers || 1) - 1);
+            if (pendo._circleLineTooltipUsers === 0) {
+                var styleElem = document.getElementById("pendoSvgStyles");
+                if (styleElem) styleElem.parentNode.removeChild(styleElem);
+            }
         });
     }
 })(step, guide);

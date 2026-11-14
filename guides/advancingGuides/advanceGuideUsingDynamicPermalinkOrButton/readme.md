@@ -34,3 +34,7 @@ Here we have 2 option to trigger the dynamic permalik
 **2. Using default button provided within guides, use the UsingDefaultGuideButtons folder for codes**
 
 <img width="576" alt="Screenshot 2022-12-14 at 3 53 33 PM" src="https://user-images.githubusercontent.com/15645502/207570079-d22f104b-60e9-4368-b8f7-a12371803a1f.png">
+
+## Privacy
+
+The permalink URL is built from visitor or account metadata, and anything in a URL can end up in browser history, server logs, and analytics tools. Avoid personal data such as email addresses or names in the URL. The snippets only use the account name as a subdomain if it contains just letters, digits, and hyphens, so an unexpected value can't send the user to another site.

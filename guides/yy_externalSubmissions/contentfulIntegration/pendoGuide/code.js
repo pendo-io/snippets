@@ -13,6 +13,8 @@
  */
 (function createDynamicGuide() {
 	
+	// This token is visible to anyone who can see the guide. Only use a read-only
+	// Content Delivery API token, never a Content Management or Preview token.
 	let contentfulAuthToken = 'CONTENTFUL_API_TOKEN';
 	let contentfulSpaceId = 'CONTENTFUL_CONTENT_SPACE_ID';
 	let contentId = window.ppContentGuideKey || 'YOUR_DEFAULT_CONTENT_KEY';

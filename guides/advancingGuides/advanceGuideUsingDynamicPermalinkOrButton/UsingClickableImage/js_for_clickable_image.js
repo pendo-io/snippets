@@ -17,11 +17,23 @@
             Use ${pendo.accountId} to provide the Account ID value
             Use ${pendo.getSerializedMetadata().visitor.metadataname} to get the value of a visitor level metadata field. Replace 'metadataname' with the name of the metadata field.
             Use ${pendo.getSerializedMetadata().account.metadataname} to get the value of an account level metadata field
+
+            Privacy: anything in the URL can end up in browser history, logs, and analytics tools.
+            Avoid personal data such as email addresses or names, and encode values used in the
+            path or query string with encodeURIComponent().
             
             */
 
             // get the account name metadata value to be used ahead in the URL using pendo.getSerializedMetadata.
-            var account_name = pendo.getSerializedMetadata().account.name;
+            var metadata = pendo.getSerializedMetadata();
+            var account_name = metadata && metadata.account && metadata.account.name;
+
+            // The value becomes part of the hostname, so only allow letters, digits, and hyphens.
+            // Otherwise a value like "evil.com/" could send the user to another site.
+            if (!account_name || !/^[a-z0-9-]+$/i.test(account_name)) {
+                pendo.log('Dynamic permalink: account name is missing or not a valid subdomain; not redirecting.');
+                return;
+            }
 
             // build your URL by using the account name metadata directly.
             var newurl = "https://" + account_name + ".app.com/settings/manage?pendo=guide_id"

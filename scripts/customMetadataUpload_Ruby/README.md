@@ -44,4 +44,4 @@ The CSV file _must_ have headers, with the correct metadata key names that you w
 
 ## Output
 
-Results from the script (including successes, failures, and HTTP request info) will be output to a file called custom-metadata-output.log, in the same directory as the one where you run the script.
+Results from the script (including successes, failures, and HTTP status codes; the integration key is not logged) will be output to a file called custom-metadata-output.log, in the same directory as the one where you run the script.

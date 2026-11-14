@@ -3,7 +3,7 @@
 (function previousStepIfError() {
     if (!pendo.designerEnabled) { //preview/active guides will not show container, but you can still edit it when in the pendo designer
         //input unique .class or #id selector of the error div
-        errorSelector = ".errorMessageBar"
+        var errorSelector = ".errorMessageBar"
 
         document.getElementById("pendo-guide-container").style.display = "none"; //preview/active guides will not show container, but you can still edit it when in the pendo designer
         
@@ -12,17 +12,25 @@
         //var thisStepNumber = guide.getPositionOfStep(step)
         //var nextStepNumber = guide.getPositionOfStep(step)+1
 
-        setTimeout(
+        var checkTimer = setTimeout(
             function checkElementAndSkip() {
                 var results = pendo.Sizzle(`${errorSelector}`); //errDiv
                 if (results.length === 0 || !pendo._.some(results, pendo.isElementVisible)) {
                     pendo.log(guide.id + ':advance 1 step');
                     pendo.onGuideAdvanced();
-                } else {
-                    pendo.log(guide.id + ':advance to designated step');
+                } else if (previousStepNumber >= 1) {
+                    pendo.log(guide.id + ':go back to previous step');
                     pendo.goToStep({destinationStepId: pendo.getActiveGuide().guide.steps[previousStepNumber-1].id}); //previousStepNumber -1 because 0 based
+                } else {
+                    // First step: there is no previous step, so show this one again
+                    document.getElementById("pendo-guide-container").style.display = "";
                 }
             }
         , 1000)
+
+        // Don't act on a later step if this one closes before the check runs
+        step.after('teardown', function () {
+            clearTimeout(checkTimer);
+        });
     }
 })();

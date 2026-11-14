@@ -3,7 +3,7 @@
 if (navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1) { pendo.onGuideDismissed(); }
 
 (function(dom, guides) {
-    if (!pendo.designer) {
+    if (!pendo.designerEnabled) {
         dom('body').addClass('modal-open')   
     }
     
@@ -27,7 +27,9 @@ if (navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('
                 if (advanceButton.length) {
                     pendo.dom('._pendo-guide-cards-container_').addClass('_pendo-card-fade-out_');
 
-                    firstStep = pendo.findGuideById(id).steps[0];
+                    var nextGuide = pendo.findGuideById(id);
+                    if (!nextGuide) return; // guide ID missing or not eligible for this visitor
+                    var firstStep = nextGuide.steps[0];
                     firstStep.navigation_animation = '_pendo-card-fade-in_';
 
                     pendo._.delay(function() {
@@ -38,4 +40,9 @@ if (navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('
             });
         });
     })(step, guide);
+
+    // Always release the page scroll lock when this guide closes, however it closes
+    step && step.after('teardown', function () {
+        dom('body').removeClass('modal-open');
+    });
 }(pendo.dom, pendo.guides));

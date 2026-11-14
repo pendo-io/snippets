@@ -6,7 +6,8 @@ if(!pendo.designerEnabled) {
     var target = pendo.dom("#pendo-base")[0];
     var observer = new MutationObserver(function(mutations) {
         mutations.forEach(function(mutation) {
-            if (mutation.previousSibling.classList.contains("pendo-tooltip-caret") && pendo.dom("[class*='_PS_pendo']").length == 0) { 
+            var sibling = mutation.previousSibling;
+            if (sibling && sibling.classList && sibling.classList.contains("pendo-tooltip-caret") && pendo.dom("[class*='_PS_pendo']").length == 0) { 
                rotateCaret(target);
             }
         })
@@ -19,11 +20,21 @@ if(!pendo.designerEnabled) {
         subtree: true
     };
     
-   observer.observe(target, config);  
-    
+   if (target) observer.observe(target, config);  
+
+    // Stop observing and remove the injected styles when the guide closes
+    if (step && step.after) {
+        step.after('teardown', function () {
+            observer.disconnect();
+            var styleElem = document.getElementById("pendoSvgStyles");
+            if (styleElem) styleElem.parentNode.removeChild(styleElem);
+        });
+    }
 })(step, guide);
 
 function rotateCaret() {
+    // Nothing to do if this step has no caret (for example a lightbox) or the guide is gone
+    if (!pendo.dom("#pendo-guide-container")[0] || !pendo.dom(".pendo-tooltip-caret-border")[0]) return;
     var svgColor = encodeURIComponent(pendo.dom("#pendo-guide-container")[0].style.borderColor);
     var borderWidth = parseInt(pendo.dom("#pendo-guide-container")[0].style.borderWidth, 10);
     var svgCaretHeight = "";

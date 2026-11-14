@@ -4,51 +4,73 @@
 // created through the designer, and then an open text poll that contains
 // the question header text "[hidden]".
 //
-const guideContainerSelector = "[id^=pendo-guide-container]"; // flexible for overlay and embed guides
-const containerSelectorId = `pendo-g-${guide.id}`;
+(function multiSelectCheckboxPolls(step, guide) {
+    // Only look inside this guide, so radio buttons in the host app or in other guides are left alone
+    var guideRoot = (step && step.guideElement && step.guideElement[0]) || document.getElementById("pendo-guide-container");
+    if (!guideRoot) return;
 
-var radios = pendo.dom('input[type="radio"]');
-pendo._.each(radios, function(radio) {
-    radio.type = "checkbox";
-});
-
-var hiddenPollId = pendo.dom('[data-pendo-poll-id]:contains("[hidden]")')[0]
-    .attributes["data-pendo-poll-id"].value;
-var hiddenTextBox = pendo.dom(
-    "textarea[data-pendo-poll-id=" + hiddenPollId + "]",
-)[0];
-
-if (!pendo.designerEnabled) {
-    pendo.dom(guideContainerSelector)[0].style.opacity = 0;
-    hiddenElements = pendo.dom("[data-pendo-poll-id=" + hiddenPollId + "]");
-    setTimeout(() => {
-        for (var key of Object.keys(hiddenElements)) {
-            if (hiddenElements[key] && hiddenElements[key].tagName) {
-                hiddenElements[key].style.display = "none";
-            }
-        }
-    }, 50);
-}
-
-var chkArray = [];
-pendo.dom("input").on("click", 'input[type="checkbox"]', function(e) {
-    var labelName = e.target.id;
-    var label = pendo.dom('label[for="' + labelName + '"]')[0].innerText;
-
-    if (!chkArray.includes(label)) {
-        chkArray.push(label);
-    } else {
-        var index = chkArray.indexOf(label);
-        if (index !== -1) chkArray.splice(index, 1);
+    function inGuide(selector) {
+        return Array.prototype.filter.call(pendo.dom(selector), function(el) {
+            return guideRoot.contains(el);
+        });
     }
 
-    hiddenTextBox.innerText = chkArray.join(",");
-});
+    var guideContainerSelector = "[id^=pendo-guide-container]"; // flexible for overlay and embed guides
+    var containerSelectorId = `pendo-g-${guide.id}`;
+    var guideContainer = inGuide(guideContainerSelector)[0] || guideRoot;
 
-setTimeout(() => {
-    const actualHeight = pendo.dom(guideContainerSelector).height();
-    const heightWithPx = `${actualHeight}px`;
-    pendo.dom(containerSelectorId).css({ height: heightWithPx });
-    pendo.dom(guideContainerSelector)[0].style.opacity = 1;
-    pendo.flexElement(pendo.dom("#pendo-guide-container")[0]);
-}, 50);
+    var hiddenQuestion = inGuide('[data-pendo-poll-id]:contains("[hidden]")')[0];
+    if (!hiddenQuestion) {
+        console.warn('multiSelectCheckboxPolls: no open text poll with the text "[hidden]" was found in this guide.');
+        return;
+    }
+    var hiddenPollId = hiddenQuestion.getAttribute("data-pendo-poll-id");
+    var hiddenTextBox = inGuide("textarea[data-pendo-poll-id=" + hiddenPollId + "]")[0];
+
+    pendo._.each(inGuide('input[type="radio"]'), function(radio) {
+        radio.type = "checkbox";
+    });
+
+    if (!pendo.designerEnabled) {
+        guideContainer.style.opacity = 0;
+        var hiddenElements = inGuide("[data-pendo-poll-id=" + hiddenPollId + "]");
+        setTimeout(function() {
+            hiddenElements.forEach(function(el) {
+                el.style.display = "none";
+            });
+        }, 50);
+    }
+
+    // Listen on the guide itself rather than on every input on the page
+    var chkArray = [];
+    guideRoot.addEventListener("click", function(e) {
+        var input = e.target;
+        if (!input || input.tagName !== "INPUT" || input.type !== "checkbox") return;
+
+        var labelElement = guideRoot.querySelector('label[for="' + input.id + '"]');
+        if (!labelElement) return;
+        var label = labelElement.innerText;
+
+        if (!chkArray.includes(label)) {
+            chkArray.push(label);
+        } else {
+            var index = chkArray.indexOf(label);
+            if (index !== -1) chkArray.splice(index, 1);
+        }
+
+        if (hiddenTextBox) {
+            hiddenTextBox.innerText = chkArray.join(",");
+        }
+    });
+
+    setTimeout(function() {
+        var actualHeight = pendo.dom(guideContainerSelector).height();
+        var heightWithPx = `${actualHeight}px`;
+        pendo.dom(containerSelectorId).css({ height: heightWithPx });
+        guideContainer.style.opacity = 1;
+        var flexTarget = inGuide("#pendo-guide-container")[0];
+        if (flexTarget) {
+            pendo.flexElement(flexTarget);
+        }
+    }, 50);
+})(step, guide);

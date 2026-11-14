@@ -2,11 +2,14 @@
 // the placeholder text "hidden box".  It will get hidden by the designer when
 // the guide is previewed or is live.
 
-var hiddenBox = pendo.dom('._pendo-open-text-poll-input[placeholder="hidden box"]');
-if(!pendo.designerEnabled) {
+var hiddenBox = pendo.dom('#pendo-guide-container ._pendo-open-text-poll-input[placeholder="hidden box"]');
+if(!pendo.designerEnabled && hiddenBox[0]) {
   hiddenBox[0].parentElement.parentElement.parentElement.style.display = "none";
 }
 
 pendo.syncFields = function(event) {
-    hiddenBox[0].innerText = pendo.dom("#datepicker")[0].value;
+    var datepicker = pendo.dom("#pendo-guide-container #datepicker")[0];
+    if (hiddenBox[0] && datepicker) {
+        hiddenBox[0].innerText = datepicker.value;
+    }
 }

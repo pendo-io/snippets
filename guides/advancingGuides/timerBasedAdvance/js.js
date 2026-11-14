@@ -60,6 +60,8 @@ function onTimesUp() {
 
 function startTimer() {
   status = "started";
+  // Never run two intervals at once (a quick pause and resume used to start a second one)
+  clearInterval(timerInterval);
   timerInterval = setInterval(() => {
     if (status == "started") {
       timePassed = timePassed += 1;
@@ -130,6 +132,7 @@ function pauseTimer() {
     pauseIcon.classList.add('pause');
   }else{
     status = "paused";
+    clearInterval(timerInterval);
     pauseIcon.classList.remove('pause');
     pauseIcon.classList.add('play');
 
@@ -141,4 +144,5 @@ pauseBtn.addEventListener("click", pauseTimer);
 
 step.after('teardown', function () {
         clearInterval(timerInterval);
+        pauseBtn.removeEventListener("click", pauseTimer);
 });

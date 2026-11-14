@@ -4,13 +4,21 @@ var dependentButtons = [];
 var textForDisabledButtons = ["Submit", "Next", "Finish"];
 var isButtonDisabled = false;
 
+// Only match elements inside the guide, so buttons in the host app or other guides are not touched
+function requiredQuestionsInGuide(selector) {
+    var guideContainer = document.getElementById("pendo-guide-container");
+    return Array.prototype.filter.call(pendo.dom(selector), function(el) {
+        return guideContainer && guideContainer.contains(el);
+    });
+}
+
 function requiredHTML(dataPendoPollId) {
     return '<span class="required-wrapper" name="' +  dataPendoPollId + '"> *</span>';
 } 
 
 function disableEligibleButtons(textForDisabledButtons) {
     for(var i=0; i < textForDisabledButtons.length; i++) {
-        var eligibleButtons = pendo.dom("._pendo-button:contains('" + textForDisabledButtons[i] + "')");
+        var eligibleButtons = requiredQuestionsInGuide("._pendo-button:contains('" + textForDisabledButtons[i] + "')");
         for (var k=0; k < eligibleButtons.length; k++) {
             eligibleButtons[k].disabled = true;
         }
@@ -19,7 +27,7 @@ function disableEligibleButtons(textForDisabledButtons) {
 
 function enableEligibleButtons(textForDisabledButtons) {
     for(var i=0; i < textForDisabledButtons.length; i++) {
-        var eligibleButtons = pendo.dom("._pendo-button:contains('" + textForDisabledButtons[i] + "')");
+        var eligibleButtons = requiredQuestionsInGuide("._pendo-button:contains('" + textForDisabledButtons[i] + "')");
         for (var k=0; k < eligibleButtons.length; k++) {
             eligibleButtons[k].disabled = false;
         }
@@ -28,7 +36,7 @@ function enableEligibleButtons(textForDisabledButtons) {
 
 if(!pendo.designerEnabled) {
     function processRequiredQuestions() {
-        requiredQuestions = pendo.dom("._pendo-open-text-poll-question:contains('[REQUIRED]'), ._pendo-number-scale-poll-question:contains('[REQUIRED]'), ._pendo-multi-choice-poll-question:contains('[REQUIRED]')");
+        requiredQuestions = requiredQuestionsInGuide("._pendo-open-text-poll-question:contains('[REQUIRED]'), ._pendo-number-scale-poll-question:contains('[REQUIRED]'), ._pendo-multi-choice-poll-question:contains('[REQUIRED]')");
         for(i=0; i<requiredQuestions.length; i++) {
             var dataPendoPollId = requiredQuestions[i].getAttribute("data-pendo-poll-id");
             requiredPollIds.push(dataPendoPollId);
@@ -77,19 +85,19 @@ if(!pendo.designerEnabled) {
 
     processRequiredQuestions();
 
-    document.querySelectorAll("._pendo-open-text-poll-input").forEach(textbox => {
+    requiredQuestionsInGuide("._pendo-open-text-poll-input").forEach(textbox => {
         textbox.addEventListener("input", function() {
             evaluateRequiredQuestions();
         })
     })
 
-    pendo.dom("#pendo-guide-container")[0].addEventListener("click", function(){
+    pendo.dom("#pendo-guide-container")[0].addEventListener("click", function(event){
         if(!event.target.classList.contains("_pendo-button")) {
            evaluateRequiredQuestions(); 
         }
     });
 
-    pendo.dom("#pendo-guide-container")[0].addEventListener("change", function(){
+    pendo.dom("#pendo-guide-container")[0].addEventListener("change", function(event){
         if(!event.target.classList.contains("_pendo-button")) {
            evaluateRequiredQuestions(); 
         }
@@ -98,7 +106,7 @@ if(!pendo.designerEnabled) {
 }
 
 if(pendo.designerEnabled) {                          
-    addRequiredMutationListener = function() {
+    var addRequiredMutationListener = function() {
         var target = document.querySelector('#pendo-guide-container');
 
         // create an observer instance

@@ -140,4 +140,10 @@
       }
     });
   })(step, guide);
+
+  // Always release the page scroll lock when this step closes, however it closes.
+  // If the guide moves to another carousel step, that step adds it back.
+  step.after('teardown', function () {
+    dom('body').removeClass('modal-open');
+  });
 }(pendo.dom, pendo.guides));

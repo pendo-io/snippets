@@ -13,7 +13,7 @@ function branchingErrorHTML(dataPendoPollId) {
 //Execute in preview, staged, or production
 if(!pendo.designerEnabled) {
     function initialBranchingSetup() {
-        branchingQuestions = pendo.dom("._pendo-multi-choice-poll-question:contains('[BRANCHING]')");
+        branchingQuestions = pendo.dom("#pendo-guide-container ._pendo-multi-choice-poll-question:contains('[BRANCHING]')");
         
         if(branchingQuestions.length > 1) {
             console.log("Multiple guide questions marked as branching within same step; exiting guide.")
@@ -27,8 +27,8 @@ if(!pendo.designerEnabled) {
 
             var dataPendoPollId = branchingQuestions[0].getAttribute("data-pendo-poll-id");
             branchingQuestions[0].innerText = branchingQuestions[0].innerText.replace("[BRANCHING]", "");
-            var pollLabels = pendo.dom("label[for*='" + dataPendoPollId + "']");
-            var pollInputs = pendo.dom('input[data-pendo-poll-id=' + dataPendoPollId + ']');
+            var pollLabels = pendo.dom("#pendo-guide-container label[for*='" + dataPendoPollId + "']");
+            var pollInputs = pendo.dom('#pendo-guide-container input[data-pendo-poll-id=' + dataPendoPollId + ']');
 
             for(var i=0; i < pollLabels.length; i++) {
                 gotoSubstring = pollLabels[i].innerText.substring(0, pollLabels[i].innerText.indexOf(']')+1);
@@ -43,35 +43,40 @@ if(!pendo.designerEnabled) {
 
     initialBranchingSetup();
 
-    document.querySelectorAll("input[data-pendo-poll-id]").forEach(input => {
+    document.querySelectorAll("#pendo-guide-container input[data-pendo-poll-id]").forEach(input => {
         input.addEventListener("click", function() {
             addBranchingEventListener();
         })
     })
 
     function addBranchingEventListener() {
-        var guideButtons = pendo.dom("._pendo-button");
-        var checkedPollInputId = pendo.dom('input.pendo-radio[data-pendo-poll-id]:checked')[0].id;
-        var checkedPollLabel = pendo.dom('label[for="' + checkedPollInputId + '"]')[0];
+        var guideButtons = pendo.dom("#pendo-guide-container ._pendo-button");
+        var checkedPollInput = pendo.dom('#pendo-guide-container input.pendo-radio[data-pendo-poll-id]:checked')[0];
+        if (!checkedPollInput) return;
+        var checkedPollLabel = pendo.dom('#pendo-guide-container label[for="' + checkedPollInput.id + '"]')[0];
+        if (!checkedPollLabel) return;
         var checkedPollLabelStepIndex = checkedPollLabel.getAttribute("goToStep");
 
-        for (i = 0; i < guideButtons.length; i++) {
+        for (var i = 0; i < guideButtons.length; i++) {
             if(textForBranchingButtons.map(t => t.toLowerCase()).includes(guideButtons[i].innerText.toLowerCase()) && (checkedPollLabelStepIndex)) {
                 let clone = guideButtons[i].cloneNode(true);
                 let innerText = guideButtons[i].innerText;
                 guideButtons[i].replaceWith(clone);
-                pendo.dom("._pendo-button")[0].addEventListener("click", branchingGoToStep);
+                // Attach to the clone that replaced this button (not the first button in the page)
+                clone.addEventListener("click", branchingGoToStep);
             }
         }
     }
 
     function branchingGoToStep(event) {
-        var checkedPollInputId = pendo.dom('input.pendo-radio[data-pendo-poll-id]:checked')[0].id;
-        var checkedPollLabel = pendo.dom('label[for="' + checkedPollInputId + '"]')[0];
+        var checkedPollInput = pendo.dom('#pendo-guide-container input.pendo-radio[data-pendo-poll-id]:checked')[0];
+        if (!checkedPollInput) return;
+        var checkedPollLabel = pendo.dom('#pendo-guide-container label[for="' + checkedPollInput.id + '"]')[0];
+        if (!checkedPollLabel) return;
         var checkedPollLabelStepIndex = checkedPollLabel.getAttribute("goToStep");
 
         var responses = [];
-        var questions = pendo.Sizzle('[data-pendo-poll-id]');
+        var questions = pendo.Sizzle('#pendo-guide-container [data-pendo-poll-id]');
         responses = responses.concat(pendo._.map(questions, function(question) {
             var input = pendo.Sizzle('textarea,input:text,select,input:radio:checked', question);
             if (input && input.length && input[0].value) {
@@ -103,7 +108,7 @@ if(!pendo.designerEnabled) {
 
 //Only executed when the Pendo Designer is open
 if(pendo.designerEnabled) {                          
-    addRequiredMutationListener = function() {
+    var addBranchingMutationListener = function() {
         var target = document.querySelector('#pendo-guide-container');
 
         // create an observer instance
@@ -159,5 +164,5 @@ if(pendo.designerEnabled) {
         observer.observe(target, config);
     }
 
-    addRequiredMutationListener();
+    addBranchingMutationListener();
 }

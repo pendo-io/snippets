@@ -1,4 +1,20 @@
 (function(dom, guides) {
+  // Track whether this snippet added the page scroll lock, so a lock that the host
+  // app already set (Bootstrap also uses "modal-open" for its own modals) is left alone
+  var ownsScrollLock = false;
+  function lockPageScroll() {
+    if (!document.body.classList.contains('modal-open')) {
+      dom('body').addClass('modal-open');
+      ownsScrollLock = true;
+    }
+  }
+  function releasePageScroll() {
+    if (ownsScrollLock) {
+      dom('body').removeClass('modal-open');
+      ownsScrollLock = false;
+    }
+  }
+
   var currentGuide = pendo.findGuideById(step.guideId);
   var currentStepIndex = pendo._.indexOf(currentGuide.steps, step);
   var currentStep = currentGuide.steps[currentStepIndex];
@@ -54,7 +70,7 @@
     dom('._pendo-guide-arrow-wrapper_, ._pendo-guide-step-indicators_, ._pendo-guide-back-to-main_').addClass(navigationAnimation);
 
     if (pendo.isGuideShown()) {
-      dom('body').addClass('modal-open')
+      lockPageScroll();
     }
   }
 
@@ -71,7 +87,7 @@
       var guideContent = dom('._pendo-guide-card-content_');
 
       if (dismissButton.length) {
-        dom('body').removeClass('modal-open');
+        releasePageScroll();
       }
 
       if (advanceButton.length) {
@@ -141,9 +157,9 @@
     });
   })(step, guide);
 
-  // Always release the page scroll lock when this step closes, however it closes.
-  // If the guide moves to another carousel step, that step adds it back.
+  // Always release this snippet's page scroll lock when the step closes, however it
+  // closes. If the guide moves to another carousel step, that step adds it back.
   step.after('teardown', function () {
-    dom('body').removeClass('modal-open');
+    releasePageScroll();
   });
 }(pendo.dom, pendo.guides));

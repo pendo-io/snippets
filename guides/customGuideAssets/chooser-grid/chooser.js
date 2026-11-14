@@ -3,8 +3,24 @@
 if (navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1) { pendo.onGuideDismissed(); }
 
 (function(dom, guides) {
+    // Track whether this snippet added the page scroll lock, so a lock that the host
+    // app already set (Bootstrap also uses "modal-open" for its own modals) is left alone
+    var ownsScrollLock = false;
+    function lockPageScroll() {
+        if (!document.body.classList.contains('modal-open')) {
+            dom('body').addClass('modal-open');
+            ownsScrollLock = true;
+        }
+    }
+    function releasePageScroll() {
+        if (ownsScrollLock) {
+            dom('body').removeClass('modal-open');
+            ownsScrollLock = false;
+        }
+    }
+
     if (!pendo.designerEnabled) {
-        dom('body').addClass('modal-open')   
+        lockPageScroll();
     }
     
     (function wireNextGuideButton(step) {
@@ -21,14 +37,16 @@ if (navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('
                 var dismissButton = dom(e.target || e.srcElement).closest('._pendo-close-guide_');
 
                 if (dismissButton.length) {
-                    dom('body').removeClass('modal-open');
+                    releasePageScroll();
                 }
 
                 if (advanceButton.length) {
-                    pendo.dom('._pendo-guide-cards-container_').addClass('_pendo-card-fade-out_');
-
+                    // Check the destination first, so the cards aren't faded out for a guide that can't open
                     var nextGuide = pendo.findGuideById(id);
                     if (!nextGuide) return; // guide ID missing or not eligible for this visitor
+
+                    pendo.dom('._pendo-guide-cards-container_').addClass('_pendo-card-fade-out_');
+
                     var firstStep = nextGuide.steps[0];
                     firstStep.navigation_animation = '_pendo-card-fade-in_';
 
@@ -41,8 +59,8 @@ if (navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('
         });
     })(step, guide);
 
-    // Always release the page scroll lock when this guide closes, however it closes
+    // Always release this snippet's page scroll lock when the guide closes, however it closes
     step && step.after('teardown', function () {
-        dom('body').removeClass('modal-open');
+        releasePageScroll();
     });
 }(pendo.dom, pendo.guides));

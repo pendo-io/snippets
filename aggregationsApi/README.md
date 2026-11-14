@@ -28,4 +28,6 @@ You can find a page or segment ID in the URL when you open it in Pendo.
 
 ### Date ranges
 
-Each query sets its own date range in a `timeSeries` block. For example, `"first": "dateAdd(startOfPeriod(\"daily\",now()),-2,\"days\")"` with `"last": "dateAdd(startOfPeriod(\"daily\",now()),-1,\"days\")"` covers the two days before today. Adjust `first` and `last` (or `count`) to change the range; longer ranges return more data and take longer to run.
+The event queries (every file here except `visitorsInSegmentWithAccountMetadata.json`) set their own date range in a `timeSeries` block. For example, `"first": "dateAdd(startOfPeriod(\"daily\",now()),-2,\"days\")"` with `"last": "dateAdd(startOfPeriod(\"daily\",now()),-1,\"days\")"` covers the two days before today. Adjust `first` and `last` (or `count`) to change the range; longer ranges return more data and take longer to run.
+
+`visitorsInSegmentWithAccountMetadata.json` is the exception: it reads from the `visitors` source, has no `timeSeries` block, and returns every visitor in the segment regardless of when they were active.

@@ -1,7 +1,9 @@
 // This guide sets new metadata for the visitor when they hit Submit!
 
 // Only look inside the guide, so elements in the host app or other guides are not used
-var guideContainer = document.getElementById('pendo-guide-container');
+// This guide's own element. step.guideElement works for overlay and embedded guides; the fallback
+// matches any container ID that starts with pendo-guide-container (embedded guides add a suffix).
+var guideContainer = (typeof step !== 'undefined' && step && step.guideElement && step.guideElement[0]) || document.querySelector('[id^="pendo-guide-container"]');
 
 // Get selector for dropdown
 var personaSelect = guideContainer && guideContainer.querySelector('._pendo-multi-choice-poll-select');

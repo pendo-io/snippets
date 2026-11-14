@@ -1,7 +1,9 @@
 function initAcc(elem, option){
     // Listen on the guide container rather than the whole document, so the listener
     // goes away with the guide and accordions in the host app are not affected
-    var guideContainer = document.getElementById('pendo-guide-container');
+    // This guide's own element. step.guideElement works for overlay and embedded guides; the fallback
+    // matches any container ID that starts with pendo-guide-container (embedded guides add a suffix).
+    var guideContainer = (typeof step !== 'undefined' && step && step.guideElement && step.guideElement[0]) || document.querySelector('[id^="pendo-guide-container"]');
     if (!guideContainer || guideContainer.getAttribute('data-accordion-ready')) return;
     guideContainer.setAttribute('data-accordion-ready', 'true');
 

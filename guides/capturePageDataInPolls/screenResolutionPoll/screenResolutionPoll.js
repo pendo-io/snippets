@@ -1,6 +1,6 @@
 (function screenResolutionPoll(step) {
     // Only look inside this guide, so inputs and buttons elsewhere on the page are not used
-    var guideRoot = (step && step.guideElement && step.guideElement[0]) || document.getElementById('pendo-guide-container');
+    var guideRoot = (step && step.guideElement && step.guideElement[0]) || document.querySelector('[id^="pendo-guide-container"]');
     if (!guideRoot) return;
 
     var widthInput = guideRoot.querySelector('[data-_pendo-open-text-poll-input-1]');

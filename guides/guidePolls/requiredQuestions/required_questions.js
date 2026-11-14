@@ -5,8 +5,14 @@ var textForDisabledButtons = ["Submit", "Next", "Finish"];
 var isButtonDisabled = false;
 
 // Only match elements inside the guide, so buttons in the host app or other guides are not touched
+function requiredQuestionsGuideRoot() {
+    // This guide's own element. step.guideElement works for overlay and embedded guides; the fallback
+    // matches any container ID that starts with pendo-guide-container (embedded guides add a suffix).
+    return (typeof step !== 'undefined' && step && step.guideElement && step.guideElement[0]) || document.querySelector('[id^="pendo-guide-container"]');
+}
+
 function requiredQuestionsInGuide(selector) {
-    var guideContainer = document.getElementById("pendo-guide-container");
+    var guideContainer = requiredQuestionsGuideRoot();
     return Array.prototype.filter.call(pendo.dom(selector), function(el) {
         return guideContainer && guideContainer.contains(el);
     });
@@ -91,13 +97,14 @@ if(!pendo.designerEnabled) {
         })
     })
 
-    pendo.dom("#pendo-guide-container")[0].addEventListener("click", function(event){
+    var requiredGuideRoot = requiredQuestionsGuideRoot();
+    requiredGuideRoot && requiredGuideRoot.addEventListener("click", function(event){
         if(!event.target.classList.contains("_pendo-button")) {
            evaluateRequiredQuestions(); 
         }
     });
 
-    pendo.dom("#pendo-guide-container")[0].addEventListener("change", function(event){
+    requiredGuideRoot && requiredGuideRoot.addEventListener("change", function(event){
         if(!event.target.classList.contains("_pendo-button")) {
            evaluateRequiredQuestions(); 
         }

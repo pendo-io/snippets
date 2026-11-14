@@ -6,7 +6,7 @@
 //
 (function multiSelectCheckboxPolls(step, guide) {
     // Only look inside this guide, so radio buttons in the host app or in other guides are left alone
-    var guideRoot = (step && step.guideElement && step.guideElement[0]) || document.getElementById("pendo-guide-container");
+    var guideRoot = (step && step.guideElement && step.guideElement[0]) || document.querySelector('[id^="pendo-guide-container"]');
     if (!guideRoot) return;
 
     function inGuide(selector) {

@@ -106,20 +106,34 @@
     // Keep submit disabled until every upload has finished (or failed)
     pendingUploads += files.length;
     formSubmit.disabled = pendingUploads > 0;
-    var finishUpload = function() {
-      --remoteCallsRemaining;
-      pendingUploads = Math.max(0, pendingUploads - 1);
-      if (pendingUploads === 0 && !formSubmit.classList.contains('is-submitting')) {
-        formSubmit.disabled = false;
-      }
-      if (remoteCallsRemaining <= 0) {
-        updateScrollPosition();
-        resetUploadsProgress();
-      }
-    };
     for (i = 0; i < files.length; i++) {
       let file = files[i];
       let reader = new FileReader();
+      // Each file releases its hold on Submit once (when its token is stored or it fails),
+      // and finishes its progress UI once (when its preview loads or it fails)
+      let submitReleased = false;
+      let previewFinished = false;
+      let releaseSubmit = function() {
+        if (submitReleased) return;
+        submitReleased = true;
+        pendingUploads = Math.max(0, pendingUploads - 1);
+        if (pendingUploads === 0 && !formSubmit.classList.contains('is-submitting')) {
+          formSubmit.disabled = false;
+        }
+      };
+      let finishPreview = function() {
+        if (previewFinished) return;
+        previewFinished = true;
+        --remoteCallsRemaining;
+        if (remoteCallsRemaining <= 0) {
+          updateScrollPosition();
+          resetUploadsProgress();
+        }
+      };
+      let finishUpload = function() {
+        releaseSubmit();
+        finishPreview();
+      };
       reader.onload = function(e) {
         fetch(zendeskApiAddress + 'api/v2/uploads.json?filename=' + escape(file.name), {
           method: 'POST',
@@ -151,9 +165,10 @@
 
             var attachmentPreview = document.createElement('img');
             attachmentPreview.className = '_pendo-contact-form__drop-zone-preview_';
-            attachmentPreview.onload = finishUpload;
+            // The preview only affects the progress UI; Submit is released once the token is stored
+            attachmentPreview.onload = finishPreview;
             // Non-image attachments have no preview, but the upload still succeeded
-            attachmentPreview.onerror = finishUpload;
+            attachmentPreview.onerror = finishPreview;
             attachmentPreview.src = data.upload.attachment.content_url;
 
             fragment.appendChild(removeAttachment);
@@ -168,6 +183,7 @@
             var dropzoneToken = data.upload.token;
             uploads.push(dropzoneToken);
             dropzoneUploads.value = (uploads.join());
+            releaseSubmit();
           }
           return;
         }).catch(function(error) {

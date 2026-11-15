@@ -2,6 +2,7 @@
 (function goToStepNoElement() {
     // Warning: .getPositionOfStep() is 1-based
     var nextStep = guide.steps[guide.getPositionOfStep(step)];
+    if (!nextStep) return; // last step: there is no next element to check
     
     // The step of your guide you would like to go to when the element of the subsequent step isn't present
     var desiredStep = 5; //<--Step number as displayed in Pendo

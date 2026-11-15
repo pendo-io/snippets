@@ -282,7 +282,7 @@ overflow: hidden !important;
                 width: 35%;
                 text-transform: uppercase;
                 line-height: 12px;
-                color: #f8f8;
+                color: #f8f8f8;
                 -webkit-font-smoothing: antialiased;
                 -moz-osx-font-smoothing: grayscale;
               }
@@ -308,7 +308,7 @@ overflow: hidden !important;
                 transform: translateY(-50%);
                 & h3 {
                   margin: 0 0 20px 0;
-                  color: #f8f8;
+                  color: #f8f8f8;
                   font: 700 28px/1.1em "proxima-nova", sans-serif;
                   -webkit-font-smoothing: antialiased;
                   -moz-osx-font-smoothing: grayscale;
@@ -402,4 +402,31 @@ overflow: hidden !important;
 ._pendo-card-fade-in_ {
   -webkit-animation: pendo-card-fade-in 300ms ease-in-out 0ms both;
   animation: pendo-card-fade-in 300ms ease-in-out 0ms both;
+}
+
+/* Card animations referenced above. "left in" enters from the left, "right in" enters
+   from the right; the "out" versions leave in that direction. */
+@keyframes pendo-card-slide-left-in {
+  from { opacity: 0; transform: translateX(-40px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+@keyframes pendo-card-slide-left-out {
+  from { opacity: 1; transform: translateX(0); }
+  to { opacity: 0; transform: translateX(-40px); }
+}
+@keyframes pendo-card-slide-right-in {
+  from { opacity: 0; transform: translateX(40px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+@keyframes pendo-card-slide-right-out {
+  from { opacity: 1; transform: translateX(0); }
+  to { opacity: 0; transform: translateX(40px); }
+}
+@keyframes pendo-card-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes pendo-card-fade-out {
+  from { opacity: 1; }
+  to { opacity: 0; }
 }

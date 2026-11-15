@@ -6,9 +6,8 @@
         "4" : "/path/to/four.png"
     }
 
-    for (i = 1; i < 4; i++) {
-        if (translate.hasOwnProperty(i)) {
-            pendo.dom('._pendo-number-scale-poll-' + i).html('<img src="' + translate[i] + '" style="height: 43px; width: 43px;" alt="' + i + '">');
-        }
-    }
+    // Replace every number listed in translate (the old loop stopped before "4")
+    Object.keys(translate).forEach(function (number) {
+        pendo.dom('._pendo-number-scale-poll-' + number).html('<img src="' + translate[number] + '" style="height: 43px; width: 43px;" alt="' + number + '">');
+    });
 })();

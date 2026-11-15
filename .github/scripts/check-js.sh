@@ -2,7 +2,7 @@
 # Checks the JavaScript files changed between BASE and HEAD:
 #   1. Syntax: every changed file must parse (node --check).
 #   2. Lint (ESLint, see eslint.config.mjs): a changed file may not have more errors
-#      than it had on the base branch. Errors that were already there are reported as
+#      than it had where this branch started (the merge base with BASE). Errors that were already there are reported as
 #      notices but don't fail the check, so editing an old file isn't blocked by
 #      problems you didn't introduce. New files must have no errors. A renamed file is
 #      compared with its contents under the old name.
@@ -22,10 +22,18 @@ if [ ! -x "$ESLINT" ]; then
   exit 1
 fi
 
+# Compare against the merge base of BASE and HEAD: the point this branch started
+# from. Both the list of changed files and each file's previous version come from
+# it, so changes made on BASE since then don't affect the result.
+if ! merge_base=$(git merge-base "$BASE" HEAD 2> "$tmp/merge-base-error"); then
+  echo "::error::Could not find the merge base of $BASE and HEAD"
+  cat "$tmp/merge-base-error"
+  exit 1
+fi
+
 # List changed files with rename detection. Checked separately so a failed
-# comparison (for example an unknown BASE) fails the check instead of looking
-# like "nothing changed".
-if ! git diff --name-status -z -M --diff-filter=ACMR "$BASE...HEAD" -- '*.js' > "$tmp/diff" 2> "$tmp/diff-error"; then
+# comparison fails the check instead of looking like "nothing changed".
+if ! git diff --name-status -z -M --diff-filter=ACMR "$merge_base" HEAD -- '*.js' > "$tmp/diff" 2> "$tmp/diff-error"; then
   echo "::error::Could not compare with $BASE"
   cat "$tmp/diff-error"
   exit 1
@@ -79,7 +87,7 @@ lint_error_count() {
   ' "$tmp/report.json"
 }
 
-echo "Checking ${#changed[@]} changed JavaScript file(s) against $BASE"
+echo "Checking ${#changed[@]} changed JavaScript file(s) against $BASE (merge base ${merge_base:0:7})"
 status=0
 
 for i in "${!changed[@]}"; do
@@ -104,14 +112,14 @@ for i in "${!changed[@]}"; do
 
   base_errors=0
   if [ -n "$base_path" ]; then
-    if ! git show "$BASE:$base_path" > "$tmp/base.js" 2> "$tmp/show-error"; then
-      echo "::error file=$file::Could not read $base_path from $BASE"
+    if ! git show "$merge_base:$base_path" > "$tmp/base.js" 2> "$tmp/show-error"; then
+      echo "::error file=$file::Could not read $base_path from the merge base with $BASE"
       cat "$tmp/show-error"
       status=1
       continue
     fi
     if ! base_errors=$(lint_error_count --stdin --stdin-filename "$file" < "$tmp/base.js"); then
-      echo "::error file=$file::ESLint failed to run on the $BASE version"
+      echo "::error file=$file::ESLint failed to run on the previous version"
       status=1
       continue
     fi

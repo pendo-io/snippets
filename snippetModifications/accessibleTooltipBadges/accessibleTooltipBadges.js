@@ -37,8 +37,12 @@ pendo.addAltText = function(guideId) {
       var guideNameAltText = guideName.substring(guideName.indexOf("#[")+2, guideName.indexOf("]"));
     }
 
-    if(guideName == "Resource Center" && pendo.dom("#"+badgeId+ " input")[0]) {
-      pendo.dom("#"+badgeId+ " input")[0].setAttribute('alt', "Resource Center");
+    if(guideName == "Resource Center") {
+      pendo.dom("#"+badgeId+ " img")[0].setAttribute('alt', "Resource Center");
+      // Some Resource Center badges also contain an input; label it too when present
+      if (pendo.dom("#"+badgeId+ " input")[0]) {
+        pendo.dom("#"+badgeId+ " input")[0].setAttribute('alt', "Resource Center");
+      }
     } else if (guideNameAltText) {
       pendo.dom("#"+badgeId+ " img")[0].setAttribute('alt', guideNameAltText);
     } else {

@@ -99,9 +99,11 @@
   var i, dropped = false, pendingUploads = 0;
 
   var onSelectFile = function(files) {
-    // A ticket is being sent: the request body is already built, so a new upload would be
-    // left out of it. Ignore the selection so the visitor can add the file again afterwards.
-    if (formSubmit.classList.contains('is-submitting')) {
+    // A ticket is being sent (the request body is already built, so a new upload would be
+    // left out of it), or the success message is showing (the form is hidden and about to be
+    // reset, which would discard the upload). Ignore the selection so the visitor can add
+    // the file again afterwards.
+    if (formSubmit.classList.contains('is-submitting') || form.style.display === 'none') {
       dropzoneInput.value = '';
       dropzoneOverlay.style.display = 'none';
       return;

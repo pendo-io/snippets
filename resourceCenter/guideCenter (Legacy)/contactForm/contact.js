@@ -99,6 +99,13 @@
   var i, dropped = false, pendingUploads = 0;
 
   var onSelectFile = function(files) {
+    // A ticket is being sent: the request body is already built, so a new upload would be
+    // left out of it. Ignore the selection so the visitor can add the file again afterwards.
+    if (formSubmit.classList.contains('is-submitting')) {
+      dropzoneInput.value = '';
+      dropzoneOverlay.style.display = 'none';
+      return;
+    }
     uploadsProgress();
     // @TODO: check to see if filetype and/or size is acceptable prior to uploading
     // reject if not

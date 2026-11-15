@@ -1,4 +1,4 @@
-#pendo-guide-container {
+[id^="pendo-guide-container"] {
 	opacity: 0;
 	animation: FadeIn 1s linear;
 	animation-fill-mode: both;

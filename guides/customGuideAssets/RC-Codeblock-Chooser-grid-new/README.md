@@ -18,4 +18,5 @@ A list of four clickable tiles, each with an image, a title, and a short descrip
 
 - Each tile is a `.container` element with one `cont_N` class. The click handler finds the nearest `.container`, matches its `cont_N` class against `guidesByTile`, and does nothing if no class or guide ID matches.
 - It calls `pendo.onGuideDismissed()` and then `pendo.showGuideById(guideId)`, so the chosen guide opens on the current page.
+- Each configured tile gets `role="button"` and `tabindex="0"`, so keyboard users can tab to it and open it with Enter or Space.
 - Tiles are 310px wide and 70px tall (`.container`).

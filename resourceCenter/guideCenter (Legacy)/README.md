@@ -19,7 +19,7 @@ Adds a "Contact Us" panel to the Guide Center with email, subject, and message f
 1. In `contact.js`, set `zendeskApiAddress` (default `'https://yourcompany.zendesk.com/'`) to your Zendesk domain, including the trailing slash. The code posts to `api/v2/uploads.json` and `api/v2/requests.json` under that address with no authentication headers.
 2. Optional: uncomment the "DYNAMIC EMAIL DETERMINATION" block in `contact.js` if your Pendo visitor ID is the visitor's email. It fills the `#email` field from `pendo.getVisitorId()` and hides it.
 3. In `contact.less`, set `@uniform-color-scheme--primary` and `@uniform-color-scheme--secondary` to your colors.
-4. In `contact.html`, edit the heading text ("Contact Us", "We would love to help") and the fallback link in the failure message (`<a href=""></a>`), which is empty by default.
+4. In `contact.html`, edit the heading text ("Contact Us", "We would love to help"). The failure message panel (`_pendo-contact-form__fail_`) also has an empty fallback link (`<a href=""></a>`), but visitors never see it: `contact.less` hides the panel and `contact.js` never shows it (failures show a temporary error notice instead). Editing that link has no effect unless you also change the failure handling.
 5. The comment in `contact.less` notes you will likely need to adjust the CSS for the top of `_pendo-launcher-menu_` after adding the form.
 
 ### Notes

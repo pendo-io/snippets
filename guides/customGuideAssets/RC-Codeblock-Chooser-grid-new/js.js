@@ -9,18 +9,42 @@
         cont_4: 'GUIDE_ID_4'
     };
 
-    step && step.attachEvent(step.guideElement[0], 'click', function(e) {
-        var tile = pendo.dom(e.target || e.srcElement).closest('.container');
-        if (!tile.length) return;
+    if (!step) return;
+    var guideRoot = step.guideElement[0];
+
+    function openGuideForTile(target) {
+        var tile = pendo.dom(target).closest('.container');
+        if (!tile.length) return false;
 
         var tileClass = Object.keys(guidesByTile).find(function(cls) {
             return tile[0].classList.contains(cls);
         });
         var guideId = tileClass && guidesByTile[tileClass];
-        if (!guideId) return;
+        if (!guideId) return false;
 
         // Dismiss the current guide, then show the chosen guide on the same page.
         pendo.onGuideDismissed();
         pendo.showGuideById(guideId);
+        return true;
+    }
+
+    // Make each configured tile reachable and usable with a keyboard, like a button
+    Object.keys(guidesByTile).forEach(function(cls) {
+        var tile = guideRoot.querySelector('.container.' + cls);
+        if (!tile) return;
+        tile.setAttribute('role', 'button');
+        tile.setAttribute('tabindex', '0');
+    });
+
+    step.attachEvent(guideRoot, 'click', function(e) {
+        openGuideForTile(e.target || e.srcElement);
+    });
+
+    // Enter or Space on a focused tile opens its guide, the same as a click
+    step.attachEvent(guideRoot, 'keydown', function(e) {
+        if (e.key !== 'Enter' && e.key !== ' ') return;
+        if (openGuideForTile(e.target || e.srcElement)) {
+            e.preventDefault(); // stop Space from scrolling the page
+        }
     });
 })(step, guide);

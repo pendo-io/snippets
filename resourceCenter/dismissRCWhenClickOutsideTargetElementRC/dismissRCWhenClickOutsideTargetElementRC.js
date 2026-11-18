@@ -8,7 +8,17 @@
 pendo.initialize({
     events: {
         guidesLoaded: () => {
+            // guidesLoaded can fire many times; only attach the listener once
+            if (window._pendoRCOffClickAttached) {
+                return;
+            }
+            window._pendoRCOffClickAttached = true;
+
             const hideResourceCenterOffClick = e => {
+                const resourceCenter = pendo.BuildingBlocks.BuildingBlockResourceCenter.getResourceCenter();
+                if (!resourceCenter) {
+                    return;
+                }
                 let tgt = e.target;
                 let path = e.composedPath();
                 let resourceCenterDescendant = false;
@@ -17,7 +27,7 @@ pendo.initialize({
                         resourceCenterDescendant = true;
                     };
                 };
-                if (pendo.dom('#pendo-resource-center-container').length && !resourceCenterDescendant && !pendo.dom(tgt).closest(pendo.BuildingBlocks.BuildingBlockResourceCenter.getResourceCenter().steps[0].elementPathRule).length) {
+                if (pendo.dom('#pendo-resource-center-container').length && !resourceCenterDescendant && !pendo.dom(tgt).closest(resourceCenter.steps[0].elementPathRule).length) {
                     pendo.BuildingBlocks.BuildingBlockResourceCenter.dismissResourceCenter();
                 };
             };

@@ -7,7 +7,10 @@
             variables.forEach(variable => {
                 const [key, value] = variable.replace(/\$\{|\}/g, "").split(".");
                 if (replacementData[key]) {
-                    const replacement = replacementData[key][value] || replacementData[key];
+                    // Use an empty string for missing fields (never the whole metadata object), and
+                    // encode the value so characters such as & ? # / + can't change the URL's meaning
+                    const field = value ? replacementData[key][value] : undefined;
+                    const replacement = (field === undefined || field === null || typeof field === "object") ? "" : encodeURIComponent(String(field));
                     newText = newText.replaceAll(variable, replacement);
                 }
             });
@@ -19,9 +22,8 @@
             originalData.actions?.forEach(action => {
                 action.parameters?.forEach(param => {
                     if (param.name === "url") {
-                        pendo.log("Found:", param.value);
+                        // Not logged: the resulting URL can contain visitor or account data
                         param.value = replaceVariables(param.value, replacementData);
-                        pendo.log("Replaced:", param.value);
                     }
                 });
             });

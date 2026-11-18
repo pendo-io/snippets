@@ -61,7 +61,9 @@ begin
     endpoint_url,
     headers: http_headers, 
     body: request_body_array.to_json,
-    logger: logger, log_level: :info, log_format: :curl
+    # :apache logs the method, path, and status only; :curl would write the
+    # request headers, including the integration key, to the log file
+    logger: logger, log_level: :info, log_format: :apache
   )
 
 rescue HTTParty::Error

@@ -2,7 +2,8 @@
 <!-- You can use visitor or account metadata below depending on what you need in the Permalink URL -->
 
 <span class="_pendo-hidden-account_"><%= metadata.account.name %></span>
-<span class="_pendo-hidden-visitor_"><%= metadata.visitor.email %></span>
+<!-- To expose a visitor field the same way, add for example: <span class="_pendo-hidden-visitor_"><%= metadata.visitor.yourfield %></span> -->
+<!-- Avoid personal data such as email addresses: it is added to the page's HTML even when hidden with CSS -->
 
 <!-- **Warning** -->
 <!-- Use the above one in case if you are choosing to use method 2 in the js_for_clickable_image.js file -->

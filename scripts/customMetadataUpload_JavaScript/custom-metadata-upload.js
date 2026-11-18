@@ -51,11 +51,16 @@ let uploadCustomMetadata = () => {
 			headers: http_headers,
 		})
 		.then(function (response) {
-			logger.info(response);
+			// Log only the status and body: the full response includes the request config,
+			// whose headers contain the integration key
+			logger.info(`HTTP ${response.status}: ${JSON.stringify(response.data)}`);
 		})
 		.catch(function (error) {
-			logger.error(error);
-			console.log(error);
+			let details = error.response
+				? `HTTP ${error.response.status}: ${JSON.stringify(error.response.data)}`
+				: error.message;
+			logger.error(details);
+			console.error(details);
 		});
 };
 

@@ -20,10 +20,11 @@ Creating an experience to provide multiple options from a single guide experienc
 - In the CSS tab, add the code provided from the chooser.less file.
     - In the CSS tab, adjust the lines for the background image under the CSS selectors for the cards. These should be located on lines 323, 329, 335, 341. 
 - In the JS tab, add the code provided from the chooser.js file.
-    - In the JS tab, add the guide ids for the additional Pendo guides you would like to activate based on the click event. These should be located on lines 13 - 16.
+    - In the JS tab, add the guide ids for the additional Pendo guides you would like to activate based on the click event. These should be located on lines 36 to 39.
 - Guide Id: You can find the id for a guide in the URL on the Pendo application
 
 ## Miscellaneous Notes
+- Safari: the background gradients render poorly in Safari, so by default the guide is closed for Safari visitors (including every browser on iOS, which all use Safari's engine) until the page reloads. It is not permanently dismissed. Set `skipOnSafari` to `false` at the top of the JS to show it in Safari.
 - This guide won't fully work in preview mode. The added guides for the buttons will not be available to launch. It is recommended to test in a staging environment.
 - Editing the container will now require a click on the edit button in the step tray. There will no longer be an option to click on the border around the guide to edit the container settings to adjust the dismiss x icon color or other properties.
 - This code is using undocumented APIs from the Pendo object found by inspection in the Browsers Developer Tools console. There is risk in using undocumented code which can lead to unintended future behavior if the functionality changes.

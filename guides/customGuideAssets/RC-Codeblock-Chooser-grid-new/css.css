@@ -35,9 +35,11 @@ section h2 {
   justify-content: center;
   width: 50%;
 }
+/* Fits inside the 70px tall tile with a little space above and below */
 .img-container img {
-  height: 80px;
-  width: 80px;
+  height: 56px;
+  width: 56px;
+  object-fit: contain;
 }
 .text-container {
   align-items: flex-start;

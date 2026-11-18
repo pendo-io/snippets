@@ -145,12 +145,8 @@ if(pendo.designerEnabled) {
 
                         if(questionText.includes("[REQUIRED]")){
 							pollQuestion.firstChild.firstChild.innerHTML = pollQuestion.firstChild.firstChild.innerHTML + requiredHTML(dataPendoPollId);
-                            if(requiredQuestions.includes(dataPendoPollId)) {
-                                var index = requiredQuestions.indexOf(dataPendoPollId);
-                                if (index !== -1) {
-                                    requiredQuestions.splice(index, 1);
-                                }
-                            } else {
+                            // The question can render again while editing; add it once, never toggle it off here
+                            if(!requiredQuestions.includes(dataPendoPollId)) {
                                 requiredQuestions.push(dataPendoPollId);
                             }
                             

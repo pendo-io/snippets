@@ -83,7 +83,11 @@
     pendo.drawSecondaryHomeViewBadge = function () {
         var targetModule = document.querySelector(pendo.customModuleSelector);
         if (targetModule) {
-            targetModule.innerHTML += pendo.secondaryHomeViewBubble; //need to update this one's guide-id to your custom rc module guide id
+            // insertAdjacentHTML adds the bubble without rebuilding the module's existing elements
+            // (innerHTML += would drop Pendo's listeners); skip if it's already there
+            if (!document.getElementById('pendo-secondary-home-view-bubble')) {
+                targetModule.insertAdjacentHTML('beforeend', pendo.secondaryHomeViewBubble); //need to update this one's guide-id to your custom rc module guide id
+            }
             pendo.secondaryHomeViewBadgeCountElem = document.getElementById('pendo-secondary-home-view-count')
             pendo.updateSecondaryHomeViewBadge();
             pendo.isSecondaryBadgeDrawn = true;
@@ -122,7 +126,8 @@
                 // skip text and comment nodes, which have no classList
                 if (mutation.addedNodes.length && mutation.addedNodes[0].nodeType === 1) {
                     if (mutation.addedNodes[0].classList.contains('pendo-notification-bubble-unread-count')) {
-                        pendo.setAlerts(pendo.getUnseenAnnouncementCount());
+                        // setAlerts already adds the unseen announcement count; passing it here doubled it
+                        pendo.setAlerts();
                     }
                     if (mutation.addedNodes[0].id == 'pendo-resource-center-container') {
                         pendo.addRCMutationListener(); //if the RC container is added start listening to what's happening inside

@@ -19,8 +19,14 @@
 		pageUrlLabel[0].style.display = "none";
 	}
 
+	// Query strings and hashes can contain tokens or personal data, so only the page
+	// address is recorded by default. Set this to true to record the full URL.
+	var includeQueryAndHash = false;
+
 	function updateHiddenTextBox() {
-		pageUrlTextBox[0].innerText = window.location.href;
+		pageUrlTextBox[0].innerText = includeQueryAndHash
+			? window.location.href
+			: window.location.origin + window.location.pathname;
 	}
 
 	updateHiddenTextBox();

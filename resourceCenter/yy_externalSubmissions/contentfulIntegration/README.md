@@ -21,7 +21,7 @@ Builds a searchable list inside the Pendo Resource Center from entries stored in
 
 ## Notes
 
-- The token is placed in the request URL in code that runs in the browser, so anyone who can view the page can see it. Use a read-only Content Delivery API token, never a management token.
+- The token is sent in an `Authorization` header rather than the request URL, which keeps it out of URLs, logs, and browser history. It is still in code that runs in the browser, so anyone who can view the page can find it. Use a read-only Content Delivery API token, never a management token.
 - The code requests `https://cdn.contentful.com` once when the module loads. It makes a single request and does not page through results.
 - Errors are not handled; if the request fails, the list stays empty.
 - Typing in `#searchBox` filters rows by title, case-insensitively.

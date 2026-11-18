@@ -26,9 +26,8 @@ Adds a "Contact Us" panel to the Guide Center with email, subject, and message f
 
 - The snippet uses `fetch` and the File API; check these against your product's browser support requirements.
 - The requester's name and email are both set to the value of the email field.
-- Known limitations with attachments: when several files are uploaded at once, each one is uploaded under the last file's name, because the file name is read after the loop has moved on. Upload tokens are also joined into one comma-separated string and sent as a single entry in `uploads`, so a request with more than one attachment may not include them correctly. Submitting also doesn't wait for uploads to finish, so attachments still uploading when the visitor clicks Submit are left out. Test attachments before relying on them.
-- After a successful submit the form shows a confirmation, closes after 3 seconds, and resets. On failure, an error notice is shown for 5 seconds.
-- The submit button is disabled when the form is submitted and is never re-enabled, either by the reset after a success or after a failure. Visitors can't retry a failed request or send a second request without the Guide Center being rendered again.
+- Attachments: each file is uploaded under its own name, and every upload token is sent with the ticket. Submit is disabled while attachments are uploading and while a ticket is being sent. Files added during a send, or while the confirmation message shows, are ignored so they aren't lost; the visitor can add them again afterwards.
+- After a successful submit the form shows a confirmation, closes after 3 seconds, and resets, including its attachments. On failure, an error notice is shown for 5 seconds and the visitor can submit again.
 - The file contains several `@TODO` comments, including that file type and size are not checked before upload.
 
 ## onboardingProgress/guideProgress

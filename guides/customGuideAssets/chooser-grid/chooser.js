@@ -1,8 +1,15 @@
-// terrible awful choice to prevent the guide from showing to safari users
-// the background gradients look awful and need to be fixed before this can be removed
-if (navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1) { pendo.onGuideDismissed(); }
+// Safari (and every iOS browser, which all use Safari's engine) draws this guide's
+// background gradients poorly. While skipOnSafari is true, the guide is closed for those
+// visitors until the page reloads; it is not permanently dismissed, so it can show again
+// once the styles are fixed. Set it to false to show the guide in Safari.
+var skipOnSafari = true;
 
 (function(dom, guides) {
+    if (skipOnSafari && navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1) {
+        pendo.onGuideDismissed({ until: 'reload' });
+        return;
+    }
+
     // Track whether this snippet added the page scroll lock, so a lock that the host
     // app already set (Bootstrap also uses "modal-open" for its own modals) is left alone
     var ownsScrollLock = false;

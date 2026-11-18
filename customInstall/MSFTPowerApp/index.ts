@@ -14,7 +14,7 @@ declare
 var pendo: any;
 
 export
-    class <YOUR-PCF - COMPONENT - NAME >
+    class YourPcfComponentName // Rename to your PCF component's class name
         implements ComponentFramework.StandardControl < IInputs, IOutputs > {
             private _divContainer: HTMLDivElement;
 
@@ -25,13 +25,18 @@ export
             private _visitorValue3: any = "";
 
             private _accountValue1: any = "";
-            private _accountValue1: any = "";
+            private _accountValue2: any = "";
 
             private _context: ComponentFramework.Context<IInputs>;
 
             // Optionally, declare callpendo as a lever to enable/disable Pendo initialization
             // This could be set true or false elsewhere as an easy control
             private _callpendo: any = "";
+
+            // PCF calls updateView many times: initialize Pendo once, then only send
+            // changes (for example when the user switches accounts) with pendo.identify
+            private _pendoInitialized = false;
+            private _lastPendoOptions = "";
             constructor() {
             }
 
@@ -68,8 +73,8 @@ export
 
                 if (fieldsHaveValues && this._callpendo === "true") {
 
-                    // This is the actual Pendo initialization logic, which could be used without the validation logic above if preferred.
-                    pendo.initialize({
+                    // These are the values sent to Pendo. The initialization logic below could be used without the validation logic above if preferred.
+                    const pendoOptions = {
                         visitor: {
                             id: this._visitorValue1, // Required if user is logged in
                             visitorField2: this._visitorValue2, // replace visitorField2 with actual field name, such as email or other metadata you'll be passing
@@ -92,7 +97,18 @@ export
                                 // planPrice
                                 // creationDate
                         }
-                    });
+                    };
+
+                    const optionsKey = JSON.stringify(pendoOptions);
+                    if (!this._pendoInitialized) {
+                        this._pendoInitialized = true;
+                        this._lastPendoOptions = optionsKey;
+                        pendo.initialize(pendoOptions);
+                    } else if (optionsKey !== this._lastPendoOptions) {
+                        // The visitor or account values changed after initialization, so update Pendo
+                        this._lastPendoOptions = optionsKey;
+                        pendo.identify(pendoOptions);
+                    }
                 }
             }
 

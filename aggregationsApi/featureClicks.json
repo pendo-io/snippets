@@ -4,7 +4,7 @@
 		"mimeType": "application/json"
 	},
 	"request": {
-        "name": "guide-views",
+        "name": "feature-clicks",
         "pipeline": [
             {
                 "source": {

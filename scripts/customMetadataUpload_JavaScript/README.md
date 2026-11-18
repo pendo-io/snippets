@@ -42,6 +42,14 @@ Options:
 $ node custom-metadata-upload.js -f custom-metadata-test.csv -i cded0000-0000-0000-0000-00008980000.us -t visitor
 ```
 
+The `-d` option has no effect at the moment: its value is stored but never used. (`--debug` in the help output above is the option's description, not a separate flag; passing `--debug` gives an unknown-option error.)
+
+The script sends requests to `app.pendo.io`. If your subscription is hosted in another region, edit `apiUrl` in the script and replace only the `app.pendo.io` part with the host you sign in to Pendo with, keeping `https://` and the rest of the path. For example, for EU subscriptions:
+
+```js
+let apiUrl = `https://app.eu.pendo.io/api/v1/metadata/${options.type}/custom/value`;
+```
+
 ## File Format
 
 The CSV file _must_ have headers, with the correct metadata key names that you wish to upload. The first column _must_ either be visitorID or accountID, case sensitive.

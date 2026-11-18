@@ -76,7 +76,8 @@ api_url = "#{base_url}/api/v1/metadata/#{options[:type]}/custom/value"
 # Read the CSV. Row numbers count the header as row 1 and skip empty lines.
 begin
   rows = CSV.parse(File.read(options[:file], encoding: 'bom|utf-8'), skip_blanks: true)
-rescue CSV::MalformedCSVError => e
+rescue CSV::MalformedCSVError, SystemCallError, IOError => e
+  # Malformed CSV, or a file that can't be read (for example, no read permission)
   fail_with_usage.call("could not read the CSV file: #{e.message}")
 end
 fail_with_usage.call('the CSV file is empty; it needs a header row') if rows.empty?
@@ -97,6 +98,17 @@ rows.drop(1).each_with_index do |row, index|
 end
 
 # Posts one batch, retrying rate limits, network errors, and 5xx responses
+# Retry-After is either a number of seconds or an HTTP date to wait until.
+# Returns the seconds to wait, or nil if the header is missing or invalid.
+def retry_after_seconds(value)
+  text = value.to_s.strip
+  return nil if text.empty?
+  return text.to_i if text.match?(/\A\d+\z/)
+  [(Time.httpdate(text) - Time.now).ceil, 0].max
+rescue ArgumentError
+  nil
+end
+
 def post_batch(api_url, integration_key, body, label)
   attempt = 0
   loop do
@@ -130,7 +142,8 @@ def post_batch(api_url, integration_key, body, label)
     end
 
     wait = FIRST_BACKOFF_SECONDS * 2**attempt
-    wait = retry_after.strip.to_i if status == 429 && retry_after.to_s.strip.match?(/\A\d+\z/)
+    server_wait = retry_after_seconds(retry_after)
+    wait = server_wait if [429, 503].include?(status) && server_wait
     reason = network_error ? "network error (#{network_error})" : "HTTP #{status}"
     log('WARN', "#{label}: #{reason}, retrying in #{wait}s (retry #{attempt + 1} of #{max_retries})")
     sleep(wait)

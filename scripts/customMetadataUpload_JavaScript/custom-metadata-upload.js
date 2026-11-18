@@ -63,10 +63,27 @@ const baseUrl = process.env.PENDO_API_BASE_URL || `https://${options.host}`;
 const apiUrl = `${baseUrl}/api/v1/metadata/${options.metadataType}/custom/value`;
 
 // Read the CSV. Row numbers count the header as row 1 and skip empty lines.
-const csv = Papa.parse(fs.readFileSync(options.file, 'utf8'), {
+let csvText;
+try {
+	csvText = fs.readFileSync(options.file, 'utf8');
+} catch (error) {
+	fail(`could not read the CSV file: ${error.message}`);
+}
+const csv = Papa.parse(csvText, {
 	header: false,
 	skipEmptyLines: true,
 });
+// Papa Parse reports malformed CSV (for example an unclosed quote, which would merge the
+// following rows into one value) in csv.errors instead of throwing. Stop before uploading
+// anything. "UndetectableDelimiter" only means the file has a single column, which is fine.
+const parseErrors = csv.errors.filter((error) => error.code !== 'UndetectableDelimiter');
+if (parseErrors.length > 0) {
+	const details = parseErrors
+		.slice(0, 5)
+		.map((error) => (error.row === undefined ? error.message : `row ${error.row + 1}: ${error.message}`))
+		.join('; ');
+	fail(`the CSV file is malformed (${details})`);
+}
 const rows = csv.data;
 if (rows.length === 0) {
 	fail('the CSV file is empty; it needs a header row');
@@ -85,6 +102,17 @@ rows.slice(1).forEach((row, index) => {
 	fields.forEach((field, i) => (values[field] = row[i + 1] || ''));
 	records.push({ rowNumber, entry: { [`${options.metadataType}Id`]: id, values } });
 });
+
+// Retry-After is either a number of seconds or an HTTP date to wait until.
+// Returns the seconds to wait, or null if the header is missing or invalid.
+function retryAfterSeconds(value) {
+	const text = String(value || '').trim();
+	if (!text) return null;
+	if (/^\d+$/.test(text)) return Number(text);
+	const until = Date.parse(text);
+	if (Number.isNaN(until)) return null;
+	return Math.max(0, Math.ceil((until - Date.now()) / 1000));
+}
 
 const sleep = (seconds) => new Promise((resolve) => setTimeout(resolve, seconds * 1000));
 
@@ -122,8 +150,9 @@ async function postBatch(body, label) {
 		}
 
 		let wait = FIRST_BACKOFF_SECONDS * 2 ** attempt;
-		if (status === 429 && /^\d+$/.test(String(retryAfter || '').trim())) {
-			wait = Number(retryAfter);
+		const serverWait = retryAfterSeconds(retryAfter);
+		if ((status === 429 || status === 503) && serverWait !== null) {
+			wait = serverWait;
 		}
 		const reason = networkError ? `network error (${networkError})` : `HTTP ${status}`;
 		log('WARN', `${label}: ${reason}, retrying in ${wait}s (retry ${attempt + 1} of ${maxRetries})`);

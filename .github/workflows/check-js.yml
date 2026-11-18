@@ -1,0 +1,30 @@
+name: Check JavaScript
+
+# Runs on every pull request (it exits early when no JavaScript changed, so it can safely
+# be made a required check). See .github/scripts/check-js.sh for what is checked.
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  check-js:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # Full history, so the base branch is available to diff against
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install ESLint
+        run: npm install --no-save --no-package-lock --no-audit --no-fund eslint@9 globals@15
+
+      - name: Check changed JavaScript files
+        run: bash .github/scripts/check-js.sh
+        env:
+          BASE: origin/${{ github.base_ref }}

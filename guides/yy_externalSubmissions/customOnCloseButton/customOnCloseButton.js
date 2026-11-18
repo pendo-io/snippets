@@ -20,7 +20,7 @@
     closeBtn.onclick = pendo.onGuideDismissed; 
   
     /* Check to see if the user clicks on the backdrop */
-    document.addEventListener('click', function(evt) { 
+    function dismissOnBackdropClick(evt) { 
 		let elem = evt.target || evt.srcElement;
         
         // If the user clicked on the pendo backdrop dismiss it.
@@ -28,7 +28,15 @@
             pendo.onGuideDismissed();
         }
      
-    }, false);
+    }
+    document.addEventListener('click', dismissOnBackdropClick, false);
+
+    /* Remove the listener when the guide closes, so it can't dismiss later guides */
+    if (typeof step !== 'undefined' && step.after) {
+        step.after('teardown', function () {
+            document.removeEventListener('click', dismissOnBackdropClick, false);
+        });
+    }
 
     /* Insert the new close button into the DOM of the guide */
     guide.appendChild(closeBtn);

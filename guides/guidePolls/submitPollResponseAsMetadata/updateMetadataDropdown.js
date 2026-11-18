@@ -1,14 +1,23 @@
 // This guide sets new metadata for the visitor when they hit Submit!
 
-// Get selector for dropdown
-var personaSelect = document.querySelector('._pendo-multi-choice-poll-select');
+// Only look inside the guide, so elements in the host app or other guides are not used
+// This guide's own element. step.guideElement works for overlay and embedded guides; the fallback
+// matches any container ID that starts with pendo-guide-container (embedded guides add a suffix).
+var guideContainer = (typeof step !== 'undefined' && step && step.guideElement && step.guideElement[0]) || document.querySelector('[id^="pendo-guide-container"]');
 
-// On guide submit, pass in persona selection as metadata
-document.querySelector('[id^="pendo-button"]').addEventListener('click', updatePersona);
+// Get selector for dropdown
+var personaSelect = guideContainer && guideContainer.querySelector('._pendo-multi-choice-poll-select');
+
+// On guide submit, pass in persona selection as metadata.
+// This uses the first button in the guide; if the guide has more than one button
+// (for example Back and Submit), replace the selector with your Submit button's ID.
+var submitButton = guideContainer && guideContainer.querySelector('[id^="pendo-button"]');
+if (submitButton) submitButton.addEventListener('click', updatePersona);
 
 function updatePersona(){    
     // create visitor agent metadata field called 'persona', this property can be updated to satifsfy different naming requirements
     // 'userRole' is the value pulled from available options in the multi-select poll. Update the poll to provide different values.
+    if (!personaSelect || personaSelect.selectedIndex < 0) return;
     let userRole = personaSelect.options[personaSelect.selectedIndex].text;
     const account = window.pendo.getSerializedMetadata().account;
     const visitor = window.pendo.getSerializedMetadata().visitor;

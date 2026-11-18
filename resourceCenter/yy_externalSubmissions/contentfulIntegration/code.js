@@ -60,7 +60,7 @@
      * @param {String}  spaceId - the space id for your content in Contentful
      */
     function _getGlossaryContent(token, spaceId) {
-		let query = 'https://cdn.contentful.com/spaces/' + spaceId + '/environments/master/entries?access_token=' + token + '&order=fields.title&content_type=YOUR_CONTENT_TYPE';
+		let query = 'https://cdn.contentful.com/spaces/' + spaceId + '/environments/master/entries?order=fields.title&content_type=YOUR_CONTENT_TYPE';
 		
         let xhttp = new XMLHttpRequest(); 
 		xhttp.onreadystatechange = function () {
@@ -71,6 +71,8 @@
 			}
 		};
 		xhttp.open("GET", query, true);
+		// Send the token in a header rather than the URL, so it stays out of logs and history
+		xhttp.setRequestHeader('Authorization', 'Bearer ' + token);
 		xhttp.send();
 	}
     

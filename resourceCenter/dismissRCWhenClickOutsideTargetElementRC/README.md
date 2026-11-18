@@ -34,6 +34,7 @@ Closes the Pendo Resource Center when the visitor clicks outside of it, for Reso
 ## Notes
 
 - In both versions, clicks inside the Resource Center or on the activation element do not close it.
-- The `_v2` version attaches its document click listener once and stores it in `pendo.pro.hideRC`. If no Resource Center is found when the guide runs, it sets `pendo.pro.hideRC` to `true` and never attaches the listener.
-- Known limitation of `_v2`: it only dismisses its own hidden tooltip guide on the run that attaches the listener. On later activations (the listener already exists, or no Resource Center was found), the code returns before `pendo.onGuideDismissed`, so the invisible tooltip stays active instead of being dismissed. Test repeated activation before relying on it.
+- The `_v2` version attaches its document click listener once and stores it in `pendo.pro.hideRC`. If no Resource Center is found when the guide runs, it doesn't attach the listener yet and tries again the next time the guide runs.
+- Every time the `_v2` guide runs, it dismisses its own hidden tooltip guide, so the invisible tooltip never stays active.
+- The original version attaches its click listener only once, however many times guides load.
 - The `_v2` version and the badge snippet (`dismissRCWhenClickOutsideBadgeRC`) both use `pendo.pro.hideRC`, so don't run them together.

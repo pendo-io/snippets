@@ -57,7 +57,7 @@
 	function _getGuideContent(token, spaceId, contentId) {
 
 		// Build out the API query based on your Contentful tokens, space id and content id
-		let query = 'https://cdn.contentful.com/spaces/' + encodeURIComponent(spaceId) + '/environments/master/entries/' + encodeURIComponent(contentId) + '?access_token=' + encodeURIComponent(token);
+		let query = 'https://cdn.contentful.com/spaces/' + encodeURIComponent(spaceId) + '/environments/master/entries/' + encodeURIComponent(contentId);
         
         
         // Create an xhttp request object to fetch the query.
@@ -76,6 +76,8 @@
 			}
 		};
 		xhttp.open("GET", query, true);
+		// Send the token in a header rather than the URL, so it stays out of logs and history
+		xhttp.setRequestHeader('Authorization', 'Bearer ' + token);
 		xhttp.send();
 	}
 

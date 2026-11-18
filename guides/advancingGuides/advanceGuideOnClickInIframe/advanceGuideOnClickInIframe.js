@@ -31,6 +31,6 @@
   step.after('teardown', function () {
     pendo.detachEvent(iframe, 'mouseover', setMouseOverIframe);
     pendo.detachEvent(iframe, 'mouseout', setMouseOutOfIframe);
-    pendo.detachEvent(iframe, 'blur', advanceGuideIfMouseOverIframe);
+    pendo.detachEvent(window, 'blur', advanceGuideIfMouseOverIframe);
   });
 })(pendo.dom);

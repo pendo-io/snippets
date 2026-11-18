@@ -1,51 +1,50 @@
-(function wireNextGuideButton(step) {
+(function wireChooserGrid(step) {
 
-    // Uncomment the below to get the account name metadata value to be used ahead in the URL using pendo.getSerializedMetadata.
-    // const account_name = pendo.getSerializedMetadata().account.name;
+    // Map each tile's class (from html.html) to the ID of the guide it should open.
+    // Replace the placeholder values with your own guide IDs.
+    var guidesByTile = {
+        cont_1: 'GUIDE_ID_1',
+        cont_2: 'GUIDE_ID_2',
+        cont_3: 'GUIDE_ID_3',
+        cont_4: 'GUIDE_ID_4'
+    };
 
-    step && step.attachEvent(step.guideElement[0], 'click', function(e) {
+    if (!step) return;
+    var guideRoot = step.guideElement[0];
 
-        /*var guides = {
-            guide_1: 'Hb26BrTG490qIszrKU43h-_K0Vg', // Dashboard WT Guide
-            guide_2: 's03C3V6h8nnkFBVIV3QpEq1fyUU', // New SI | Dashboard Starting Page | Alerts Prefrences WT Guide
-        };
+    function openGuideForTile(target) {
+        var tile = pendo.dom(target).closest('.container');
+        if (!tile.length) return false;
 
-        var imageClasses = {
-            img_1: 'cont_1',
-            img_2: 'cont_3'
-        };
-        */
+        var tileClass = Object.keys(guidesByTile).find(function(cls) {
+            return tile[0].classList.contains(cls);
+        });
+        var guideId = tileClass && guidesByTile[tileClass];
+        if (!guideId) return false;
 
-        var guide_1 = 'Hb26BrTG490qIszrKU43h-_K0Vg';
-        // get the first clickable image in the guide.
-        var advanceButton = pendo.dom(e.target || e.srcElement).closest('.cont_1');
- 
-        //var advanceButton = pendo.dom(e.target || e.srcElement).closest('.container');
+        // Dismiss the current guide, then show the chosen guide on the same page.
+        pendo.onGuideDismissed();
+        pendo.showGuideById(guideId);
+        return true;
+    }
 
-        // This command will show the guide of the ID provided
-        if (advanceButton.length) {
-            // var imageClass = advanceButton[0].classList[0];
-            // var guideId = Object.keys(imageClasses).find(key => imageClasses[key] === imageClass);
-            // guideId = guides[guideId];
+    // Make each configured tile reachable and usable with a keyboard, like a button
+    Object.keys(guidesByTile).forEach(function(cls) {
+        var tile = guideRoot.querySelector('.container.' + cls);
+        if (!tile) return;
+        tile.setAttribute('role', 'button');
+        tile.setAttribute('tabindex', '0');
+    });
 
-            // This command dismisses the current active guide.
-            pendo.onGuideDismissed();
-            // Use the below code to trigger another guide via guide id on the same page.
-            pendo.showGuideById(guide_1);
+    step.attachEvent(guideRoot, 'click', function(e) {
+        openGuideForTile(e.target || e.srcElement);
+    });
+
+    // Enter or Space on a focused tile opens its guide, the same as a click
+    step.attachEvent(guideRoot, 'keydown', function(e) {
+        if (e.key !== 'Enter' && e.key !== ' ') return;
+        if (openGuideForTile(e.target || e.srcElement)) {
+            e.preventDefault(); // stop Space from scrolling the page
         }
-    })
-})(step, guide);
-
-
-(function wireNextGuideButton(step) {
-    step && step.attachEvent(step.guideElement[0], 'click', function(e) {
-        var guide_2 = 's03C3V6h8nnkFBVIV3QpEq1fyUU'; // Place guide id between the quotation marks
-        var advanceButton = pendo.dom(e.target || e.srcElement).closest('.cont_2');
-        if (advanceButton.length) {
-            // This command dismisses the current active guide.
-            pendo.onGuideDismissed();
-            // Use the below code to trigger another guide via guide id on the same page.
-            pendo.showGuideById(guide_2);
-        }
-    })
+    });
 })(step, guide);

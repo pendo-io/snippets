@@ -2,7 +2,7 @@
     var logicCheckTimeoutAmmountInMilliseconds = 1500; //set as 0 if no delay is required
     var skippedNumberOfSteps = 1; //Number needs to be 1 or greater.
 
-    setTimeout(skipStepsNoElementLogic, Number(logicCheckTimeoutAmmountInMilliseconds));
+    var logicCheckTimer = setTimeout(skipStepsNoElementLogic, Number(logicCheckTimeoutAmmountInMilliseconds));
     function skipStepsNoElementLogic() {
         if (!pendo.designerEnabled) {
             pendo.log(`skipStepsNoElement function start main logic`);
@@ -10,7 +10,8 @@
             var currentStepIndex = Number(guidePayload.stepIndex);
             var guideSteps = guidePayload.guide.steps;
             var nextStepPayload = guideSteps[currentStepIndex + 1];
-            var nextStepId = guideSteps[currentStepIndex + 1].id;
+            if (!nextStepPayload) return; // last step: there is no next step to check
+            var nextStepId = nextStepPayload.id;
             if (guideSteps[currentStepIndex + 1 + skippedNumberOfSteps]) {
                 var skipToStepId = guideSteps[currentStepIndex + 1 + skippedNumberOfSteps].id;
             }
@@ -36,7 +37,7 @@
     };
 
     var invisibleStepStylingFixTimeoutAmmountInMilliseconds = 1;
-    setTimeout(invisibleStepStylingFix, Number(invisibleStepStylingFixTimeoutAmmountInMilliseconds));
+    var stylingFixTimer = setTimeout(invisibleStepStylingFix, Number(invisibleStepStylingFixTimeoutAmmountInMilliseconds));
     function invisibleStepStylingFix() {
         if (!pendo.designerEnabled) {
             if (pendo.dom(`#pendo-guide-container`)[0]) {
@@ -52,4 +53,13 @@
             pendo.log(`invisible step styling fixed (guide container display removed & backdrop display removed for invisible step)`)
         }
     }
-})
+
+    // If this step closes before the timers fire, cancel them so they can't
+    // advance, dismiss, or restyle a different guide that is active by then
+    if (typeof step !== 'undefined' && step && step.after) {
+        step.after('teardown', function () {
+            clearTimeout(logicCheckTimer);
+            clearTimeout(stylingFixTimer);
+        });
+    }
+})();

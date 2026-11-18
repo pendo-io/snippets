@@ -5,8 +5,6 @@ require 'logger'
 require 'optparse'
 require 'httparty'
 require 'csv'
-require 'uri-handler'
-require 'pry'
 
 logger = Logger::new("./custom-metadata-upload.log")
 

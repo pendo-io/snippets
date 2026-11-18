@@ -55,7 +55,7 @@
 	function _getGuideContent(token, spaceId, contentId) {
 
 		// Build out the API query based on your Contentful tokens, space id and content id
-		let query = 'https://cdn.contentful.com/' + spaceId + '/ntbw5oht064d/environments/master/entries/' + contentId + '?access_token=' + token;
+		let query = 'https://cdn.contentful.com/spaces/' + encodeURIComponent(spaceId) + '/environments/master/entries/' + encodeURIComponent(contentId) + '?access_token=' + encodeURIComponent(token);
         
         
         // Create an xhttp request object to fetch the query.
@@ -64,7 +64,7 @@
 		xhttp.onreadystatechange = function () {
 			if (this.readyState == 4 && this.status == 200) {
                 
-                result = JSON.parse(this.responseText);
+                let result = JSON.parse(this.responseText);
                 _updateGuideUI(result.fields);
                 
                 // Pendo Analytics Track Event - Custom Event based on guide title
